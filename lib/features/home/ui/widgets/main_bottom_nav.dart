@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/theme/theme_route.dart';
+import '../../../../core/utils/utils_route.dart';
 import '../../../call/ui/calls_screen.dart';
 import '../../../profile/ui/profile_screen.dart';
+import '../../../update/ui/updates_screen.dart';
 import '../../controller/home_controller.dart';
 import '../home_screen.dart';
 
@@ -19,11 +21,11 @@ class MainBottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final items = [
-      _BottomItem(Icons.call_outlined, 'Calls', BottomTabType.calls),
-      _BottomItem(Icons.chat_bubble_outline_rounded, 'Chat', BottomTabType.chat),
-      _BottomItem(Icons.all_inclusive_rounded, 'Voicemail', BottomTabType.voicemail),
-      _BottomItem(Icons.layers_outlined, 'Updates', BottomTabType.updates),
-      _BottomItem(Icons.person_outline_rounded, 'Profile', BottomTabType.profile),
+      _BottomItem(image: AppAssets.callIcon, title: 'Calls', type: BottomTabType.calls),
+      _BottomItem(image: AppAssets.commentIcons, title: 'Chat', type: BottomTabType.chat),
+      _BottomItem(image: AppAssets.voicemailIcon, title: 'Voicemail', type: BottomTabType.voicemail),
+      _BottomItem(image: AppAssets.updateIcon,title: 'Updates', type: BottomTabType.updates),
+      _BottomItem(image: AppAssets.userIcon, title: 'Profile', type: BottomTabType.profile),
     ];
 
     return SafeArea(
@@ -52,8 +54,7 @@ class MainBottomNav extends StatelessWidget {
                 children: items.map((item) {
                   return Expanded(
                     child: Obx(() {
-                      final selected =
-                          controller.selectedBottomTab.value == item.type;
+                      final selected = controller.selectedBottomTab.value == item.type;
 
                       return GestureDetector(
                         // onTap: () => controller.changeBottomTab(item.type),
@@ -61,6 +62,7 @@ class MainBottomNav extends StatelessWidget {
                             if (item.type == BottomTabType.calls) Get.to(() => CallsScreen());
                             if (item.type == BottomTabType.chat) Get.offAll(() => HomeScreen());
                             if (item.type == BottomTabType.profile) Get.to(() => ProfileScreen()); 
+                            if (item.type == BottomTabType.updates) Get.to(() => UpdatesScreen()); 
                           },
                         behavior: HitTestBehavior.opaque,
                         child: AnimatedContainer(
@@ -69,13 +71,14 @@ class MainBottomNav extends StatelessWidget {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(
-                                item.icon,
-                                size: 21,
-                                color: selected
-                                    ? AppColors.buttonBlue
-                                    : Theme.of(context).brightness == Brightness.dark ? Colors.white70 : Colors.black54,
-                              ),
+                                Image.asset(
+                                  item.image!,
+                                  width: 21,
+                                  height: 21,
+                                  color: selected
+                                      ? AppColors.buttonBlue
+                                      : Theme.of(context).brightness == Brightness.dark ? Colors.white70 : Colors.black54,
+                                ),
                               const SizedBox(height: 3),
                               Text(
                                 item.title,
@@ -106,9 +109,10 @@ class MainBottomNav extends StatelessWidget {
 }
 
 class _BottomItem {
-  final IconData icon;
+  final String? image;
   final String title;
   final BottomTabType type;
 
-  _BottomItem(this.icon, this.title, this.type);
+  _BottomItem({this.image, required this.title, required this.type});
 }
+

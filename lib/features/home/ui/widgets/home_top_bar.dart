@@ -15,9 +15,8 @@ class HomeTopBar extends StatelessWidget {
       child: Row(
         children: [
           Image.asset(
-            AppAssets.ghostLogo,
-            height: 30,
-            width: 30,
+            AppAssets.ghostLogo1,
+            height: 30, width: 30,
             fit: BoxFit.contain,
           ),
 

@@ -1,4 +1,4 @@
-enum CallType { audio, video}
+enum CallType {audio, video}
 
 class CallItemModel {
   final String id;

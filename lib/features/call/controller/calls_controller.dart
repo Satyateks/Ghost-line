@@ -38,7 +38,7 @@ class CallsController extends GetxController {
     calls.assignAll([
       CallItemModel(
         id: '1',
-        name: 'Satyam',
+        name: 'Satyam Mishra (7)',
         avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e',
         time: 'Yesterday, 10:12',
         type: CallType.video,
@@ -67,7 +67,7 @@ class CallsController extends GetxController {
         avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330',
         time: 'Yesterday, 10:12',
         type: CallType.audio,
-        isRecent: true,
+        isRecent: false,
       ),
       CallItemModel(
         id: '5',
@@ -75,6 +75,14 @@ class CallsController extends GetxController {
         avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d',
         time: 'Yesterday, 10:12',
         type: CallType.audio,
+        isRecent: false,
+      ),
+      CallItemModel(
+        id: '8',
+        name: 'Satyam',
+        avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e',
+        time: 'Yesterday, 10:12',
+        type: CallType.video,
         isRecent: false,
       ),
       CallItemModel(
@@ -92,6 +100,15 @@ class CallsController extends GetxController {
         time: 'Yesterday, 10:12',
         type: CallType.audio,
         isRecent: false,
+        isMissed: true,
+      ),
+      CallItemModel(
+        id: '9',
+        name: 'Sejal Pawar',
+        avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330',
+        time: 'Yesterday, 10:12',
+        type: CallType.audio,
+        isRecent: true,
       ),
     ]);
   }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../../../core/theme/theme_route.dart';
+import '../../../../core/utils/app_assets.dart';
+import '../../../contact/ui/save_contact_screen.dart';
 
 class FloatingCallButton extends StatelessWidget {
   const FloatingCallButton({super.key});
@@ -9,13 +12,10 @@ class FloatingCallButton extends StatelessWidget {
     return FloatingActionButton(
       elevation: 0,
       backgroundColor: AppColors.buttonBlue,
-      onPressed: () {},
+      onPressed: ()=>Get.to(SaveContactScreen()),
       shape: const CircleBorder(),
-      child: const Icon(
-        Icons.add_call,
-        color: Colors.white,
-        size: 24,
-      ),
+      child:Image.asset(AppAssets.addCallIcon,color:  Colors.white,height: 24)
     );
   }
 }
+

@@ -8,15 +8,26 @@ class AppAssets {
 
   /// Images
   static const String ghostLogo = '$_images/ghostlineLogo.png';
+  static const String ghostLogo1 = '$_images/ghostlineLogo1.png';
   static const String onboarding = '$_images/onboarding.png';
   static const String authBg = '$_images/auth_bg.png';
   static const String defaultAvatar = '$_images/default_avatar.png';
 
   /// Icons
   static const String chatIcon = '$_icons/chat.svg';
-  static const String callIcon = '$_icons/call.svg';
+  static const String callIcon = '$_images/callIcon.png';
+  static const String addCallIcon = '$_images/addCallIcon.png';
+  static const String commentIcons = '$_images/commentIcons.png';
+  static const String missedCallIcon = '$_images/missedCall.png';
+  static const String videoIcon = '$_images/videoIcon.png';
+  static const String userIcon = '$_images/user.png';
   static const String profileIcon = '$_icons/profile.svg';
   static const String searchIcon = '$_icons/search.svg';
+
+  
+  /// bottom bar
+  static const String voicemailIcon = '$_images/voicemailIcon.png';
+  static const String updateIcon = '$_images/updateIcon.png';
 
   /// Lottie
   static const String typingAnimation = '$_lottie/typing.json';

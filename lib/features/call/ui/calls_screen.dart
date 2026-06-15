@@ -49,18 +49,14 @@ class CallsScreen extends StatelessWidget {
                   _SectionTitle('Recents'),
                   const SizedBox(height: 8),
 
-                  ...callsCtrl.recentCalls.map(
-                    (call) => CallListTile(call: call),
-                  ),
+                  ...callsCtrl.recentCalls.map((call) => CallListTile(call: call)),
 
                   const SizedBox(height: 14),
 
                   _SectionTitle('Contacts'),
                   const SizedBox(height: 8),
 
-                  ...callsCtrl.contacts.map(
-                    (call) => CallListTile(call: call),
-                  ),
+                  ...callsCtrl.contacts.map((call) => CallListTile(call: call)),
                 ],
               ),
             ),

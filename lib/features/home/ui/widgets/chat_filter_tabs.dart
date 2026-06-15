@@ -1,4 +1,3 @@
-
 // ignore_for_file: unnecessary_underscores
 
 import 'dart:ui';
@@ -11,39 +10,38 @@ import '../../controller/home_controller.dart';
 class ChatFilterTabs extends StatelessWidget {
   final HomeController controller;
 
-  const ChatFilterTabs({
-    super.key,
-    required this.controller,
-  });
+  const ChatFilterTabs({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 30,
-      child: Obx(() => ListView.separated(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        scrollDirection: Axis.horizontal,
-        physics: const BouncingScrollPhysics(),
-        itemCount: controller.filterTabs.length + 1,
-        separatorBuilder: (_, __) => const SizedBox(width: 7),
-        itemBuilder: (context, index) {
-          if (index == 0) {
-            return _AddTabButton(
-              onTap: () => _showAddTabBottomSheet(context, controller),
-            );
-          }
-          final item = controller.filterTabs[index - 1];
+      child: Obx(
+        () => ListView.separated(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          scrollDirection: Axis.horizontal,
+          physics: const BouncingScrollPhysics(),
+          itemCount: controller.filterTabs.length + 1,
+          separatorBuilder: (_, __) => const SizedBox(width: 7),
+          itemBuilder: (context, index) {
+            if (index == 0) {
+              return _AddTabButton(
+                onTap: () => _showAddTabBottomSheet(context, controller),
+              );
+            }
+            final item = controller.filterTabs[index - 1];
 
-          return Obx(() {
-            final selected = controller.selectedFilter.value == item.id;
-            return _FilterChip(
-              title: item.title,
-              selected: selected,
-              onTap: () => controller.changeFilter(item.id),
-            );
-          });
-        },
-      )),
+            return Obx(() {
+              final selected = controller.selectedFilter.value == item.id;
+              return _FilterChip(
+                title: item.title,
+                selected: selected,
+                onTap: () => controller.changeFilter(item.id),
+              );
+            });
+          },
+        ),
+      ),
     );
   }
 
@@ -66,7 +64,9 @@ class ChatFilterTabs extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
-                  color: isDark ? Colors.black.withOpacity(0.5) : Colors.white.withOpacity(0.5),
+                  color: isDark
+                      ? Colors.black.withOpacity(0.5)
+                      : Colors.white.withOpacity(0.5),
                   border: Border(
                     top: BorderSide(
                       color: Colors.white.withOpacity(0.2),
@@ -109,7 +109,9 @@ class ChatFilterTabs extends StatelessWidget {
                           color: isDark ? Colors.white54 : Colors.black45,
                         ),
                         filled: true,
-                        fillColor: isDark ? Colors.white.withOpacity(0.05) : Colors.black.withOpacity(0.05),
+                        fillColor: isDark
+                            ? Colors.white.withOpacity(0.05)
+                            : Colors.black.withOpacity(0.05),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide: BorderSide.none,
@@ -171,7 +173,9 @@ class _AddTabButton extends StatelessWidget {
         width: 38,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: isDark ? Colors.white.withOpacity(0.10) : Colors.black.withOpacity(0.055),
+          color: isDark
+              ? Colors.white.withOpacity(0.10)
+              : Colors.black.withOpacity(0.055),
           borderRadius: BorderRadius.circular(999),
         ),
         child: Icon(
@@ -182,6 +186,7 @@ class _AddTabButton extends StatelessWidget {
       ),
     );
   }
+}
 
 class _FilterChip extends StatelessWidget {
   final String title;
@@ -208,8 +213,8 @@ class _FilterChip extends StatelessWidget {
           color: selected
               ? AppColors.primaryBlue.withOpacity(0.28)
               : isDark
-                  ? Colors.white.withOpacity(0.10)
-                  : Colors.black.withOpacity(0.055),
+              ? Colors.white.withOpacity(0.10)
+              : Colors.black.withOpacity(0.055),
           borderRadius: BorderRadius.circular(999),
           border: Border.all(
             color: selected
@@ -223,8 +228,8 @@ class _FilterChip extends StatelessWidget {
             color: selected
                 ? Colors.white
                 : isDark
-                    ? Colors.white70
-                    : Colors.black54,
+                ? Colors.white70
+                : Colors.black54,
             fontSize: 12,
             fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
           ),

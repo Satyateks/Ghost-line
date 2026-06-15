@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/theme_route.dart';
+import '../../../../core/utils/app_assets.dart';
 import '../../../../core/widgets/widgets_route.dart';
 import '../../model/call_item_model.dart';
 
@@ -56,11 +57,7 @@ class CallListTile extends StatelessWidget {
 
                 Row(
                   children: [
-                    Icon(
-                      Icons.call_made_rounded,
-                      size: 12,
-                      color: subColor,
-                    ),
+                    Image.asset(AppAssets.missedCallIcon,color: isDark ? Colors.white : AppColors.lightTextPrimary,),
                     const SizedBox(width: 4),
                     Text(
                       call.time,
@@ -76,14 +73,16 @@ class CallListTile extends StatelessWidget {
             ),
           ),
 
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              call.type == CallType.video
-                  ? Icons.videocam_outlined
-                  : Icons.call_outlined,
-              color: isDark ? Colors.white : AppColors.lightTextPrimary,
-              size: 24,
+          InkWell(
+            onTap: () {},
+            borderRadius: BorderRadius.circular(18),
+            child: Padding(
+              padding: const EdgeInsets.all(7),
+              child: Image.asset(
+                call.type == CallType.video ? AppAssets.videoIcon : AppAssets.callIcon,
+                width: 24, height: 24,
+                color: isDark ? Colors.white : AppColors.lightTextPrimary,
+              ),
             ),
           ),
         ],
