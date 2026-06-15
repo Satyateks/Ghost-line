@@ -1,0 +1,8 @@
+{
+    "builder.serverUrl": "https://www.figma.com/design/4zmCaAo23tYnVjZsAMNhuZ/collage-project?t=RWZVgnqoWmydGHp3-0",
+    "builder.command": "",
+    "builder.runDevServer": false,
+    "builder.autoDetectDevServer": true,
+    "builder.launchType": "editor",
+    "java.configuration.updateBuildConfiguration": "interactive"
+}

@@ -1,0 +1,53 @@
+lib/
+ ├── main.dart
+ ├── app/
+ │   ├── app.dart
+ │   └── routes.dart
+ │
+ ├── core/
+ │   ├── theme/
+ │   │   ├── app_colors.dart
+ │   │   ├── app_text_styles.dart
+ │   │   ├── app_spacing.dart
+ │   │   ├── app_radius.dart
+ │   │   └── app_theme.dart
+ │   │
+ │   ├── widgets/
+ │   │   ├── glass_card.dart
+ │   │   ├── glass_button.dart
+ │   │   ├── glass_text_field.dart
+ │   │   ├── app_logo.dart
+ │   │   ├── custom_app_bar.dart
+ │   │   └── avatar_widget.dart
+ │   │              
+                    
+                    
+                    ├── auth_shell.dart
+                    ├── glass_scaffold.dart
+                    └── keyboard_dismiss.dart
+ │   └── utils/
+         ├── app_constants.dart
+         ├── app_assets.dart
+         ├── responsive.dart
+         ├── validators.dart
+         ├── date_time_helper.dart
+         ├── snackbar_helper.dart
+         ├── bottom_sheet_helper.dart
+         ├── keyboard_helper.dart
+         ├── device_helper.dart
+         ├── theme_extension.dart
+         └── input_formatters.dart
+ │
+ ├── features/
+ │   ├── auth/
+ │   ├── chat_list/
+ │   ├── chat_room/
+ │   ├── calls/
+ │   ├── profile/
+ │   ├── premium/
+ │   └── settings/
+ │
+ └── data/
+     ├── models/
+     ├── services/
+     └── repositories/

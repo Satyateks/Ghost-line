@@ -1,0 +1,641 @@
+// ignore_for_file: deprecated_member_use
+
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+
+import '../../../core/theme/theme_route.dart';
+import '../../../core/utils/utils_route.dart';
+import '../../home/ui/home_screen.dart';
+import '../controller/authCtl.dart';
+
+
+class AuthScreen extends StatelessWidget {
+  AuthScreen({super.key});
+
+  final AuthUiController authCtrl = Get.put(AuthUiController());
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        backgroundColor: Colors.black,
+        body: Container(
+          decoration: const BoxDecoration(
+            gradient: AppColors.darkBgGradient,
+          ),
+          child: SafeArea(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final size = MediaQuery.sizeOf(context);
+                final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+
+                return SingleChildScrollView(
+                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                  padding: EdgeInsets.only(bottom: bottomInset + 12),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: constraints.maxHeight,
+                    ),
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          top: size.height * 0.025,
+                          left: 0,
+                          right: 0,
+                          child: Center(
+                            child: Image.asset(
+                              AppAssets.ghostLogo,
+                              height: size.height * 0.035,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        ),
+
+                        Positioned(
+                          top: size.height * 0.085,
+                          left: 8,
+                          right: 8,
+                          child: Image.asset(
+                            AppAssets.onboarding,
+                            height: size.height * 0.36,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+
+                        Positioned(
+                          top: size.height * 0.445,
+                          left: 0,
+                          right: 0,
+                          child: const _AuthIntroText(),
+                        ),
+
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: _cardTop(context),
+                            left: 8,
+                            right: 8,
+                          ),
+                          child: Obx(
+                            () => AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 280),
+                              switchInCurve: Curves.easeOutCubic,
+                              switchOutCurve: Curves.easeInCubic,
+                              transitionBuilder: (child, animation) {
+                                return FadeTransition(
+                                  opacity: animation,
+                                  child: SlideTransition(
+                                    position: Tween<Offset>(
+                                      begin: const Offset(0, 0.04),
+                                      end: Offset.zero,
+                                    ).animate(animation),
+                                    child: child,
+                                  ),
+                                );
+                              },
+                              child: _cardByType(
+                                authCtrl.currentCard.value,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  double _cardTop(BuildContext context) {
+    final height = MediaQuery.sizeOf(context).height;
+    if (height < 700) return height * 0.57;
+    if (height < 780) return height * 0.60;
+    return height * 0.61;
+  }
+
+  Widget _cardByType(AuthCardType type) {
+    switch (type) {
+      case AuthCardType.login: return _LoginCard(key: const ValueKey('login'), controller: authCtrl);
+      case AuthCardType.createAccount: return _CreateAccountCard( key: const ValueKey('createAccount'), controller: authCtrl);
+      case AuthCardType.otp: return _OtpCard(key: const ValueKey('otp'), controller: authCtrl);
+      case AuthCardType.username: return _UsernameCard( key: const ValueKey('username'), controller: authCtrl);
+    }
+  }
+}
+
+class _LoginCard extends StatelessWidget {
+  final AuthUiController controller;
+
+  const _LoginCard({
+    super.key,
+    required this.controller,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return _AuthGlassCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const _AuthTitle("Log in"),
+          const SizedBox(height: 12),
+
+          _AuthField(
+            controller: controller.loginIdCtrl,
+            hint: "Enter Username or mobile",
+          ),
+
+          const SizedBox(height: 8),
+
+          _AuthField(
+            controller: controller.loginPasswordCtrl,
+            hint: "Enter Password",
+            obscureText: true,
+          ),
+
+          const SizedBox(height: 9),
+
+          Center(
+            child: GestureDetector(
+              onTap: controller.showCreateAccount,
+              child: RichText(
+                text: TextSpan(
+                  text: "Don't have an account? ",
+                  style: TextStyle(
+                    color: Colors.white.withOpacity(0.62),
+                    fontSize: 10,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  children: const [
+                    TextSpan(
+                      text: "Create account",
+                      style: TextStyle(
+                        color: AppColors.primaryBlue,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 15),
+
+          _AuthPrimaryButton(
+            title: "Continue",
+            onTap: controller.showOtp,
+          ),
+        ],
+      ),
+    );
+  }
+}
+class _CreateAccountCard extends StatelessWidget {
+  final AuthUiController controller;
+
+  const _CreateAccountCard({
+    super.key,
+    required this.controller,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return _AuthGlassCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const _AuthTitle("Create an account"),
+          const SizedBox(height: 12),
+
+          _AuthField(
+            controller: controller.createIdCtrl,
+            hint: "Mobile or Email",
+          ),
+
+          const SizedBox(height: 8),
+
+          _AuthField(
+            controller: controller.createPasswordCtrl,
+            hint: "Choose Password",
+            obscureText: true,
+          ),
+
+          const SizedBox(height: 9),
+
+          Center(
+            child: GestureDetector(
+              onTap: controller.showLogin,
+              child: RichText(
+                text: TextSpan(
+                  text: "Have an existing account ",
+                  style: TextStyle(
+                    color: Colors.white.withOpacity(0.62),
+                    fontSize: 10,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  children: const [
+                    TextSpan(
+                      text: "Log in",
+                      style: TextStyle(
+                        color: AppColors.primaryBlue,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 15),
+
+          _AuthPrimaryButton(
+            title: "Continue",
+            onTap: controller.showOtp,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _OtpCard extends StatelessWidget {
+  final AuthUiController controller;
+
+  const _OtpCard({
+    super.key,
+    required this.controller,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return _AuthGlassCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              GestureDetector(
+                onTap: controller.showLogin,
+                child: Icon(
+                  Icons.arrow_back_ios_new_rounded,
+                  color: Colors.white.withOpacity(0.82),
+                  size: 14,
+                ),
+              ),
+              const SizedBox(width: 6),
+              const _AuthTitle("Enter OTP"),
+            ],
+          ),
+
+          const SizedBox(height: 4),
+
+          Row(
+            children: [
+              Text(
+                "An OTP was sent to xxx90",
+                style: TextStyle(
+                  color: Colors.white.withOpacity(0.45),
+                  fontSize: 9.5,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const Spacer(),
+              GestureDetector(
+                onTap: controller.showLogin,
+                child: const Text(
+                  "Change Number",
+                  style: TextStyle(
+                    color: AppColors.primaryBlue,
+                    fontSize: 9.5,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 14),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: List.generate(
+              6,
+              (index) => _OtpBox(
+                controller: controller.otpControllers[index],
+                isLast: index == 5,
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 8),
+
+          Align(
+            alignment: Alignment.centerRight,
+            child: Text(
+              "Resend in 35s",
+              style: TextStyle(
+                color: Colors.white.withOpacity(0.45),
+                fontSize: 9.5,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 16),
+
+          _AuthPrimaryButton(
+            title: "Continue",
+            onTap: controller.showUsername,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _UsernameCard extends StatelessWidget {
+  final AuthUiController controller;
+
+  const _UsernameCard({
+    super.key,
+    required this.controller,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return _AuthGlassCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const _AuthTitle("Choose a Username"),
+          const SizedBox(height: 12),
+
+          _AuthField(
+            controller: controller.usernameCtrl,
+            hint: "Choose a Username",
+          ),
+
+          const SizedBox(height: 62),
+
+          _AuthPrimaryButton(
+            title: "Continue",
+            onTap: () {
+              Get.offAll(() => HomeScreen());
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+class _AuthTitle extends StatelessWidget {
+  final String title;
+
+  const _AuthTitle(this.title);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      title,
+      style: AppTextStyles.authTitle(Colors.white).copyWith(
+        fontSize: 13,
+        fontWeight: FontWeight.w700,
+      ),
+    );
+  }
+}
+
+class _AuthField extends StatelessWidget {
+  final TextEditingController controller;
+  final String hint;
+  final bool obscureText;
+
+  const _AuthField({
+    required this.controller,
+    required this.hint,
+    this.obscureText = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 31,
+      child: TextFormField(
+        controller: controller,
+        obscureText: obscureText,
+        cursorColor: AppColors.primaryBlue,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 10.5,
+          fontWeight: FontWeight.w500,
+        ),
+        decoration: InputDecoration(
+          hintText: hint,
+          hintStyle: TextStyle(
+            color: Colors.white.withOpacity(0.44),
+            fontSize: 9.7,
+            fontWeight: FontWeight.w500,
+          ),
+          filled: true,
+          fillColor: Colors.white.withOpacity(0.08),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 11,
+            vertical: 0,
+          ),
+          border: _fieldBorder(),
+          enabledBorder: _fieldBorder(),
+          focusedBorder: _fieldBorder(
+            color: AppColors.primaryBlue.withOpacity(0.65),
+          ),
+        ),
+      ),
+    );
+  }
+
+  OutlineInputBorder _fieldBorder({Color? color}) {
+    return OutlineInputBorder(
+      borderRadius: BorderRadius.circular(AppRadius.full),
+      borderSide: BorderSide(
+        color: color ?? Colors.transparent,
+        width: 1,
+      ),
+    );
+  }
+}
+
+class _AuthPrimaryButton extends StatelessWidget {
+  final String title;
+  final VoidCallback onTap;
+
+  const _AuthPrimaryButton({
+    required this.title,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 34,
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: onTap,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.buttonBlue,
+          elevation: 0,
+          shadowColor: Colors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppRadius.full),
+          ),
+          padding: EdgeInsets.zero,
+        ),
+        child: Text(
+          title,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 10.8,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _OtpBox extends StatelessWidget {
+  final TextEditingController controller;
+  final bool isLast;
+
+  const _OtpBox({
+    required this.controller,
+    required this.isLast,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 38,
+      width: 34,
+      child: TextFormField(
+        controller: controller,
+        maxLength: 1,
+        textAlign: TextAlign.center,
+        keyboardType: TextInputType.number,
+        inputFormatters: [
+          FilteringTextInputFormatter.digitsOnly,
+          LengthLimitingTextInputFormatter(1),
+        ],
+        cursorColor: AppColors.primaryBlue,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.w700,
+        ),
+        decoration: InputDecoration(
+          counterText: "",
+          filled: true,
+          fillColor: Colors.white.withOpacity(0.08),
+          contentPadding: EdgeInsets.zero,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(AppRadius.full),
+            borderSide: BorderSide.none,
+          ),
+        ),
+        onChanged: (value) {
+          if (value.isNotEmpty && !isLast) {
+            FocusScope.of(context).nextFocus();
+          }
+
+          if (value.isEmpty) {
+            FocusScope.of(context).previousFocus();
+          }
+        },
+      ),
+    );
+  }
+}
+
+class _AuthIntroText extends StatelessWidget {
+  const _AuthIntroText();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          "Lorem ipsum dolor sit amet\nconsectetur nunc",
+          textAlign: TextAlign.center,
+          style: AppTextStyles.h3(Colors.white).copyWith(
+            fontSize: 16,
+            height: 1.16,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          "Lorem ipsum dolor sit amet consectetur. Blandit\nsed sed dis mattis consequat et.",
+          textAlign: TextAlign.center,
+          style: AppTextStyles.bodySmall(
+            Colors.white.withOpacity(0.58),
+          ).copyWith(
+            fontSize: 10.5,
+            height: 1.25,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _AuthGlassCard extends StatelessWidget {
+  final Widget child;
+
+  const _AuthGlassCard({ required this.child });
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(16),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(
+          sigmaX: 18,
+          sigmaY: 18,
+        ),
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.075),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: Colors.white.withOpacity(0.07),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.35),
+                blurRadius: 24,
+                offset: const Offset(0, 12),
+              ),
+            ],
+          ),
+          child: child,
+        ),
+      ),
+    );
+  }
+}
+
+
+
+
+
