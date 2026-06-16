@@ -74,31 +74,41 @@ class AuthScreen extends StatelessWidget {
                           child: const _AuthIntroText(),
                         ),
 
-                        Padding(
-                          padding: EdgeInsets.only(
-                            top: _cardTop(context),
+                        Container(
+                          width: double.infinity,
+                          constraints: BoxConstraints(
+                            minHeight: constraints.maxHeight,
+                          ),
+                          alignment: Alignment.bottomCenter,
+                          padding: const EdgeInsets.only(
                             left: 8,
                             right: 8,
+                            bottom: 24,
                           ),
-                          child: Obx(
-                            () => AnimatedSwitcher(
-                              duration: const Duration(milliseconds: 280),
-                              switchInCurve: Curves.easeOutCubic,
-                              switchOutCurve: Curves.easeInCubic,
-                              transitionBuilder: (child, animation) {
-                                return FadeTransition(
-                                  opacity: animation,
-                                  child: SlideTransition(
-                                    position: Tween<Offset>(
-                                      begin: const Offset(0, 0.04),
-                                      end: Offset.zero,
-                                    ).animate(animation),
-                                    child: child,
-                                  ),
-                                );
-                              },
-                              child: _cardByType(
-                                authCtrl.currentCard.value,
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              top: size.height * 0.54,
+                            ),
+                            child: Obx(
+                              () => AnimatedSwitcher(
+                                duration: const Duration(milliseconds: 280),
+                                switchInCurve: Curves.easeOutCubic,
+                                switchOutCurve: Curves.easeInCubic,
+                                transitionBuilder: (child, animation) {
+                                  return FadeTransition(
+                                    opacity: animation,
+                                    child: SlideTransition(
+                                      position: Tween<Offset>(
+                                        begin: const Offset(0, 0.04),
+                                        end: Offset.zero,
+                                      ).animate(animation),
+                                      child: child,
+                                    ),
+                                  );
+                                },
+                                child: _cardByType(
+                                  authCtrl.currentCard.value,
+                                ),
                               ),
                             ),
                           ),
@@ -115,12 +125,7 @@ class AuthScreen extends StatelessWidget {
     );
   }
 
-  double _cardTop(BuildContext context) {
-    final height = MediaQuery.sizeOf(context).height;
-    if (height < 700) return height * 0.57;
-    if (height < 780) return height * 0.60;
-    return height * 0.61;
-  }
+
 
   Widget _cardByType(AuthCardType type) {
     switch (type) {

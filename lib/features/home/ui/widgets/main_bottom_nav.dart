@@ -7,6 +7,7 @@ import '../../../../core/utils/utils_route.dart';
 import '../../../call/ui/calls_screen.dart';
 import '../../../profile/ui/profile_screen.dart';
 import '../../../update/ui/updates_screen.dart';
+import '../../../voiceMall/ui/voicemail_screen.dart';
 import '../../controller/home_controller.dart';
 import '../home_screen.dart';
 
@@ -61,6 +62,7 @@ class MainBottomNav extends StatelessWidget {
                         onTap: () { controller.changeBottomTab(item.type);
                             if (item.type == BottomTabType.calls) Get.to(() => CallsScreen());
                             if (item.type == BottomTabType.chat) Get.offAll(() => HomeScreen());
+                            if (item.type == BottomTabType.voicemail) Get.offAll(() => VoicemailScreen());
                             if (item.type == BottomTabType.profile) Get.to(() => ProfileScreen()); 
                             if (item.type == BottomTabType.updates) Get.to(() => UpdatesScreen()); 
                           },

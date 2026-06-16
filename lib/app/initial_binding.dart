@@ -10,6 +10,7 @@ import '../features/profile/contoller/profile_controller.dart';
 import '../features/update/controller/updates_controller.dart';
 import '../features/user_profile/controller/user_profile_controller.dart';
 import '../features/user_profile/internal/media_links_docs/contoller/media_links_docs_controller.dart.dart';
+import '../features/voiceMall/controller/voicemail_controller.dart';
 
 class InitialBinding extends Bindings {
   @override
@@ -26,6 +27,7 @@ class InitialBinding extends Bindings {
     Get.put(ProfileController());
     Get.put(UpdatesController());
     Get.put(ContactController());
+    Get.put(VoicemailController());
   }
 
 }
