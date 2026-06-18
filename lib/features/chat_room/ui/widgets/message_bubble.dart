@@ -7,10 +7,7 @@ import '../../model/message_model.dart';
 class MessageBubble extends StatelessWidget {
   final MessageModel message;
 
-  const MessageBubble({
-    super.key,
-    required this.message,
-  });
+  const MessageBubble({super.key, required this.message});
 
   void _showFullScreenImage(BuildContext context, String path) {
     Navigator.of(context).push(MaterialPageRoute(
@@ -20,11 +17,7 @@ class MessageBubble extends StatelessWidget {
           backgroundColor: Colors.black,
           iconTheme: const IconThemeData(color: Colors.white),
         ),
-        body: Center(
-          child: InteractiveViewer(
-            child: Image.file(File(path)),
-          ),
-        ),
+        body: Center(child: InteractiveViewer(child: Image.file(File(path)))),
       ),
     ));
   }
@@ -34,17 +27,8 @@ class MessageBubble extends StatelessWidget {
     final isMe = message.isMe;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    final bubbleColor = isMe
-        ? AppColors.buttonBlue
-        : isDark
-            ? const Color(0xFF26262B)
-            : Colors.white;
-
-    final textColor = isMe
-        ? Colors.white
-        : isDark
-            ? Colors.white
-            : AppColors.lightTextPrimary;
+    final bubbleColor = isMe ? AppColors.buttonBlue : isDark ? const Color(0xFF26262B) : Colors.white;
+    final textColor = isMe ? Colors.white : isDark ? Colors.white : AppColors.lightTextPrimary;
 
     Widget content;
     if (message.type == MessageType.image && message.filePath != null) {
@@ -52,12 +36,7 @@ class MessageBubble extends StatelessWidget {
         onTap: () => _showFullScreenImage(context, message.filePath!),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(8),
-          child: Image.file(
-            File(message.filePath!),
-            width: 200,
-            height: 200,
-            fit: BoxFit.cover,
-          ),
+          child: Image.file(File(message.filePath!), width: 200, height: 200, fit: BoxFit.cover),
         ),
       );
     } else if (message.type == MessageType.document && message.filePath != null) {
@@ -82,12 +61,10 @@ class MessageBubble extends StatelessWidget {
     } else {
       content = Text(
         message.message,
-        style: TextStyle(
-          color: textColor,
-          fontSize: 14,
-          height: 1.35,
-          fontWeight: FontWeight.w500,
-        ),
+        style: AppTextStyles.bodyLarge(textColor),
+        // style: TextStyle(
+        //   color: textColor,fontSize: 15,height: 1.35,
+        //   fontWeight: FontWeight.w500),
       );
     }
 
@@ -123,3 +100,5 @@ class MessageBubble extends StatelessWidget {
     );
   }
 }
+
+

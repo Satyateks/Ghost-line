@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../home/controller/home_controller.dart';
+import '../../home/ui/widgets/main_bottom_nav.dart';
 import '../controller/updates_controller.dart';
+import 'comments_screen.dart';
 import 'widgets/dark_post_card.dart';
 import 'widgets/dark_story_item.dart';
+import 'widgets/story_viewerScreen.dart';
 
 class UpdatesScreen extends StatelessWidget {
   UpdatesScreen({super.key});
 
   final UpdatesController controller = Get.put(UpdatesController());
-
+  final HomeController homeCtrl = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF050505),
+      bottomNavigationBar: MainBottomNav(controller: homeCtrl),
       body: SafeArea(
         child: Obx(
           () => CustomScrollView(
@@ -69,9 +74,8 @@ class UpdatesScreen extends StatelessWidget {
                         onTap: () {
                           if (story.isOwnStory) {
                             // TODO: open add story picker
-                          } else {
-                            Get.toNamed("/story-viewer", arguments: story);
-                          }
+                          } else Get.to(StoryViewerScreen(),arguments: story);
+
                         },
                       );
                     },
@@ -89,7 +93,7 @@ class UpdatesScreen extends StatelessWidget {
                     post: post,
                     onLike: () => controller.togglePostLike(post.id),
                     onComment: () {
-                      Get.toNamed("/comments", arguments: post);
+                      Get.to(CommentsScreen(), arguments: post);
                     },
                     onShare: () => controller.sharePost(post),
                   );

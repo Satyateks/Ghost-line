@@ -33,9 +33,7 @@ class HomeScreen extends StatelessWidget {
 
           const SizedBox(height: 10),
 
-          HomeSearchBar(
-            onChanged: controller.updateSearch,
-          ),
+          HomeSearchBar(onChanged: controller.updateSearch),
 
           const SizedBox(height: 10),
 
@@ -47,20 +45,14 @@ class HomeScreen extends StatelessWidget {
             child: Obx(() {
               final chats = controller.filteredChats;
 
-              if (chats.isEmpty) {
-                return const _EmptyChatList();
-              }
+              if (chats.isEmpty) return const _EmptyChatList();
+
 
               return ListView.separated(
                 physics: const BouncingScrollPhysics(),
                 padding: const EdgeInsets.fromLTRB(10, 4, 10, 100),
                 itemCount: chats.length,
-                separatorBuilder: (_, __) => Divider(
-                  height: 1,
-                  thickness: 0.6,
-                  color: Theme.of(context).dividerColor,
-                  indent: 62,
-                ),
+                separatorBuilder: (_, __) => Divider(height: 1, thickness: 0.1, color: Theme.of(context).dividerColor, indent: 62),
                 itemBuilder: (context, index) {
                   final chat = chats[index];
 

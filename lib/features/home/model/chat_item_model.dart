@@ -8,6 +8,9 @@ class ChatItemModel {
   final bool isArchived;
   final bool isGroup;
   final bool isOnline;
+  bool isMuted;
+  bool isFavourite;
+  bool isBlocked;
 
   ChatItemModel({
     required this.id,
@@ -19,5 +22,8 @@ class ChatItemModel {
     this.isArchived = false,
     this.isGroup = false,
     this.isOnline = false,
+    this.isMuted = false,
+    this.isFavourite = false,
+    this.isBlocked = false,
   });
 }

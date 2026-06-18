@@ -18,7 +18,7 @@ class ContactController extends GetxController {
     final last = lastNameController.text.trim();
 
     if (first.isEmpty && last.isEmpty) {
-      return "Rajat Tikaram";
+      return "Satyam Mishra";
     }
 
     return "$first $last".trim();
