@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../model/chat_item_model.dart';
 
@@ -8,7 +9,7 @@ class FilterTab {
   FilterTab({required this.id, required this.title});
 }
 
-enum BottomTabType { calls, chat, voicemail, updates, profile}
+enum BottomTabType { calls, chat, voicemail, updates, profile }
 
 class HomeController extends GetxController {
   final RxList<FilterTab> filterTabs = <FilterTab>[
@@ -32,9 +33,33 @@ class HomeController extends GetxController {
     _loadDummyChats();
   }
 
-  void changeFilter(String filterId) {
-    selectedFilter.value = filterId;
+  void forwardMessage({
+    required dynamic message,
+    required List<String> chatIds,
+  }) {
+    for (final chatId in chatIds) {
+      // API ya local insert logic yahan aayega
+      debugPrint("Forward message ${message.id} to chat $chatId");
+    }
   }
+  void deleteMessage(String messageId) {chats.removeWhere((item) => item.id == messageId);}
+
+  void pinMessage(String messageId) {
+    final index = chats.indexWhere((item) => item.id == messageId);
+    if (index == -1) return;
+
+    chats[index].isPinned = true;
+    chats.refresh();
+  }
+
+  void starMessage(String messageId) {
+    final index = chats.indexWhere((item) => item.id == messageId);
+    if (index == -1) return;
+    chats[index].isStarred = true; chats.refresh();
+  }
+
+
+  void changeFilter(String filterId) { selectedFilter.value = filterId; }
 
   void addCustomTab(String title) {
     final id = title.toLowerCase().replaceAll(' ', '_');
@@ -44,13 +69,9 @@ class HomeController extends GetxController {
     }
   }
 
-  void changeBottomTab(BottomTabType tab) {
-    selectedBottomTab.value = tab;
-  }
+  void changeBottomTab(BottomTabType tab) { selectedBottomTab.value = tab; }
 
-  void updateSearch(String value) {
-    searchQuery.value = value.trim().toLowerCase();
-  }
+  void updateSearch(String value) { searchQuery.value = value.trim().toLowerCase(); }
 
   List<ChatItemModel> get filteredChats {
     List<ChatItemModel> list = chats;
@@ -71,7 +92,7 @@ class HomeController extends GetxController {
       case 'groups':
         list = chats.where((e) => e.isGroup).toList();
         break;
-        
+
       default:
         // for custom tabs like favorites, family, etc. which don't have built-in data currently
         list = [];
@@ -80,16 +101,54 @@ class HomeController extends GetxController {
 
     if (searchQuery.value.isNotEmpty) {
       list = list.where((chat) {
-        return chat.name.toLowerCase().contains(searchQuery.value) ||
-            chat.message.toLowerCase().contains(searchQuery.value);
+        return chat.name.toLowerCase().contains(searchQuery.value) || chat.message.toLowerCase().contains(searchQuery.value);
       }).toList();
     }
 
     return list;
   }
 
-  void deleteChat(String id) {
-    chats.removeWhere((chat) => chat.id == id);
+  void deleteChat(String id) {chats.removeWhere((chat) => chat.id == id);}
+
+  void archiveChat(String chatId) {
+    // archive logic
+  }
+
+  void muteChat(String chatId) {
+    final index = chats.indexWhere((item) => item.id == chatId);
+    if (index == -1) return;
+
+    chats[index].isMuted = true;
+    chats.refresh();
+  }
+
+  void addToFavourite(String chatId) {
+    final index = chats.indexWhere((item) => item.id == chatId);
+    if (index == -1) return;
+
+    chats[index].isFavourite = true;
+    chats.refresh();
+  }
+
+  void addToList(String chatId) {
+    // add to custom list logic
+  }
+
+  void blockChat(String chatId) {
+    final index = chats.indexWhere((item) => item.id == chatId);
+    if (index == -1) return;
+
+    chats[index].isBlocked = true;
+    chats.refresh();
+  }
+
+  void clearChat(String chatId) {
+    final index = chats.indexWhere((item) => item.id == chatId);
+    if (index == -1) return;
+
+    // chats[index].message = "";
+    // chats[index].unreadCount = 0;
+    chats.refresh();
   }
 
   void _loadDummyChats() {
@@ -259,4 +318,5 @@ class HomeController extends GetxController {
     ]);
   }
 }
+
 

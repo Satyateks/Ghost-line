@@ -11,6 +11,8 @@ class ChatItemModel {
   bool isMuted;
   bool isFavourite;
   bool isBlocked;
+  bool isPinned;
+  bool isStarred;
 
   ChatItemModel({
     required this.id,
@@ -25,5 +27,7 @@ class ChatItemModel {
     this.isMuted = false,
     this.isFavourite = false,
     this.isBlocked = false,
+    this.isPinned = false,
+    this.isStarred = false,
   });
 }

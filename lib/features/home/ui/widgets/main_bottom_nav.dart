@@ -110,6 +110,116 @@ class MainBottomNav extends StatelessWidget {
   }
 }
 
+
+
+
+class _GlassBottomNavItem extends StatefulWidget {
+  final _BottomItem item;
+  final bool selected;
+  final bool isDark;
+  final VoidCallback onTap;
+
+  const _GlassBottomNavItem({
+    required this.item,
+    required this.selected,
+    required this.isDark,
+    required this.onTap,
+  });
+
+  @override
+  State<_GlassBottomNavItem> createState() => _GlassBottomNavItemState();
+}
+
+class _GlassBottomNavItemState extends State<_GlassBottomNavItem> {
+  bool isPressed = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final selectedColor = widget.isDark ? Colors.white : AppColors.buttonBlue;
+
+    final normalColor = widget.isDark
+        ? Colors.white.withOpacity(0.62)
+        : Colors.black.withOpacity(0.54);
+
+    final color = widget.selected ? selectedColor : normalColor;
+
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTapDown: (_) => setState(() => isPressed = true),
+      onTapCancel: () => setState(() => isPressed = false),
+      onTapUp: (_) {
+        setState(() => isPressed = false);
+        widget.onTap();
+      },
+      child: AnimatedScale(
+        duration: const Duration(milliseconds: 110),
+        curve: Curves.easeOut,
+        scale: isPressed ? 0.92 : 1,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 220),
+          curve: Curves.easeOutCubic,
+          margin: const EdgeInsets.symmetric(horizontal: 1.5),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(34),
+
+            /// Selected item bhi transparent rahega
+            color: widget.selected
+                ? Colors.white.withOpacity(widget.isDark ? 0.10 : 0.28)
+                : Colors.transparent,
+
+            border: Border.all(
+              color: widget.selected
+                  ? Colors.white.withOpacity(widget.isDark ? 0.16 : 0.45)
+                  : Colors.transparent,
+              width: 0.8,
+            ),
+
+            boxShadow: widget.selected
+                ? [
+                    BoxShadow(
+                      color: widget.isDark
+                          ? Colors.white.withOpacity(0.05)
+                          : AppColors.buttonBlue.withOpacity(0.10),
+                      blurRadius: 14,
+                      offset: const Offset(0, 6),
+                    ),
+                  ]
+                : [],
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                widget.item.image!,
+                width: widget.selected ? 23 : 21,
+                height: widget.selected ? 23 : 21,
+                color: color,
+              ),
+
+              const SizedBox(height: 5),
+
+              Text(
+                widget.item.title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: color,
+                  fontSize: widget.selected ? 11.5 : 10.7,
+                  fontWeight:
+                      widget.selected ? FontWeight.w800 : FontWeight.w500,
+                  height: 1,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+
 class _BottomItem {
   final String? image;
   final String title;
@@ -117,4 +227,5 @@ class _BottomItem {
 
   _BottomItem({this.image, required this.title, required this.type});
 }
+
 

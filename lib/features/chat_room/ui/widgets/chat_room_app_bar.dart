@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ghostline/core/utils/utils_route.dart';
 
 import '../../../../core/theme/theme_route.dart';
 import '../../../../core/widgets/widgets_route.dart';
@@ -25,17 +26,12 @@ class ChatRoomAppBar extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(10, 4, 10, 0),
       child: Row(
         children: [
-          _CircleGlassButton(
-            icon: Icons.arrow_back_ios_new_rounded,
-            onTap: Get.back,
-          ),
+          _CircleGlassButton(icon: Icons.arrow_back_ios_new_rounded, onTap: Get.back),
 
           const SizedBox(width: 10),
 
         /*  AvatarWidget(name: name, imageUrl: avatar, size: 34, showStatus: false),
-
           const SizedBox(width: 8),
-
           Expanded(
             child: Text( name, maxLines: 1,
               overflow: TextOverflow.ellipsis,
@@ -46,11 +42,7 @@ class ChatRoomAppBar extends StatelessWidget {
           ),*/
           Expanded(
             child: InkWell(
-              onTap: () {
-                Get.to(
-                  () => UserProfileScreen( name: name, avatar: avatar),
-                );
-              },
+              onTap: ()=> Get.to(UserProfileScreen(name: name, avatar: avatar)),
               borderRadius: BorderRadius.circular(999),
               child: Row(
                 children: [
@@ -85,29 +77,15 @@ class ChatRoomAppBar extends StatelessWidget {
                 height: 42,
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
-                  color: isDark
-                      ? Colors.white.withOpacity(0.08)
-                      : Colors.white.withOpacity(0.76),
+                  color: isDark ? Colors.white.withOpacity(0.08) : Colors.white.withOpacity(0.76),
                   borderRadius: BorderRadius.circular(999),
-                  border: Border.all(
-                    color: isDark
-                        ? Colors.white.withOpacity(0.10)
-                        : Colors.white.withOpacity(0.95),
-                  ),
+                  border: Border.all(color: isDark ? Colors.white.withOpacity(0.10) : Colors.white.withOpacity(0.95)),
                 ),
                 child: Row(
                   children: [
-                    Icon(
-                      Icons.videocam_outlined,
-                      size: 22,
-                      color: textColor,
-                    ),
+                    Image.asset(AppAssets.videoIcon,height: 22, color: textColor),
                     const SizedBox(width: 14),
-                    Icon(
-                      Icons.call_outlined,
-                      size: 20,
-                      color: textColor,
-                    ),
+                    Image.asset(AppAssets.callIcon,height: 22, color: textColor),
                   ],
                 ),
               ),
@@ -164,3 +142,4 @@ class _CircleGlassButton extends StatelessWidget {
     );
   }
 }
+

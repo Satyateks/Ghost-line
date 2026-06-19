@@ -1,14 +1,19 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 import '../../../../core/theme/theme_route.dart';
+import '../../../home/controller/home_controller.dart';
 import '../../model/message_model.dart';
+import '../forward_message_screen.dart';
+import 'messageActionMenu.dart';
 
 class MessageBubble extends StatelessWidget {
   final MessageModel message;
+  MessageBubble({super.key, required this.message});
 
-  const MessageBubble({super.key, required this.message});
-
+  final HomeController homeController = Get.find<HomeController>();
   void _showFullScreenImage(BuildContext context, String path) {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (_) => Scaffold(
@@ -59,13 +64,77 @@ class MessageBubble extends StatelessWidget {
         ],
       );
     } else {
-      content = Text(
+      content = GestureDetector(
+        onLongPressStart: (details) {
+          MessageActionMenu.show(
+            context: context,
+            details: details,
+            message: message,
+            onCopy: () {
+              Clipboard.setData(
+                ClipboardData(text: message.message),
+              );
+            },
+            onForward: () {
+              Get.to( () => ForwardMessageScreen(message: message));
+            },
+            onDelete: () {
+              MessageActionSheet.show(
+                context: context,
+                icon: Icons.delete_outline_rounded,
+                title: "Delete Message?",
+                messageText: "Are you sure you want to delete this message?",
+                confirmText: "Delete",
+                confirmColor: Colors.redAccent,
+                onConfirm: () {
+                  homeController.deleteMessage(message.id);
+                  Get.back();
+                },
+              );
+            },
+            onPin: () {
+              MessageActionSheet.show(
+                context: context,
+                icon: Icons.push_pin_outlined,
+                title: "Pin Message?",
+                messageText: "This message will be pinned in this chat.",
+                confirmText: "Pin",
+                confirmColor: AppColors.buttonBlue,
+                onConfirm: () {
+                  homeController.pinMessage(message.id);
+                  Get.back();
+                },
+              );
+            },
+            onStar: () {
+              MessageActionSheet.show(
+                context: context,
+                icon: Icons.star_border_rounded,
+                title: "Star Message?",
+                messageText: "This message will be saved in your starred messages.",
+                confirmText: "Star",
+                confirmColor: AppColors.buttonBlue,
+                onConfirm: () {
+                  homeController.starMessage(message.id);
+                  Get.back();
+                },
+              );
+            },
+          );
+        },
+        child: Text(
+          message.message,
+          style: AppTextStyles.bodyLarge(textColor),
+        ),
+      );
+
+     /* content = Text(
         message.message,
         style: AppTextStyles.bodyLarge(textColor),
         // style: TextStyle(
         //   color: textColor,fontSize: 15,height: 1.35,
         //   fontWeight: FontWeight.w500),
-      );
+      );*/
     }
 
     return Align(

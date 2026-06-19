@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:ghostline/core/utils/utils_route.dart';
 
 import '../../model/post_model.dart';
 
@@ -73,19 +74,8 @@ class DarkPostCard extends StatelessWidget {
                   color: post.isLiked ? Colors.redAccent : Colors.white,
                   onTap: onLike,
                 ),
-                _IconAction(
-                  icon: Icons.mode_comment_outlined,
-                  onTap: onComment,
-                ),
-                _IconAction(
-                  icon: Icons.send_rounded,
-                  onTap: onShare,
-                ),
-                const Spacer(),
-                _IconAction(
-                  icon: Icons.bookmark_border_rounded,
-                  onTap: () {},
-                ),
+                _IconAction(imagePath: AppAssets.commentIcons, onTap: onComment),
+                _IconAction(imagePath: AppAssets.shareIcon, onTap: onShare),
               ],
             ),
           ),
@@ -211,14 +201,18 @@ class _PostHeader extends StatelessWidget {
 }
 
 class _IconAction extends StatelessWidget {
-  final IconData icon;
+  final IconData? icon;
+  final String? imagePath;
   final Color color;
   final VoidCallback onTap;
+  final double size;
 
   const _IconAction({
-    required this.icon,
+    this.icon,
+    this.imagePath,
     required this.onTap,
     this.color = Colors.white,
+    this.size = 25,
   });
 
   @override
@@ -226,11 +220,18 @@ class _IconAction extends StatelessWidget {
     return IconButton(
       visualDensity: VisualDensity.compact,
       onPressed: onTap,
-      icon: Icon(
-        icon,
-        color: color,
-        size: 25,
-      ),
+      icon: imagePath != null
+          ? Image.asset(
+              imagePath!,
+              width: size,
+              height: size,
+              color: color,
+            )
+          : Icon(
+              icon,
+              color: color,
+              size: size,
+            ),
     );
   }
 }

@@ -25,9 +25,7 @@ class ChatFilterTabs extends StatelessWidget {
           separatorBuilder: (_, __) => const SizedBox(width: 7),
           itemBuilder: (context, index) {
             if (index == 0) {
-              return _AddTabButton(
-                onTap: () => _showAddTabBottomSheet(context, controller),
-              );
+              return _AddTabButton(onTap: () => _showAddTabBottomSheet(context, controller));
             }
             final item = controller.filterTabs[index - 1];
 
@@ -238,3 +236,5 @@ class _FilterChip extends StatelessWidget {
     );
   }
 }
+
+

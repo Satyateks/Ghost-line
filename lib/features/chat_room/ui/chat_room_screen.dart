@@ -13,8 +13,7 @@ class ChatRoomScreen extends StatelessWidget {
   ChatRoomScreen({
     super.key,
     this.name = 'Satyam Mishra',
-    this.avatar =
-        'https://images.unsplash.com/photo-1500648767791-00dcc994a43e',
+    this.avatar = 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e',
   });
 
   final String name;
@@ -27,10 +26,7 @@ class ChatRoomScreen extends StatelessWidget {
     return GlassScaffold(
       safeArea: true,
       resizeToAvoidBottomInset: true,
-      appBar: ChatRoomAppBar(
-        name: name,
-        avatar: avatar,
-      ),
+      appBar: ChatRoomAppBar( name: name, avatar: avatar),
       body: Column(
         children: [
           const SizedBox(height: 6),
@@ -43,9 +39,7 @@ class ChatRoomScreen extends StatelessWidget {
 
           const SizedBox(height: 10),
 
-          Expanded(
-            child: Obx(
-              () => ListView.builder(
+          Expanded( child: Obx( () => ListView.builder(
                 reverse: true,
                 physics: const BouncingScrollPhysics(),
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 12),
@@ -53,10 +47,7 @@ class ChatRoomScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final message = controller.messages[index];
 
-                  if (message.type == MessageType.audio) {
-                    return AudioMessageBubble(message: message);
-                  }
-
+                  if (message.type == MessageType.audio) return AudioMessageBubble(message: message);
                   return MessageBubble(message: message);
                 },
               ),
@@ -112,3 +103,6 @@ class _DateSeparator extends StatelessWidget {
     );
   }
 }
+
+
+

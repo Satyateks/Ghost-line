@@ -18,6 +18,7 @@ class AppAssets {
   static const String callIcon = '$_images/callIcon.png';
   static const String addCallIcon = '$_images/addCallIcon.png';
   static const String commentIcons = '$_images/commentIcons.png';
+  static const String shareIcon = '$_images/shareIcon.png';
   static const String missedCallIcon = '$_images/missedCall.png';
   static const String videoIcon = '$_images/videoIcon.png';
   static const String userIcon = '$_images/user.png';

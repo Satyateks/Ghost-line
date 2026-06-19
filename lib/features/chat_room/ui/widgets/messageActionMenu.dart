@@ -1,173 +1,30 @@
+
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import '../../../../core/theme/theme_route.dart';
-import '../../../../core/widgets/widgets_route.dart';
-import '../../model/chat_item_model.dart';
 
+import '../../../../core/theme/app_colors.dart';
 
-class ChatListTile extends StatelessWidget {
-  final ChatItemModel chat;
-  final VoidCallback onTap;
-  final GestureLongPressStartCallback? onLongPressStart;
-
-  const ChatListTile({
-    super.key,
-    required this.chat,
-    required this.onTap,
-    required this.onLongPressStart,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final nameColor = isDark ? Colors.white : AppColors.lightTextPrimary;
-    final msgColor = isDark ? Colors.white70 : AppColors.lightTextSecondary;
-    final timeColor = isDark ? Colors.white60 : AppColors.lightTextMuted;
-
-    return GestureDetector(
-      onLongPressStart: onLongPressStart,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(14),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 2),
-          child: Row(
-            children: [
-            AvatarWidget(
-              name: chat.name,
-              imageUrl: chat.avatar,
-              size: 48,
-              isOnline: chat.isOnline,
-              showStatus: false,
-            ),
-
-            const SizedBox(width: 10),
-
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        chat.name,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: nameColor,
-                          fontSize: 16,
-                          height: 1.05,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-
-                    if (chat.isMuted) ...[
-                      const SizedBox(width: 5),
-                      Icon(
-                        Icons.notifications_off_outlined,
-                        size: 14,
-                        color: timeColor,
-                      ),
-                    ],
-
-                    if (chat.isBlocked) ...[
-                      const SizedBox(width: 5),
-                      const Icon(
-                        Icons.block_rounded,
-                        size: 14,
-                        color: Colors.redAccent,
-                      ),
-                    ],
-                  ],
-                ),
-                  const SizedBox(height: 4),
-
-                  Text(
-                    chat.message,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: msgColor,
-                      fontSize: 13.2,
-                      height: 1.12,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            const SizedBox(width: 8),
-
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  chat.time,
-                  style: TextStyle(
-                    color: timeColor,
-                    fontSize: 11,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-
-                const SizedBox(height: 8),
-                      
-                if (chat.unreadCount > 0)
-                  Container(
-                    height: 20,
-                    constraints: const BoxConstraints(minWidth: 20),
-                    padding: const EdgeInsets.symmetric(horizontal: 6),
-                    alignment: Alignment.center,
-                    decoration: const BoxDecoration(
-                      color: AppColors.buttonBlue,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Text(
-                      chat.unreadCount.toString(),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 11,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  )
-                else
-                  const SizedBox(height: 20),
-              ],
-            ),
-          ],
-        ),
-      ),
-    ));
-  }
-}
-
-
-class ChatActionMenu {
+class MessageActionMenu {
   static Future<void> show({
     required BuildContext context,
     required LongPressStartDetails details,
-    required ChatItemModel chat,
-    required VoidCallback onArchive,
-    required VoidCallback onMute,
-    required VoidCallback onFavourite,
-    required VoidCallback onAddToList,
-    required VoidCallback onBlock,
-    required VoidCallback onClearChat,
+    required dynamic message,
+    required VoidCallback onCopy,
+    required VoidCallback onForward,
     required VoidCallback onDelete,
+    required VoidCallback onPin,
+    required VoidCallback onStar,
   }) async {
     final overlay = Overlay.of(context).context.findRenderObject() as RenderBox;
 
     final selected = await showMenu<String>(
       context: context,
-      color:const Color(0xFF3F3F3F),
+      color: Colors.transparent,
       elevation: 0,
       constraints: const BoxConstraints(
         minWidth: 190,
-        maxWidth: 210,
+        maxWidth: 220,
       ),
       position: RelativeRect.fromRect(
         Rect.fromLTWH(
@@ -178,61 +35,45 @@ class ChatActionMenu {
         ),
         Offset.zero & overlay.size,
       ),
-      items: [
+      items: const [
         PopupMenuItem<String>(
-          value: "archive",
+          value: "copy",
           padding: EdgeInsets.zero,
-          child: _ChatActionItem(
-            icon: Icons.archive_outlined,
-            title: "Archive",
+          child: _MessageActionItem(
+            icon: Icons.copy_rounded,
+            title: "Copy",
           ),
         ),
         PopupMenuItem<String>(
-          value: "mute",
+          value: "forward",
           padding: EdgeInsets.zero,
-          child: _ChatActionItem(
-            icon: Icons.notifications_off_outlined,
-            title: "Mute",
+          child: _MessageActionItem(
+            icon: Icons.forward_rounded,
+            title: "Forward",
           ),
         ),
         PopupMenuItem<String>(
-          value: "favourite",
+          value: "pin",
           padding: EdgeInsets.zero,
-          child: _ChatActionItem(
-            icon: Icons.favorite_border_rounded,
-            title: "Add to Favourites",
+          child: _MessageActionItem(
+            icon: Icons.push_pin_outlined,
+            title: "Pin message",
           ),
         ),
         PopupMenuItem<String>(
-          value: "list",
+          value: "star",
           padding: EdgeInsets.zero,
-          child: _ChatActionItem(
-            icon: Icons.list_alt_rounded,
-            title: "Add to list",
-          ),
-        ),
-        PopupMenuItem<String>(
-          value: "block",
-          padding: EdgeInsets.zero,
-          child: _ChatActionItem(
-            icon: Icons.block_rounded,
-            title: "Block",
-          ),
-        ),
-        PopupMenuItem<String>(
-          value: "clear",
-          padding: EdgeInsets.zero,
-          child: _ChatActionItem(
-            icon: Icons.cancel_outlined,
-            title: "Clear chat",
+          child: _MessageActionItem(
+            icon: Icons.star_border_rounded,
+            title: "Star message",
           ),
         ),
         PopupMenuItem<String>(
           value: "delete",
           padding: EdgeInsets.zero,
-          child: _ChatActionItem(
+          child: _MessageActionItem(
             icon: Icons.delete_outline_rounded,
-            title: "Delete chat",
+            title: "Delete message",
             isDanger: true,
             isLast: true,
           ),
@@ -246,24 +87,35 @@ class ChatActionMenu {
     if (selected == null) return;
 
     switch (selected) {
-      case "archive": onArchive(); break;
-      case "mute": onMute(); break;
-      case "favourite": onFavourite(); break;
-      case "list": onAddToList(); break;
-      case "block": onBlock(); break;
-      case "clear": onClearChat(); break;
-      case "delete": onDelete(); break;
+      case "copy":
+        onCopy();
+        break;
+      case "forward":
+        onForward();
+        break;
+      case "pin":
+        onPin();
+        break;
+      case "star":
+        onStar();
+        break;
+      case "delete":
+        onDelete();
+        break;
     }
   }
 }
 
-class _ChatActionItem extends StatelessWidget {
+
+
+
+class _MessageActionItem extends StatelessWidget {
   final IconData icon;
   final String title;
   final bool isDanger;
   final bool isLast;
 
-  const _ChatActionItem({
+  const _MessageActionItem({
     required this.icon,
     required this.title,
     this.isDanger = false,
@@ -273,11 +125,11 @@ class _ChatActionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 40,
+      height: 42,
       decoration: BoxDecoration(
-        // color: const Color(0xFF3F3F3F),
+        color: const Color(0xFF3F3F3F),
         borderRadius: BorderRadius.vertical(
-          top: title == "Archive" ? const Radius.circular(14) : Radius.zero,
+          top: title == "Copy" ? const Radius.circular(14) : Radius.zero,
           bottom: isLast ? const Radius.circular(14) : Radius.zero,
         ),
       ),
@@ -290,7 +142,7 @@ class _ChatActionItem extends StatelessWidget {
                 children: [
                   Icon(
                     icon,
-                    size: 21,
+                    size: 19,
                     color: isDanger ? Colors.redAccent : Colors.white70,
                   ),
                   const SizedBox(width: 10),
@@ -299,7 +151,7 @@ class _ChatActionItem extends StatelessWidget {
                       title,
                       style: TextStyle(
                         color: isDanger ? Colors.redAccent : Colors.white,
-                        fontSize: 15.5,height: 2,
+                        fontSize: 13.5,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -308,7 +160,6 @@ class _ChatActionItem extends StatelessWidget {
               ),
             ),
           ),
-
           if (!isLast)
             Divider(
               height: 1,
@@ -323,12 +174,13 @@ class _ChatActionItem extends StatelessWidget {
   }
 }
 
-class ActionConfirmSheet {
+
+class MessageActionSheet {
   static Future<void> show({
     required BuildContext context,
     required IconData icon,
     required String title,
-    required String message,
+    required String messageText,
     required String confirmText,
     required Color confirmColor,
     required VoidCallback onConfirm,
@@ -395,7 +247,7 @@ class ActionConfirmSheet {
                     const SizedBox(height: 8),
 
                     Text(
-                      message,
+                      messageText,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: isDark
@@ -429,9 +281,7 @@ class ActionConfirmSheet {
                               child: Text(
                                 "Cancel",
                                 style: TextStyle(
-                                  color: isDark
-                                      ? Colors.white
-                                      : Colors.black87,
+                                  color: isDark ? Colors.white : Colors.black87,
                                   fontSize: 13,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -477,7 +327,6 @@ class ActionConfirmSheet {
     );
   }
 }
-
 
 
 

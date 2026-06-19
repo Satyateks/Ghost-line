@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ghostline/core/theme/theme_route.dart';
 
 import '../../../core/widgets/glass_scaffold.dart';
 import '../../chat_room/ui/chat_room_screen.dart';
@@ -59,14 +60,69 @@ class HomeScreen extends StatelessWidget {
                   return ChatListTile(
                     chat: chat,
                     onTap: ()=> Get.to(() => ChatRoomScreen(name: chat.name, avatar: chat.avatar)),
-                    onLongPress: () {
-                      DeleteChatSheet.show(
-                        context: context,
-                        onDelete: () {
-                          controller.deleteChat(chat.id);
-                          Get.back();
-                        },
-                      );
+                   
+                      onLongPressStart: (details) {
+                        ChatActionMenu.show(
+                          context: context,
+                          details: details,
+                          chat: chat,
+                          onArchive: () {
+                            controller.archiveChat(chat.id);
+                          },
+                          onMute: () {
+                            controller.muteChat(chat.id);
+                          },
+                          onFavourite: () {
+                            controller.addToFavourite(chat.id);
+                          },
+                          onAddToList: () {
+                            controller.addToList(chat.id);
+                          },
+                          onBlock: () {
+                            ActionConfirmSheet.show(
+                              context: context,
+                              icon: Icons.block_rounded,
+                              title: "Block ${chat.name}?",
+                              message: "Blocked users won’t be able to send you messages or view your updates.",
+                              confirmText: "Block",
+                              confirmColor: AppColors.error,
+                              onConfirm: () {
+                                controller.blockChat(chat.id);
+                                Get.back();
+                              },
+                            );
+                          },
+                          onClearChat: () {
+                             ClearChatSheet.show(
+                              context: context,
+                              onDelete: () {
+                                controller.deleteChat(chat.id);
+                                Get.back();
+                              },
+                            );
+                            // ActionConfirmSheet.show(
+                            //   context: context,
+                            //   icon: Icons.cancel_outlined,
+                            //   title: "Clear Chat?",
+                            //   message: "This will clear all messages from this chat, but the chat will stay in your list.",
+                            //   confirmText: "Clear",
+                            //   confirmColor: AppColors.buttonBlue,
+                            //   onConfirm: () {
+                            //     controller.clearChat(chat.id);
+                            //     Get.back();
+                            //   },
+                            // );
+                          },
+                          onDelete: () {
+                            DeleteChatSheet.show(
+                              context: context,
+                              onDelete: () {
+                                controller.deleteChat(chat.id);
+                                Get.back();
+                              },
+                            );
+                          },
+                        );
                     },
                   );
                 },

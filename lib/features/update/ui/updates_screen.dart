@@ -37,21 +37,6 @@ class UpdatesScreen extends StatelessWidget {
                               fontSize: 22,
                             ),
                       ),
-                      const Spacer(),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.search_rounded,
-                          color: Colors.white,
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.more_vert_rounded,
-                          color: Colors.white,
-                        ),
-                      ),
                     ],
                   ),
                 ),
@@ -74,7 +59,9 @@ class UpdatesScreen extends StatelessWidget {
                         onTap: () {
                           if (story.isOwnStory) {
                             // TODO: open add story picker
-                          } else Get.to(StoryViewerScreen(),arguments: story);
+                          } else {
+                            Get.to(StoryViewerScreen(),arguments: story);
+                          }
 
                         },
                       );
@@ -92,17 +79,22 @@ class UpdatesScreen extends StatelessWidget {
                   return DarkPostCard(
                     post: post,
                     onLike: () => controller.togglePostLike(post.id),
-                    onComment: () {
-                      Get.to(CommentsScreen(), arguments: post);
+                   onComment: () {
+                      Get.bottomSheet(
+                        CommentsBottomSheet(post: post),
+                        isScrollControlled: true,
+                        backgroundColor: Colors.transparent,
+                        barrierColor: Colors.black.withOpacity(0.45),
+                        enterBottomSheetDuration: const Duration(milliseconds: 260),
+                        exitBottomSheetDuration: const Duration(milliseconds: 200),
+                      );
                     },
                     onShare: () => controller.sharePost(post),
                   );
                 },
               ),
 
-              const SliverToBoxAdapter(
-                child: SizedBox(height: 24),
-              ),
+              const SliverToBoxAdapter(child: SizedBox(height: 24)),
             ],
           ),
         ),
