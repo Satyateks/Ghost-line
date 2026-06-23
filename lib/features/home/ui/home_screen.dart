@@ -66,18 +66,10 @@ class HomeScreen extends StatelessWidget {
                           context: context,
                           details: details,
                           chat: chat,
-                          onArchive: () {
-                            controller.archiveChat(chat.id);
-                          },
-                          onMute: () {
-                            controller.muteChat(chat.id);
-                          },
-                          onFavourite: () {
-                            controller.addToFavourite(chat.id);
-                          },
-                          onAddToList: () {
-                            controller.addToList(chat.id);
-                          },
+                          onArchive: ()=> controller.archiveChat(chat.id),
+                          onMute: ()=> controller.muteChat(chat.id),
+                          onFavourite: ()=> controller.addToFavourite(chat.id),
+                          onAddToList: ()=> controller.addToList(chat.id),
                           onBlock: () {
                             ActionConfirmSheet.show(
                               context: context,

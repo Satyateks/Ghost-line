@@ -27,31 +27,17 @@ class GlassScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Scaffold(
+    return Scaffold(extendBody: true,
       resizeToAvoidBottomInset: resizeToAvoidBottomInset,
       backgroundColor: isDark ? AppColors.darkBg : AppColors.lightBg,
       floatingActionButton: floatingActionButton,
       bottomNavigationBar: bottomNavigationBar,
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: gradient ??
-              (isDark ? AppColors.darkBgGradient : AppColors.lightBgGradient),
-        ),
+      body: Container(width: double.infinity,  
+        height: double.infinity, 
+        decoration: BoxDecoration( gradient: gradient ?? (isDark ? AppColors.darkBgGradient : AppColors.lightBgGradient)),
         child: safeArea
-            ? SafeArea(
-                child: Column(
-                  children: [
-                    if (appBar != null) appBar!,
-                    Expanded(child: body),
-                  ],
-                ),
-              )
-            : Column(
-                children: [
-                  if (appBar != null) appBar!,
-                  Expanded(child: body),
-                ],
-              ),
+            ? SafeArea(bottom: false, child: Column( children: [if (appBar != null) appBar!, Expanded(child: body)]))
+            : Column(children: [ if (appBar != null) appBar!, Expanded(child: body)]),
       ),
     );
   }

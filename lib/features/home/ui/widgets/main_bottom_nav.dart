@@ -11,6 +11,7 @@ import '../../../voiceMall/ui/voicemail_screen.dart';
 import '../../controller/home_controller.dart';
 import '../home_screen.dart';
 
+ 
 class MainBottomNav extends StatelessWidget {
   final HomeController controller;
 
@@ -21,204 +22,108 @@ class MainBottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     final items = [
       _BottomItem(image: AppAssets.callIcon, title: 'Calls', type: BottomTabType.calls),
       _BottomItem(image: AppAssets.commentIcons, title: 'Chat', type: BottomTabType.chat),
       _BottomItem(image: AppAssets.voicemailIcon, title: 'Voicemail', type: BottomTabType.voicemail),
-      _BottomItem(image: AppAssets.updateIcon,title: 'Updates', type: BottomTabType.updates),
+      _BottomItem(image: AppAssets.updateIcon, title: 'Updates', type: BottomTabType.updates),
       _BottomItem(image: AppAssets.userIcon, title: 'Profile', type: BottomTabType.profile),
     ];
 
-    return SafeArea(
-      top: false,
+    return SafeArea(top: false, left: false, right: false, bottom: false,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 0, 10, 8),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(999),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
-            child: Container(
-              height: 62,
-              padding: const EdgeInsets.symmetric(horizontal: 4),
-              decoration: BoxDecoration(
-                color: Theme.of(context).brightness == Brightness.dark
-                    ? Colors.white.withOpacity(0.075)
-                    : Colors.white.withOpacity(0.78),
-                borderRadius: BorderRadius.circular(999),
-                border: Border.all(
-                  color: Theme.of(context).brightness == Brightness.dark
-                      ? Colors.white.withOpacity(0.12)
-                      : Colors.white.withOpacity(0.95),
-                ),
-              ),
-              child: Row(
-                children: items.map((item) {
-                  return Expanded(
-                    child: Obx(() {
-                      final selected = controller.selectedBottomTab.value == item.type;
-
-                      return GestureDetector(
-                        // onTap: () => controller.changeBottomTab(item.type),
-                        onTap: () { controller.changeBottomTab(item.type);
-                            if (item.type == BottomTabType.calls) Get.to(() => CallsScreen());
-                            if (item.type == BottomTabType.chat) Get.offAll(() => HomeScreen());
-                            if (item.type == BottomTabType.voicemail) Get.offAll(() => VoicemailScreen());
-                            if (item.type == BottomTabType.profile) Get.to(() => ProfileScreen()); 
-                            if (item.type == BottomTabType.updates) Get.to(() => UpdatesScreen()); 
-                          },
-                        behavior: HitTestBehavior.opaque,
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 180),
-                          alignment: Alignment.center,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                                Image.asset(
-                                  item.image!,
-                                  width: 21,
-                                  height: 21,
-                                  color: selected
-                                      ? AppColors.buttonBlue
-                                      : Theme.of(context).brightness == Brightness.dark ? Colors.white70 : Colors.black54,
-                                ),
-                              const SizedBox(height: 3),
-                              Text(
-                                item.title,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: selected
-                                      ? AppColors.buttonBlue
-                                      : Theme.of(context).brightness == Brightness.dark ? Colors.white70 : Colors.black54,
-                                  fontSize: 10.5,
-                                  fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    }),
-                  );
-                }).toList(),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-
-
-
-class _GlassBottomNavItem extends StatefulWidget {
-  final _BottomItem item;
-  final bool selected;
-  final bool isDark;
-  final VoidCallback onTap;
-
-  const _GlassBottomNavItem({
-    required this.item,
-    required this.selected,
-    required this.isDark,
-    required this.onTap,
-  });
-
-  @override
-  State<_GlassBottomNavItem> createState() => _GlassBottomNavItemState();
-}
-
-class _GlassBottomNavItemState extends State<_GlassBottomNavItem> {
-  bool isPressed = false;
-
-  @override
-  Widget build(BuildContext context) {
-    final selectedColor = widget.isDark ? Colors.white : AppColors.buttonBlue;
-
-    final normalColor = widget.isDark
-        ? Colors.white.withOpacity(0.62)
-        : Colors.black.withOpacity(0.54);
-
-    final color = widget.selected ? selectedColor : normalColor;
-
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTapDown: (_) => setState(() => isPressed = true),
-      onTapCancel: () => setState(() => isPressed = false),
-      onTapUp: (_) {
-        setState(() => isPressed = false);
-        widget.onTap();
-      },
-      child: AnimatedScale(
-        duration: const Duration(milliseconds: 110),
-        curve: Curves.easeOut,
-        scale: isPressed ? 0.92 : 1,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 220),
-          curve: Curves.easeOutCubic,
-          margin: const EdgeInsets.symmetric(horizontal: 1.5),
+        padding: const EdgeInsets.fromLTRB(14, 0, 14, 21), // Adjusted for a better floating look
+        child: Container(
+          // Subtle drop shadow to lift the glass bar off the background content
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(34),
-
-            /// Selected item bhi transparent rahega
-            color: widget.selected
-                ? Colors.white.withOpacity(widget.isDark ? 0.10 : 0.28)
-                : Colors.transparent,
-
-            border: Border.all(
-              color: widget.selected
-                  ? Colors.white.withOpacity(widget.isDark ? 0.16 : 0.45)
-                  : Colors.transparent,
-              width: 0.8,
-            ),
-
-            boxShadow: widget.selected
-                ? [
-                    BoxShadow(
-                      color: widget.isDark
-                          ? Colors.white.withOpacity(0.05)
-                          : AppColors.buttonBlue.withOpacity(0.10),
-                      blurRadius: 14,
-                      offset: const Offset(0, 6),
-                    ),
-                  ]
-                : [],
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                widget.item.image!,
-                width: widget.selected ? 23 : 21,
-                height: widget.selected ? 23 : 21,
-                color: color,
-              ),
-
-              const SizedBox(height: 5),
-
-              Text(
-                widget.item.title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: color,
-                  fontSize: widget.selected ? 11.5 : 10.7,
-                  fontWeight:
-                      widget.selected ? FontWeight.w800 : FontWeight.w500,
-                  height: 1,
-                ),
+            borderRadius: BorderRadius.circular(AppRadius.full),
+            boxShadow: [
+              BoxShadow(
+                color: isDark ? Colors.black.withOpacity(0.2) : Colors.black.withOpacity(0.06),
+                blurRadius: 20,
+                spreadRadius: 1,
+                offset: const Offset(0, 4),
               ),
             ],
           ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(999),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
+              child: Container(
+                height: 66, // Slightly increased height for vertical breathing room
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                decoration: BoxDecoration(
+                  // Premium semi-transparent tint for both modes
+                  color: isDark ? Colors.white.withOpacity(0.06) : Colors.white.withOpacity(0.15), 
+                  borderRadius: BorderRadius.circular(999),
+                  border: Border.all(
+                    // Faux-reflective border edge
+                    color: isDark ? Colors.white.withOpacity(0.12) : Colors.white.withOpacity(0.4),
+                    width: 1.2,
+                  ),
+                ),
+                child: Row(
+                  children: items.map((item) {
+                    return Expanded(
+                      child: Obx(() {
+                        final selected = controller.selectedBottomTab.value == item.type;
+                        final selectedColor = isDark ? AppColors.darkTextPrimary : AppColors.darkCard;
+                        final unselectedColor =isDark ? Colors.white70 : Colors.black54;
+                        final itemColor = selected ? selectedColor : unselectedColor;                        
+
+                        return GestureDetector(
+                          onTap: () {
+                            controller.changeBottomTab(item.type);
+                            if (item.type == BottomTabType.calls) Get.to(() => CallsScreen());
+                            if (item.type == BottomTabType.chat) Get.offAll(() => HomeScreen());
+                            if (item.type == BottomTabType.voicemail) Get.offAll(() => VoicemailScreen());
+                            if (item.type == BottomTabType.profile) Get.to(() => ProfileScreen());
+                            if (item.type == BottomTabType.updates) Get.to(() => UpdatesScreen());
+                          },
+                          behavior: HitTestBehavior.opaque,
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 200),
+                            curve: Curves.easeInOut,
+                            alignment: Alignment.center,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                if (item.image != null)
+                                  Image.asset(
+                                    item.image!, width: selected ? 23 : 21, 
+                                    height: selected ? 23 : 21,
+                                    color: itemColor
+                                  ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  item.title,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    color: itemColor,
+                                    fontSize: 14,
+                                    fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );
   }
 }
-
-
 
 class _BottomItem {
   final String? image;
@@ -228,4 +133,8 @@ class _BottomItem {
   _BottomItem({this.image, required this.title, required this.type});
 }
 
+
+
+ 
+ 
 

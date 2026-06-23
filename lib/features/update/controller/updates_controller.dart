@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../model/comment_model.dart';
@@ -144,130 +145,218 @@ class UpdatesController extends GetxController {
     posts.value = [
       PostModel(
         id: "1",
+        postTime: "10:11 PM",
         userName: "Rohit Sharma",
         userImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
         title: "New UI Design Concept",
-        description: "This is a modern update post with clean layout and media preview.",
+        description:
+            "Client ne bola tha sirf ek chhota sa update chahiye. "
+            "Ab 17 revisions, 3 Zoom calls aur 42 WhatsApp messages baad "
+            "hum finally usi design par wapas aa gaye hain jo pehle din approve hua tha. 😂",
         mediaUrl: "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
         likeCount: 120,
         commentCount: 18,
       ),
+
       PostModel(
         id: "2",
+        postTime: "09:45 PM",
         userName: "Aman Verma",
         userImage: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d",
         title: "Flutter App Demo",
-        description: " I always have to think so hard to come up with a worthy comment. Looking for more 'gen-z' or 'trendy' terms that are highly expressive/animated but still genuine.",
-        mediaUrl: "https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
+        description:
+            "Aaj pura din ek bug fix karne me nikal gaya. "
+            "End me pata chala semicolon missing tha. "
+            "Software engineering ka asli gym yahi hai, "
+            "roz patience ki exercise hoti hai. 🚀😂",
+        mediaUrl: "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
         isVideo: true,
         likeCount: 88,
         commentCount: 11,
       ),
+
       PostModel(
         id: "3",
+        postTime: "08:30 PM",
         userName: "Priya Kapoor",
         userImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330",
         title: "Workspace Setup",
-        description: "Finally completed my dream workstation setup.",
+        description:
+            "Ye workstation setup complete karne me 6 mahine lage. "
+            "RGB lights, mechanical keyboard, ultrawide monitor sab aa gaya. "
+            "Ab bas kaam karne ka mann bhi aa jaye to setup perfect ho jayega. 😅",
         mediaUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3",
         likeCount: 245,
         commentCount: 34,
       ),
+
       PostModel(
         id: "4",
+        postTime: "07:15 AM",
         userName: "Karan Singh",
         userImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
         title: "Morning Ride",
-        description: "Beautiful weather for a long bike ride today.",
+        description:
+            "Subah fitness ke liye bike ride par nikla tha. "
+            "15 minute baad samajh aaya ki weather enjoy karne se zyada "
+            "main traffic aur speed breakers se fight kar raha hoon. 🏍️😂",
         mediaUrl: "https://images.unsplash.com/photo-1558980664-10ea292f2c9a",
         likeCount: 92,
         commentCount: 9,
       ),
+
       PostModel(
         id: "5",
+        postTime: "03:20 PM",
         userName: "Neha Gupta",
         userImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80",
         title: "Coffee Break",
-        description: "Nothing beats a fresh cup of coffee while coding.",
+        description:
+            "Coffee lene gaya tha 5 minute ke break ke liye. "
+            "Wapas aaya to 45 minute nikal chuke the aur "
+            "office gossip ki puri quarterly report mil chuki thi. ☕😂",
         mediaUrl: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085",
         likeCount: 177,
         commentCount: 23,
       ),
+
       PostModel(
         id: "6",
+        postTime: "06:45 PM",
         userName: "Rahul Mehta",
         userImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
         title: "Nature Vlog",
-        description: "Weekend getaway in the mountains.",
-        mediaUrl: "https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
+        description:
+            "Mountain trip plan kiya tha digital detox ke liye. "
+            "Result ye hua ki 300 photos, 25 videos aur 8 reels shoot kar li. "
+            "Nature kam, content zyada enjoy kiya. 📸😂",
+        mediaUrl: "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4",
         isVideo: true,
         likeCount: 310,
         commentCount: 41,
       ),
+
       PostModel(
         id: "7",
+        postTime: "11:00 AM",
         userName: "Simran Kaur",
         userImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2",
         title: "Fashion Shoot",
-        description: "Latest photoshoot highlights.",
+        description:
+            "Fashion shoot ke liye 4 ghante ready hone me lage. "
+            "Photos select karne me 2 ghante aur lag gaye. "
+            "Finally jo photo post ki usme aadha face hi visible hai. ✨😂",
         mediaUrl: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1",
         likeCount: 428,
         commentCount: 57,
       ),
+
       PostModel(
         id: "8",
+        postTime: "05:30 PM",
         userName: "Vikas Arora",
         userImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
         title: "Gym Progress",
-        description: "Consistency is the key to success.",
+        description:
+            "Gym join kiye hue 3 mahine ho gaye. "
+            "Weight machine abhi bhi wahi number dikha rahi hai, "
+            "lekin selfie collection kaafi improve ho gaya hai. 💪📸😂",
         mediaUrl: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438",
         likeCount: 154,
         commentCount: 19,
       ),
+
       PostModel(
         id: "9",
+        postTime: "09:00 PM",
         userName: "Anjali Sharma",
         userImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330",
         title: "Travel Diaries",
-        description: "Exploring hidden gems around the world.",
+        description:
+            "Travel karte waqt ek baat samajh aayi. "
+            "Destination se zyada exciting airport ke food prices hote hain. "
+            "Ek sandwich dekhkar lagta hai loan apply karna padega. ✈️😂",
         mediaUrl: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
         likeCount: 502,
         commentCount: 68,
       ),
+
       PostModel(
         id: "10",
+        postTime: "02:15 PM",
         userName: "Dev Malhotra",
         userImage: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d",
         title: "Startup Journey",
-        description: "Sharing lessons learned while building products.",
+        description:
+            "Startup build karna roller coaster jaisa hota hai. "
+            "Subah lagta hai company unicorn banegi. "
+            "Shaam tak lagta hai password reset feature hi launch kar lein to achievement hai. 🚀😂",
         mediaUrl: "https://images.unsplash.com/photo-1552664730-d307ca884978",
         likeCount: 231,
         commentCount: 26,
       ),
+
       PostModel(
         id: "11",
+        postTime: "01:00 PM",
         userName: "Meera Joshi",
         userImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2",
         title: "Cooking Reel",
-        description: "Quick and easy homemade pasta recipe.",
-        mediaUrl: "https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
+        description:
+            "Recipe video me sab kuch 30 seconds me ho gaya. "
+            "Reality me kitchen saaf karne me cooking se zyada time lag gaya. "
+            "Content creators kuch zyada hi optimistic hote hain. 🍝🔥😂",
+        mediaUrl: "https://media.istockphoto.com/id/682672086/video/ld-carniolan-honey-bee-hanging-on-to-the-stamens-of-a-white-cherry-blossom.mp4?s=mp4-640x640-is&k=20&c=PFR6kiOEaQxLmfxOPZtb563DG_gBqZWJsI2oVeMNdOk=",
         isVideo: true,
         likeCount: 391,
         commentCount: 49,
       ),
+
       PostModel(
         id: "12",
+        postTime: "06:50 PM",
         userName: "Arjun Patel",
         userImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
         title: "Sunset Photography",
-        description: "Captured this beautiful sunset yesterday.",
+        description:
+            "Sunset dekhne gaya tha thoda relax hone. "
+            "Lekin har 2 minute me lag raha tha ki ab wali photo pehle wali se better hai. "
+            "Final gallery me 57 almost same photos hain. 🌅📸😂",
         mediaUrl: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
         likeCount: 287,
         commentCount: 31,
       ),
+      PostModel(
+        id: "13",
+        postTime: "02:15 PM",
+        userName: "Meera Malhotra",
+        userImage: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d",
+        title: "Startup Journey",
+        description:
+            "Startup build karna roller coaster jaisa hota hai. "
+            "Subah lagta hai company unicorn banegi. "
+            "Shaam tak lagta hai password reset feature hi launch kar lein to achievement hai. 🚀😂",
+        mediaUrl: "https://cdn.pixabay.com/video/2026/02/23/336253_large.mp4",
+        likeCount: 231,isVideo: true,
+        commentCount: 26,
+      ),      
+      PostModel(
+        id: "14",
+        postTime: "12:30 PM",
+        userName: "Vikas Arora",
+        userImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
+        title: "Gym Progress",
+        description:
+            "Gym join kiye hue 3 mahine ho gaye. "
+            "Weight machine abhi bhi wahi number dikha rahi hai, "
+            "lekin selfie collection kaafi improve ho gaya hai. 💪📸😂",
+        mediaUrl: "https://cdn.pixabay.com/video/2025/09/14/304019_large.mp4",
+        likeCount: 154,isVideo: true,
+        commentCount: 19,
+      ),      
     ];
   }
-  
+    
   void loadComments() {
     comments.value = [
       CommentModel(

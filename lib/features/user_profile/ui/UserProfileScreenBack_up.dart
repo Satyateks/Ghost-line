@@ -1,22 +1,19 @@
-// ignore_for_file: unnecessary_underscores, deprecated_member_use
-
+/*
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/theme_route.dart';
 import '../../../core/utils/snackbar_helper.dart';
-import '../../../core/widgets/avatar_widget.dart';
-import '../../../core/widgets/glass_scaffold.dart';
+import '../../../core/widgets/widgets_route.dart';
 import '../controller/user_profile_controller.dart';
-import '../model/profile_option_model.dart';
 import '../internal/media_links_docs/ui/media_links_docs_screen.dart';
+import '../model/profile_option_model.dart';
 import 'widgets/groups_common_card.dart';
 import 'widgets/invisible_bottom_sheet.dart';
 import 'widgets/profile_action_buttons.dart';
 import 'widgets/profile_option_card.dart';
-import 'widgets/option_tile_wrapper.dart';
-import 'widgets/group_bottom_sheet.dart';
 
 class UserProfileScreen extends StatelessWidget {
   UserProfileScreen({super.key, required this.name, required this.avatar});
@@ -26,35 +23,17 @@ class UserProfileScreen extends StatelessWidget {
 
   final UserProfileController controller = Get.put(UserProfileController());
 
-  late final groupOptions = controller.groupOptions;
-
-  void _handleOptionTap(BuildContext context, ProfileOptionModel item) {
+  void _handleOptionTap( BuildContext context, ProfileOptionModel item) {
     switch (item.type) {
-      case ProfileOptionType.invisible:
-        InvisibleBottomSheet.show(context: context, controller: controller);
-        break;
+      case ProfileOptionType.invisible: InvisibleBottomSheet.show(context: context, controller: controller); break;
       case ProfileOptionType.hideMobileNumber:
       case ProfileOptionType.callForwarding:
       case ProfileOptionType.callWaiting:
-      case ProfileOptionType.voicemail:
-        controller.toggleOption(item.type);
-        break;
-      case ProfileOptionType.mediaLinksDocs:
-        Get.to(() => MediaLinksDocsScreen(userName: name));
-        break;
+      case ProfileOptionType.voicemail: controller.toggleOption(item.type); break;
+      case ProfileOptionType.mediaLinksDocs: Get.to( () => MediaLinksDocsScreen(userName: name)); break;
     }
   }
 
-  void _handleOptionTap1(BuildContext context, ProfileOptionModel item) {
-    GroupBottomSheet.show(context: context, controller: controller);
-  }
-
-  void _handleToggle1(ProfileOptionModel item) {
-    item.value.value = !item.value.value;
-    item = item.copyWith(
-      subtitle: item.value.value ? 'On' : 'Off',
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +42,7 @@ class UserProfileScreen extends StatelessWidget {
       resizeToAvoidBottomInset: true,
       body: Stack(
         children: [
-          BlurBackground(avatar: avatar),
+          _BlurBackground( avatar: avatar ),
 
           SafeArea(
             child: SingleChildScrollView(
@@ -71,7 +50,7 @@ class UserProfileScreen extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(12, 10, 12, 24),
               child: Column(
                 children: [
-                  TopBackChip(name: name),
+                  _TopBackChip(name: name),
 
                   const SizedBox(height: 34),
 
@@ -110,12 +89,6 @@ class UserProfileScreen extends StatelessWidget {
 
                   const SizedBox(height: 14),
                   GroupsCommonCard(groups: controller.groups, onTap: (group) {SnackbarHelper.success('${group.title} opened', title: 'Group');}),
-                  const SizedBox(height: 14),
-                  OptionsList(
-                    options: groupOptions,
-                    onTap: (item) { _handleOptionTap1(context, item); },
-                    onToggle: (item) { _handleToggle1(item); },
-                  ),
                 ],
               ),
             ),
@@ -124,65 +97,13 @@ class UserProfileScreen extends StatelessWidget {
       ),
     );
   }
+  
 }
 
-class OptionsList extends StatelessWidget {
-  final List<ProfileOptionModel> options;
-  final ValueChanged<ProfileOptionModel> onTap;
-  final ValueChanged<ProfileOptionModel> onToggle;
-
-  const OptionsList({
-    super.key,
-    required this.options,
-    required this.onTap,
-    required this.onToggle,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(30),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 22, sigmaY: 22),
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-          decoration: BoxDecoration(
-            color: isDark
-                ? Colors.white.withOpacity(0.14)
-                : Colors.white.withOpacity(0.78),
-            borderRadius: BorderRadius.circular(30),
-            border: Border.all(
-              color: isDark
-                  ? Colors.white.withOpacity(0.14)
-                  : Colors.white.withOpacity(0.95),
-            ),
-          ),
-          child: Column(
-            children: List.generate(options.length, (index) {
-              final option = options[index];
-
-              return OptionTileWrapper(
-                option: option,
-                showDivider: index != options.length - 1,
-                onTap: () => onTap(option),
-                onToggle: (_) => onToggle(option),
-              );
-            }),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class BlurBackground extends StatelessWidget {
+class _BlurBackground extends StatelessWidget {
   final String avatar;
 
-  const BlurBackground({
-    super.key,
+  const _BlurBackground({
     required this.avatar,
   });
 
@@ -234,11 +155,10 @@ class BlurBackground extends StatelessWidget {
   }
 }
 
-class TopBackChip extends StatelessWidget {
+class _TopBackChip extends StatelessWidget {
   final String name;
 
-  const TopBackChip({
-    super.key,
+  const _TopBackChip({
     required this.name,
   });
 
@@ -295,3 +215,5 @@ class TopBackChip extends StatelessWidget {
     );
   }
 }
+*/
+

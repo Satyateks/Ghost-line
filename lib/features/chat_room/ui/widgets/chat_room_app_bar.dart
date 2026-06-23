@@ -35,10 +35,7 @@ class ChatRoomAppBar extends StatelessWidget {
           Expanded(
             child: Text( name, maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle( color: textColor, fontSize: 16,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
+              style: TextStyle( color: textColor, fontSize: 16, fontWeight: FontWeight.w700)),
           ),*/
           Expanded(
             child: InkWell(

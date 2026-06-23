@@ -75,28 +75,16 @@ class ProfileOptionTile extends StatelessWidget {
 
                 if (option.actionType == ProfileOptionActionType.toggle)
                   Switch.adaptive(
-                    value: option.value,
+                    value: option.value.firstRebuild,
                     activeColor: AppColors.buttonBlue,
                     onChanged: onToggle,
                   )
-                else
-                  Icon(
-                    Icons.arrow_forward_ios_rounded,
-                    color: textColor,
-                    size: 20,
-                  ),
+                else Icon(Icons.arrow_forward_ios_rounded, color: textColor, size: 20),
               ],
             ),
           ),
 
-          if (showDivider)
-            Divider(
-              height: 1,
-              color: isDark
-                  ? Colors.white.withOpacity(0.10)
-                  : Colors.black.withOpacity(0.08),
-              indent: 42,
-            ),
+          if (showDivider) Divider(height: 1, color: isDark ? Colors.white.withOpacity(0.10) : Colors.black.withOpacity(0.08), indent: 42),
         ],
       ),
     );

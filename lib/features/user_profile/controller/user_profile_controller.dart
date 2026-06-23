@@ -17,11 +17,14 @@ class UserProfileController extends GetxController {
   final RxList<ProfileOptionModel> options = <ProfileOptionModel>[].obs;
   final RxList<CommonGroupModel> groups = <CommonGroupModel>[].obs;
 
+  late final RxList<ProfileOptionModel> groupOptions;
+
   @override
   void onInit() {
     super.onInit();
     loadProfileOptions();
     loadCommonGroups();
+    loadGroupOptions();
   }
 
   void loadProfileOptions() {
@@ -93,17 +96,51 @@ class UserProfileController extends GetxController {
     ]);
   }
 
+  void loadGroupOptions() {
+    groupOptions = <ProfileOptionModel>[
+      ProfileOptionModel(
+        type: ProfileOptionType.invisible,
+        title: 'Add List',
+        subtitle: 'Add users to a list',
+        icon: Icons.add_circle_outline,
+        actionType: ProfileOptionActionType.toggle,
+        value: false,
+      ),
+      ProfileOptionModel(
+        type: ProfileOptionType.invisible,
+        title: 'Export Chat',
+        subtitle: 'Export chat history',
+        icon: Icons.share_outlined,
+        actionType: ProfileOptionActionType.sheet,
+        value: true,
+      ),
+      ProfileOptionModel(
+        type: ProfileOptionType.invisible,
+        title: 'Clear Chat',
+        subtitle: 'Clear chat history',
+        icon: Icons.delete_outline,
+        actionType: ProfileOptionActionType.sheet,
+        value: false,
+      ),
+      ProfileOptionModel(
+        type: ProfileOptionType.invisible,
+        title: 'Block',
+        subtitle: 'Block this user',
+        icon: Icons.block_outlined,
+        actionType: ProfileOptionActionType.navigation,
+        value: false,
+      ),
+    ].obs;
+  }
+
   void toggleOption(ProfileOptionType type) {
     final index = options.indexWhere((e) => e.type == type);
     if (index == -1) return;
 
-    final old = options[index];
-    final newValue = !old.value;
+    options[index].value.value = !options[index].value.value;
 
-    options[index] = old.copyWith(
-      value: newValue,
-      subtitle: newValue ? 'On' : 'Off',
-    );
+    final newValue = options[index].value.value;
+    options[index] = options[index].copyWith(subtitle: newValue ? 'On' : 'Off');
   }
 
   void updateInvisibleOption(InvisibleOption option) {
@@ -115,30 +152,15 @@ class UserProfileController extends GetxController {
     String subtitle;
 
     switch (option) {
-      case InvisibleOption.always:
-        subtitle = 'Always';
-        break;
-      case InvisibleOption.never:
-        subtitle = 'Never';
-        break;
-      case InvisibleOption.specifyTime:
-        subtitle = 'Specify time';
-        break;
+      case InvisibleOption.always: subtitle = 'Always'; break;
+      case InvisibleOption.never: subtitle = 'Never'; break;
+      case InvisibleOption.specifyTime: subtitle = 'Specify time'; break;
     }
 
-    options[index] = options[index].copyWith(
-      subtitle: subtitle,
-      value: option != InvisibleOption.never,
-    );
+    options[index] = options[index].copyWith(subtitle: subtitle, value: option != InvisibleOption.never);
   }
 
-  void updateDateRange({
-    required String from,
-    required String to,
-  }) {
-    invisibleFromDate.value = from;
-    invisibleToDate.value = to;
-  }
+  void updateDateRange({required String from, required String to}) {invisibleFromDate.value = from; invisibleToDate.value = to;}
+
 }
-
 

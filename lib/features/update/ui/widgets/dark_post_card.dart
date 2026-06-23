@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ghostline/core/utils/utils_route.dart';
 
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
 import '../../model/post_model.dart';
 
 class DarkPostCard extends StatelessWidget {
@@ -20,13 +22,24 @@ class DarkPostCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     final isDark = Theme.of(context).brightness == Brightness.dark;
+     final msgColor = isDark ? Colors.white70 : AppColors.lightTextSecondary;
     return Container(
-      color: const Color(0xFF050505),
+      color:isDark ? AppColors.darkBg : AppColors.lightBg,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _PostHeader(post: post),
-
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14),
+            child: Text(
+              post.description,
+              maxLines: 6,
+              overflow: TextOverflow.ellipsis,
+             style: AppTextStyles.bodyLarge(msgColor)
+            ),
+          ),
+          const SizedBox(height: 6),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: ClipRRect(
@@ -36,7 +49,7 @@ class DarkPostCard extends StatelessWidget {
                   CachedNetworkImage(
                     imageUrl: post.mediaUrl,
                     width: double.infinity,
-                    height: 310,
+                    height: 199,
                     fit: BoxFit.cover,
                   ),
 
@@ -50,9 +63,9 @@ class DarkPostCard extends StatelessWidget {
                             color: Colors.black.withOpacity(0.45),
                             shape: BoxShape.circle,
                           ),
-                          child: const Icon(
+                          child: Icon(
                             Icons.play_arrow_rounded,
-                            color: Colors.white,
+                            color: isDark ? Colors.white : AppColors.lightTextPrimary,
                             size: 36,
                           ),
                         ),
@@ -68,27 +81,14 @@ class DarkPostCard extends StatelessWidget {
             child: Row(
               children: [
                 _IconAction(
-                  icon: post.isLiked
-                      ? Icons.favorite_rounded
-                      : Icons.favorite_border_rounded,
-                  color: post.isLiked ? Colors.redAccent : Colors.white,
+                  icon: post.isLiked ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+                  color: post.isLiked ? Colors.redAccent : isDark ? Colors.white : AppColors.lightTextPrimary,
                   onTap: onLike,
-                ),
-                _IconAction(imagePath: AppAssets.commentIcons, onTap: onComment),
-                _IconAction(imagePath: AppAssets.shareIcon, onTap: onShare),
+                ),Text("${post.likeCount} likes", style: AppTextStyles.bodyMedium(msgColor)),
+                _IconAction(imagePath: AppAssets.commentIcons, onTap: onComment,color: isDark ? Colors.white : AppColors.lightTextPrimary,),
+                GestureDetector(onTap: onComment, child: Text( "${post.commentCount}", style: AppTextStyles.bodyMedium(msgColor))),
+                _IconAction(imagePath: AppAssets.shareIcon, onTap: onShare,color: isDark ? Colors.white : AppColors.lightTextPrimary,),
               ],
-            ),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 14),
-            child: Text(
-              "${post.likeCount} likes",
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 13,
-                fontWeight: FontWeight.w700,
-              ),
             ),
           ),
 
@@ -99,61 +99,14 @@ class DarkPostCard extends StatelessWidget {
             child: RichText(
               text: TextSpan(
                 children: [
-                  TextSpan(
-                    text: "${post.userName} ",
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  TextSpan(
-                    text: post.title,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 13,
-                      height: 1.35,
-                    ),
-                  ),
+                  TextSpan( text: "${post.userName} ",style: AppTextStyles.bodyMedium(msgColor)),
+                  TextSpan(text: post.title,style: AppTextStyles.bodyMedium(msgColor)),
                 ],
               ),
             ),
           ),
-
-          const SizedBox(height: 4),
-
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 14),
-            child: Text(
-              post.description,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                color: Colors.white60,
-                fontSize: 12,
-                height: 1.35,
-              ),
-            ),
-          ),
-
-          const SizedBox(height: 6),
-
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 14),
-            child: GestureDetector(
-              onTap: onComment,
-              child: Text(
-                "View all ${post.commentCount} comments",
-                style: const TextStyle(
-                  color: Colors.white38,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-          ),
-
           const SizedBox(height: 10),
+          Divider(height: 1, thickness: 0.4, color:isDark ? Colors.white.withOpacity(0.1) : Colors.black.withOpacity(0.05), indent: 12, endIndent: 12),
         ],
       ),
     );
@@ -167,33 +120,25 @@ class _PostHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final nameColor = isDark ? Colors.white : AppColors.lightTextPrimary;
     return Padding(
       padding: const EdgeInsets.fromLTRB(14, 8, 8, 10),
       child: Row(
         children: [
           CircleAvatar(
-            radius: 18,
+            radius: 21,
             backgroundImage: CachedNetworkImageProvider(post.userImage),
           ),
           const SizedBox(width: 10),
-          Expanded(
-            child: Text(
-              post.userName,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 13.5,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
+          Column(mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(post.userName,style: AppTextStyles.bodyHighLarge(nameColor).copyWith(fontWeight: FontWeight.w700)),
+              Text(post.postTime, style: AppTextStyles.chatName(nameColor).copyWith(fontWeight: FontWeight.w500)),
+            ],
           ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.more_horiz_rounded,
-              color: Colors.white,
-              size: 22,
-            ),
-          ),
+          // IconButton(onPressed: () {},icon:Icon(Icons.more_horiz_rounded, color:nameColor, size: 22)),
         ],
       ),
     );
@@ -212,6 +157,7 @@ class _IconAction extends StatelessWidget {
     this.imagePath,
     required this.onTap,
     this.color = Colors.white,
+    // ignore: unused_element_parameter
     this.size = 25,
   });
 

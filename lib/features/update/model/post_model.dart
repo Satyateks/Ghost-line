@@ -1,6 +1,7 @@
 class PostModel {
   final String id;
   final String userName;
+  final String postTime;
   final String userImage;
   final String title;
   final String description;
@@ -13,6 +14,7 @@ class PostModel {
   PostModel({
     required this.id,
     required this.userName,
+    required this.postTime,
     required this.userImage,
     required this.title,
     required this.description,

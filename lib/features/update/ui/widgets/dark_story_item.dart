@@ -20,14 +20,14 @@ class DarkStoryItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: SizedBox(
-        width: 62,
+        width: 85,
         child: Column(
           children: [
             Stack(
               children: [
                 Container(
-                  height: 58,
-                  width: 58,
+                  height: 80,
+                  width: 80,
                   padding: const EdgeInsets.all(2.4),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
@@ -41,10 +41,7 @@ class DarkStoryItem extends StatelessWidget {
                             ],
                           ),
                     border: story.isOwnStory
-                        ? Border.all(
-                            color: Colors.white24,
-                            width: 1,
-                          )
+                        ? Border.all( color: Colors.white24, width: 1, )
                         : null,
                   ),
                   child: Container(

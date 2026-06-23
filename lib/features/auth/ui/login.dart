@@ -26,16 +26,13 @@ class AuthScreen extends StatelessWidget {
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: isDark ? Colors.black : AppColors.lightBg,
-        body: Container(
-          decoration: BoxDecoration(
-            gradient: isDark ? AppColors.darkBgGradient : AppColors.lightBgGradient,
-          ),
+        body: Container(decoration: BoxDecoration(gradient: isDark ? AppColors.darkBgGradient : AppColors.lightBgGradient),
           child: SafeArea(
             child: LayoutBuilder(
               builder: (context, constraints) {
                 final size = MediaQuery.sizeOf(context);
                 final bottomInset = MediaQuery.of(context).viewInsets.bottom;
-
+          
                 return SingleChildScrollView(
                   keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                   padding: EdgeInsets.only(bottom: bottomInset + 12),
@@ -45,37 +42,25 @@ class AuthScreen extends StatelessWidget {
                     ),
                     child: Stack(
                       children: [
+                        Positioned.fill(child: Image.asset(isDark? AppAssets.authBg: AppAssets.authBgLight,alignment: Alignment.topCenter, fit: BoxFit.fill)),
                         Positioned(
-                          top: size.height * 0.025,
-                          left: 0,
-                          right: 0,
+                          top: size.height * 0.065, left: 0, right: 0,
                           child: Center(
-                            child: Image.asset(
-                              AppAssets.ghostLogo,
-                              height: size.height * 0.035,
-                              fit: BoxFit.contain,
-                            ),
+                            child: Image.asset(AppAssets.ghostLogo, height: size.height * 0.045, fit: BoxFit.contain),
                           ),
                         ),
-
+          
                         Positioned(
-                          top: size.height * 0.085,
-                          left: 8,
-                          right: 8,
+                          top: size.height * 0.1, left: 8, right: 8,
                           child: Image.asset(
                             AppAssets.onboarding,
                             height: size.height * 0.36,
                             fit: BoxFit.contain,
                           ),
                         ),
-
-                        Positioned(
-                          top: size.height * 0.445,
-                          left: 0,
-                          right: 0,
-                          child: const _AuthIntroText(),
-                        ),
-
+          
+                        Positioned(top: size.height * 0.49, left: 0, right: 0, child: const _AuthIntroText()),
+          
                         Container(
                           width: double.infinity,
                           constraints: BoxConstraints(minHeight: constraints.maxHeight),
@@ -412,11 +397,7 @@ class _AuthTitle extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     
     return Text(
-      title,
-      style: AppTextStyles.authTitle(isDark ? Colors.white : AppColors.lightTextPrimary).copyWith(
-        fontSize: 21,height: 1.24,
-        fontWeight: FontWeight.w700,
-      ),
+      title, style: AppTextStyles.authTitle(isDark ? Colors.white : AppColors.lightTextPrimary).copyWith(fontSize: 22,height: 1.24, fontWeight: FontWeight.w700),
     );
   }
 }
@@ -584,7 +565,7 @@ class _AuthIntroText extends StatelessWidget {
           "Find Your Dream Home\nWithout the Hassle",
           textAlign: TextAlign.center,
           style: AppTextStyles.h3(titleColor).copyWith(
-            fontSize: 16,
+            fontSize: 22,
             height: 1.16,
             fontWeight: FontWeight.w600,
           ),
@@ -596,7 +577,7 @@ class _AuthIntroText extends StatelessWidget {
           style: AppTextStyles.bodySmall(
             subtitleColor,
           ).copyWith(
-            fontSize: 10.5,
+            fontSize: 16,
             height: 1.25,
           ),
         ),
@@ -620,11 +601,9 @@ class _AuthGlassCard extends StatelessWidget {
         filter: ImageFilter.blur( sigmaX: 18, sigmaY: 18),
         child: Container(
           width: double.infinity,
-          padding: const EdgeInsets.fromLTRB(12, 21, 12, 24),
+          padding: const EdgeInsets.fromLTRB(12, 27, 12, 24),
           decoration: BoxDecoration(
-            color: isDark 
-                ? Colors.white.withOpacity(0.075)
-                : Colors.white.withOpacity(0.85),
+            color: isDark ? Colors.white.withOpacity(0.075) : Colors.white.withOpacity(0.85),
             borderRadius: BorderRadius.circular(24),
             border: Border.all(color: isDark ? Colors.white.withOpacity(0.07) : Colors.white.withOpacity(0.5)),
             boxShadow: [

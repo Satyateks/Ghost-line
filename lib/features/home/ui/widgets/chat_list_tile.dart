@@ -123,12 +123,9 @@ class ChatActionMenu {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final selected = await showMenu<String>(
       context: context,
-      color:isDark ? AppColors.darkBg : AppColors.lightBg,
-      elevation: 0,
-      constraints: const BoxConstraints(
-        minWidth: 190,
-        maxWidth: 210,
-      ),
+      color:isDark ? Color(0xFF3D3D3D) : AppColors.lightBg,
+      elevation: 1,
+      constraints: const BoxConstraints(minWidth: 190, maxWidth: 210),
       position: RelativeRect.fromRect(
         Rect.fromLTWH(
           details.globalPosition.dx,
@@ -144,7 +141,7 @@ class ChatActionMenu {
           padding: EdgeInsets.zero,
           child: _ChatActionItem(
             icon: Icons.archive_outlined,
-            title: "Archive",
+            title: "Archive",isDark: isDark,
           ),
         ),
         PopupMenuItem<String>(
@@ -152,7 +149,7 @@ class ChatActionMenu {
           padding: EdgeInsets.zero,
           child: _ChatActionItem(
             icon: Icons.notifications_off_outlined,
-            title: "Mute",
+            title: "Mute",isDark: isDark,
           ),
         ),
         PopupMenuItem<String>(
@@ -160,7 +157,7 @@ class ChatActionMenu {
           padding: EdgeInsets.zero,
           child: _ChatActionItem(
             icon: Icons.favorite_border_rounded,
-            title: "Add to Favourites",
+            title: "Add to Favourites",isDark: isDark,
           ),
         ),
         PopupMenuItem<String>(
@@ -168,7 +165,7 @@ class ChatActionMenu {
           padding: EdgeInsets.zero,
           child: _ChatActionItem(
             icon: Icons.list_alt_rounded,
-            title: "Add to list",
+            title: "Add to list",isDark: isDark,
           ),
         ),
         PopupMenuItem<String>(
@@ -176,7 +173,7 @@ class ChatActionMenu {
           padding: EdgeInsets.zero,
           child: _ChatActionItem(
             icon: Icons.block_rounded,
-            title: "Block",
+            title: "Block",isDark: isDark,
           ),
         ),
         PopupMenuItem<String>(
@@ -184,7 +181,7 @@ class ChatActionMenu {
           padding: EdgeInsets.zero,
           child: _ChatActionItem(
             icon: Icons.cancel_outlined,
-            title: "Clear chat",
+            title: "Clear chat",isDark: isDark,
           ),
         ),
         PopupMenuItem<String>(
@@ -193,7 +190,7 @@ class ChatActionMenu {
           child: _ChatActionItem(
             icon: Icons.delete_outline_rounded,
             title: "Delete chat",
-            isDanger: true,
+            isDanger: true,isDark: isDark,
             isLast: true,
           ),
         ),
@@ -240,7 +237,7 @@ class _ChatActionItem extends StatelessWidget {
         // color: const Color(0xFF3F3F3F),
         borderRadius: BorderRadius.vertical(
           top: title == "Archive" ? const Radius.circular(AppRadius.full) : Radius.zero,
-          bottom: isLast ? const Radius.circular(14) : Radius.zero,
+          bottom: isLast ? const Radius.circular(AppRadius.md) : Radius.zero,
         ),
       ),
       child: Column(
@@ -275,7 +272,7 @@ class _ChatActionItem extends StatelessWidget {
             Divider(
               height: 1,
               thickness: 0.4,
-              color: Colors.black.withOpacity(0.16),
+              color: Colors.black.withOpacity(0.4),
               indent: 12,
               endIndent: 12,
             ),

@@ -19,11 +19,11 @@ class HomeSearchBar extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(999),
+        borderRadius: AppRadius.xxllRadius,
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
           child: SizedBox(
-            height: 34,
+            height: 38,
             child: TextField(
               onChanged: onChanged,
               cursorColor: AppColors.primaryBlue,
@@ -34,12 +34,10 @@ class HomeSearchBar extends StatelessWidget {
               ),
               decoration: InputDecoration(
                 filled: true,
-                fillColor: isDark
-                    ? Colors.white.withOpacity(0.10)
-                    : Colors.white.withOpacity(0.75),
+                fillColor: isDark ? Colors.white.withOpacity(0.10) : Colors.white.withOpacity(0.75),
                 prefixIcon: Icon(
                   Icons.search_rounded,
-                  size: 18,
+                  size: 24,
                   color: isDark ? Colors.white54 : Colors.black45,
                 ),
                 hintText: 'Search friends, chat, media or groups',

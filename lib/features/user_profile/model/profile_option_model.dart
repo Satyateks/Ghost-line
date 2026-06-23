@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 enum ProfileOptionType {
   invisible,
@@ -8,6 +9,7 @@ enum ProfileOptionType {
   callWaiting,
   voicemail,
 }
+enum ProfileOptionType1{addList, exportChat,clearChat,block}
 
 enum ProfileOptionActionType {
   sheet,
@@ -21,7 +23,7 @@ class ProfileOptionModel {
   final String? subtitle;
   final IconData icon;
   final ProfileOptionActionType actionType;
-  final bool value;
+  final RxBool value;
 
   ProfileOptionModel({
     required this.type,
@@ -29,8 +31,8 @@ class ProfileOptionModel {
     required this.icon,
     required this.actionType,
     this.subtitle,
-    this.value = false,
-  });
+    bool value = false,
+  }) : value = value.obs;
 
   ProfileOptionModel copyWith({
     String? title,
@@ -45,7 +47,7 @@ class ProfileOptionModel {
       subtitle: subtitle ?? this.subtitle,
       icon: icon ?? this.icon,
       actionType: actionType ?? this.actionType,
-      value: value ?? this.value,
+      value: value ?? this.value.value,
     );
   }
 }

@@ -15,7 +15,7 @@ class ChatFilterTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 30,
+      height: 24,
       child: Obx(
         () => ListView.separated(
           padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -213,12 +213,25 @@ class _FilterChip extends StatelessWidget {
               : isDark
               ? Colors.white.withOpacity(0.10)
               : Colors.black.withOpacity(0.055),
-          borderRadius: BorderRadius.circular(999),
+          borderRadius: AppRadius.xxllRadius,
           border: Border.all(
-            color: selected
-                ? AppColors.primaryBlue.withOpacity(0.45)
-                : Colors.transparent,
+            color: selected ? AppColors.primaryBlue.withOpacity(0.45) : Colors.white.withOpacity(0.15),
+                  width: 1.5,
           ),
+          boxShadow: [
+            BoxShadow(
+              color:isDark? Colors.black.withOpacity(0.3):Colors.white.withOpacity(0.10),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+
+            if (!selected)
+              BoxShadow(
+                color: Colors.white.withOpacity(0.05),
+                blurRadius: 1,
+                spreadRadius: 0.5,
+              ),
+          ],
         ),
         child: Text(
           title,
@@ -229,12 +242,14 @@ class _FilterChip extends StatelessWidget {
                 ? Colors.white70
                 : Colors.black54,
             fontSize: 12,
-            fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+            fontWeight: selected ? FontWeight.w700 : FontWeight.w400,
           ),
         ),
       ),
     );
   }
 }
+ 
+
 
 

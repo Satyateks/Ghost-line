@@ -23,7 +23,7 @@ class CommentsBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context);
     final bottomInset = media.viewInsets.bottom;
-
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return SizedBox(
       height: media.size.height * 0.88,
       child: Stack(

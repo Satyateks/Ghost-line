@@ -19,7 +19,7 @@ class MessageActionMenu {
    final isDark = Theme.of(context).brightness == Brightness.dark;
     final selected = await showMenu<String>(
       context: context,
-      color: isDark ? AppColors.darkBg : AppColors.lightBg,
+      color: isDark ? Color(0xFF3D3D3D) : AppColors.lightBg,
       elevation: 0,
       constraints: const BoxConstraints( minWidth: 190, maxWidth: 220),
       position: RelativeRect.fromRect(
@@ -147,7 +147,7 @@ class _MessageActionItem extends StatelessWidget {
             Divider(
               height: 1,
               thickness: 0.4,
-              color: Colors.black.withOpacity(0.16),
+              color: Colors.black.withOpacity(0.4),
               indent: 12,
               endIndent: 12,
             ),

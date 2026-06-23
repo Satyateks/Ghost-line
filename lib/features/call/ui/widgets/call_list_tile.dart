@@ -104,10 +104,7 @@ class _CallListTileState extends State<CallListTile> {
 
   Widget _buildMenuItem(String icon, String title, bool isDark) {
     return InkWell(
-      onTap: () {
-        Get.back(); // close menu
-        // TODO: Action for menu
-      },
+      onTap: ()=>Get.back(),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         child: Row(

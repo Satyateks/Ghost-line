@@ -23,7 +23,7 @@ class AuthGlassCard extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.fromLTRB(18, 16, 18, 18),
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.075),
+            // color: Colors.white.withOpacity(0.075),
             borderRadius: BorderRadius.circular(26),
             border: Border.all(
               color: Colors.white.withOpacity(0.08),
