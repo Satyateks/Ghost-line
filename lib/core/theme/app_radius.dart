@@ -9,6 +9,7 @@ class AppRadius {
   static const double lg = 18;
   static const double xl = 24;
   static const double xxl = 30;
+  static const double xxll = 80;
   static const double full = 999;
 
   /// Auth UI
@@ -33,6 +34,7 @@ class AppRadius {
   static BorderRadius get lgRadius => BorderRadius.circular(lg);
   static BorderRadius get xlRadius => BorderRadius.circular(xl);
   static BorderRadius get xxlRadius => BorderRadius.circular(xxl);
+  static BorderRadius get xxllRadius => BorderRadius.circular(xxll);
   static BorderRadius get fullRadius => BorderRadius.circular(full);
 
   static const BorderRadius authCardRadius = BorderRadius.all(Radius.circular(authCard));

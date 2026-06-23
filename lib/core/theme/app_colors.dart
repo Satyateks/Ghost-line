@@ -20,6 +20,7 @@ class AppColors {
   static const Color darkGlassBorder = Color(0x26FFFFFF);
 
   /// Light Theme
+  static const Color primarybgsLight = Color(0xFFF2F5FB);
   static const Color lightBg = Color(0xFFF8FAFC);
   static const Color lightBgSoft = Color(0xFFFFFFFF);
   static const Color lightCard = Color(0xFFFFFFFF);
