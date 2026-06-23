@@ -28,10 +28,7 @@ class AccountSettingsScreen extends StatelessWidget {
             _SettingsCard(
               items: controller.accountItems(),
               onTap: (item) {
-                SettingActionSheet.show(
-                  context: context,
-                  item: item,
-                );
+                SettingActionSheet.show( context: context, item: item);
               },
             ),
           ],
@@ -175,11 +172,7 @@ class _SettingsCard extends StatelessWidget {
                   ),
                 ),
                 if (index != items.length - 1)
-                  Divider(
-                    height: 1,
-                    color: isDark
-                        ? Colors.white.withOpacity(0.10)
-                        : Colors.black.withOpacity(0.08),
+                  Divider( height: 1, color: isDark ? Colors.white.withOpacity(0.10) : Colors.black.withOpacity(0.08),
                   ),
               ],
             ),
@@ -189,3 +182,5 @@ class _SettingsCard extends StatelessWidget {
     );
   }
 }
+
+

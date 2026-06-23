@@ -1314,6 +1314,60 @@ Current implementation target:
 
 ---
 
-## 36. One-Line Project Context
+## 36. Custom Components aur Helper Files
+
+Is project mein custom components aur helper files core folder ke andar organize kiye gaye hain.
+
+### Custom Components (core/widgets/)
+
+Ye components pure app mein reuse kiye jate hain:
+
+- **app_button.dart** - Primary, secondary, outline, loading, aur disabled buttons ke liye
+- **app_text_field.dart** - Login, OTP, search, chat input, comment input ke liye
+- **app_card.dart** - Chat tiles, post cards, profile sections ke liye
+- **app_loader.dart** - API calls ke dauran loading indication ke liye
+- **app_empty_state.dart** - Jab koi chats, calls, comments, posts ya stories available na hon
+- **app_cached_image.dart** - Network images ke liye with placeholder aur error handling
+- **app_bottom_sheet.dart** - Delete confirmation, share options, media picker ke liye
+- **app_icon_button.dart** - Custom icon buttons ke liye
+
+### Helper Files (core/utils/)
+
+- **api_error_handler.dart** - Centralized API error handling ke liye
+- **snackbar_helpers.dart** - Success, error, warning, info messages ke liye
+- **validators.dart** - Form validation ke liye
+- **app_logger.dart** - Logging ke liye
+- **date_time_utils.dart** - Date aur time formatting ke liye
+
+### Network Files (core/network/)
+
+- **network_controller.dart** - Internet connectivity check ke liye
+- **network_binding.dart** - Network controller binding ke liye
+
+### Theme Files (core/theme/)
+
+- **app_theme.dart** - Light aur dark theme definitions
+- **app_colors.dart** - Common colors (primary, secondary, background, etc.)
+- **app_text_styles.dart** - Common text styles
+- **app_dimensions.dart** - Common spacing aur radius values
+
+---
+
+## 37. Project Context Summary
+
+Yeh ek Flutter GetX-based chat/social application hai jisme:
+
+- **Custom Components**: Reusable widgets core/widgets/ mein
+- **Helper Files**: Utility functions core/utils/ mein
+- **Theme System**: Centralized light/dark theme core/theme/ mein
+- **API Layer**: Dio-based API service with auth interceptor
+- **State Management**: GetX controllers aur reactive variables
+- **Modules**: Auth, Home, Chat Room, Calls, Updates, Comments
+
+Project ka goal hai pixel-perfect Figma design implementation with dark/light mode support, clean architecture, aur reusable design system.
+
+---
+
+## 38. One-Line Project Context
 
 This is a Flutter GetX-based pixel-perfect chat/social app using a centralized design system, dark/light themes, Dio API layer, reusable widgets, and modular screens such as Auth, Home, Chat Room, Calls, Updates, and Comments.

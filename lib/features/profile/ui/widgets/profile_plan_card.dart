@@ -1,7 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
-import '../../../../core/theme/app_colors.dart';
 
 class ProfilePlanCard extends StatelessWidget {
   const ProfilePlanCard({super.key});
@@ -9,6 +8,7 @@ class ProfilePlanCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final contentColor = isDark ? Colors.white : const Color(0xFF1E3A8A); 
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(14),
@@ -18,22 +18,30 @@ class ProfilePlanCard extends StatelessWidget {
           height: 60,
           padding: const EdgeInsets.symmetric(horizontal: 22),
           decoration: BoxDecoration(
-            color: AppColors.buttonBlue.withOpacity(isDark ? 0.30 : 0.18),
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(12),
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [
+                const Color(0xFF4F90FF).withOpacity(isDark ? 0.35 : 0.25), 
+                const Color(0x003C81F6),
+              ],
+            ),
+            // border: Border.all(color: const Color(0xFF4F90FF).withOpacity(isDark ? 0.2 : 0.25), width: 0.5),
           ),
           child: Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.star_rounded,
-                color: AppColors.buttonBlue,
+                color: isDark ? const Color(0xFF4F90FF) : const Color(0xFF3C81F6),
                 size: 27,
               ),
               const SizedBox(width: 9),
               Text(
                 'Quarterly plan',
                 style: TextStyle(
-                  color: isDark ? Colors.white70 : AppColors.lightTextPrimary,
-                  fontSize: 18,
+                  color: isDark ? Colors.white70 : contentColor.withOpacity(0.85),
+                  fontSize: 16,
                   fontWeight: FontWeight.w800,
                 ),
               ),
@@ -41,8 +49,8 @@ class ProfilePlanCard extends StatelessWidget {
               Text(
                 'Premium User',
                 style: TextStyle(
-                  color: isDark ? Colors.white : AppColors.lightTextPrimary,
-                  fontSize: 18,
+                  color: contentColor,
+                  fontSize: 14,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -53,3 +61,9 @@ class ProfilePlanCard extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+

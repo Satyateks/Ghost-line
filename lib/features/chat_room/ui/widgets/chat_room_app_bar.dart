@@ -28,7 +28,7 @@ class ChatRoomAppBar extends StatelessWidget {
         children: [
           _CircleGlassButton(icon: Icons.arrow_back_ios_new_rounded, onTap: Get.back),
 
-          const SizedBox(width: 10),
+          const SizedBox(width: 12),
 
         /*  AvatarWidget(name: name, imageUrl: avatar, size: 34, showStatus: false),
           const SizedBox(width: 8),
@@ -49,8 +49,8 @@ class ChatRoomAppBar extends StatelessWidget {
                   AvatarWidget(
                     name: name,
                     imageUrl: avatar,
-                    size: 34,
-                    showStatus: false,
+                    size: 40,
+                    showStatus: true,
                   ),
                   const SizedBox(width: 8),
                   Expanded(
@@ -109,12 +109,11 @@ class _CircleGlassButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(999),
+      borderRadius: BorderRadius.circular(80),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(999),
+        borderRadius: BorderRadius.circular(80),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
           child: Container(
@@ -131,9 +130,7 @@ class _CircleGlassButton extends StatelessWidget {
                     : Colors.white.withOpacity(0.95),
               ),
             ),
-            child: Icon(
-              icon,
-              size: 18,
+            child: Icon( icon, size: 24,
               color: isDark ? Colors.white : AppColors.lightTextPrimary,
             ),
           ),

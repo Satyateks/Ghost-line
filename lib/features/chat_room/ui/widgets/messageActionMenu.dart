@@ -2,8 +2,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-
-import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/theme_route.dart';
 
 class MessageActionMenu {
   static Future<void> show({
@@ -17,31 +16,23 @@ class MessageActionMenu {
     required VoidCallback onStar,
   }) async {
     final overlay = Overlay.of(context).context.findRenderObject() as RenderBox;
-
+   final isDark = Theme.of(context).brightness == Brightness.dark;
     final selected = await showMenu<String>(
       context: context,
-      color: Colors.transparent,
+      color: isDark ? AppColors.darkBg : AppColors.lightBg,
       elevation: 0,
-      constraints: const BoxConstraints(
-        minWidth: 190,
-        maxWidth: 220,
-      ),
+      constraints: const BoxConstraints( minWidth: 190, maxWidth: 220),
       position: RelativeRect.fromRect(
-        Rect.fromLTWH(
-          details.globalPosition.dx,
-          details.globalPosition.dy,
-          1,
-          1,
-        ),
+        Rect.fromLTWH( details.globalPosition.dx, details.globalPosition.dy, 1, 1),
         Offset.zero & overlay.size,
       ),
-      items: const [
+      items: [
         PopupMenuItem<String>(
           value: "copy",
           padding: EdgeInsets.zero,
           child: _MessageActionItem(
             icon: Icons.copy_rounded,
-            title: "Copy",
+            title: "Copy",isDark: isDark,
           ),
         ),
         PopupMenuItem<String>(
@@ -49,7 +40,7 @@ class MessageActionMenu {
           padding: EdgeInsets.zero,
           child: _MessageActionItem(
             icon: Icons.forward_rounded,
-            title: "Forward",
+            title: "Forward",isDark: isDark,
           ),
         ),
         PopupMenuItem<String>(
@@ -57,7 +48,7 @@ class MessageActionMenu {
           padding: EdgeInsets.zero,
           child: _MessageActionItem(
             icon: Icons.push_pin_outlined,
-            title: "Pin message",
+            title: "Pin message",isDark: isDark,
           ),
         ),
         PopupMenuItem<String>(
@@ -65,7 +56,7 @@ class MessageActionMenu {
           padding: EdgeInsets.zero,
           child: _MessageActionItem(
             icon: Icons.star_border_rounded,
-            title: "Star message",
+            title: "Star message",isDark: isDark,
           ),
         ),
         PopupMenuItem<String>(
@@ -87,21 +78,11 @@ class MessageActionMenu {
     if (selected == null) return;
 
     switch (selected) {
-      case "copy":
-        onCopy();
-        break;
-      case "forward":
-        onForward();
-        break;
-      case "pin":
-        onPin();
-        break;
-      case "star":
-        onStar();
-        break;
-      case "delete":
-        onDelete();
-        break;
+      case "copy": onCopy(); break;
+      case "forward": onForward(); break;
+      case "pin": onPin(); break;
+      case "star": onStar(); break;
+      case "delete": onDelete(); break;
     }
   }
 }
@@ -114,12 +95,14 @@ class _MessageActionItem extends StatelessWidget {
   final String title;
   final bool isDanger;
   final bool isLast;
+  final bool isDark;
 
   const _MessageActionItem({
     required this.icon,
     required this.title,
     this.isDanger = false,
     this.isLast = false,
+    this.isDark = false,
   });
 
   @override
@@ -127,7 +110,7 @@ class _MessageActionItem extends StatelessWidget {
     return Container(
       height: 42,
       decoration: BoxDecoration(
-        color: const Color(0xFF3F3F3F),
+        // color:isDark ? Colors.white70 : AppColors.lightTextPrimary,
         borderRadius: BorderRadius.vertical(
           top: title == "Copy" ? const Radius.circular(14) : Radius.zero,
           bottom: isLast ? const Radius.circular(14) : Radius.zero,
@@ -143,14 +126,14 @@ class _MessageActionItem extends StatelessWidget {
                   Icon(
                     icon,
                     size: 19,
-                    color: isDanger ? Colors.redAccent : Colors.white70,
+                    color: isDanger ? Colors.redAccent :isDark ? Colors.white : AppColors.lightTextPrimary,
                   ),
                   const SizedBox(width: 10),
                   Expanded(
                     child: Text(
                       title,
                       style: TextStyle(
-                        color: isDanger ? Colors.redAccent : Colors.white,
+                        color: isDanger ? Colors.redAccent :isDark?Colors.white : AppColors.lightTextPrimary,
                         fontSize: 13.5,
                         fontWeight: FontWeight.w500,
                       ),
@@ -186,6 +169,8 @@ class MessageActionSheet {
     required VoidCallback onConfirm,
   }) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final titleColor=isDark ? Colors.white : AppColors.lightTextPrimary;
+    final messageTextClr=isDark ? Colors.white : AppColors.lightTextSecondary;
 
     return showModalBottomSheet(
       context: context,
@@ -216,48 +201,17 @@ class MessageActionSheet {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Container(
-                      height: 54,
-                      width: 54,
-                      decoration: BoxDecoration(
-                        color: confirmColor.withOpacity(0.16),
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        icon,
-                        color: confirmColor,
-                        size: 28,
-                      ),
-                    ),
+                    // Container(
+                    //   height: 54,
+                    //   width: 54,
+                    //   decoration: BoxDecoration(color: confirmColor.withOpacity(0.16),shape: BoxShape.circle),
+                    //   child: Icon(icon, color: confirmColor, size: 28),
+                    // ),
 
                     const SizedBox(height: 14),
-
-                    Text(
-                      title,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: isDark
-                            ? Colors.white
-                            : AppColors.lightTextPrimary,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-
+                    Text(title,textAlign: TextAlign.center,style: AppTextStyles.h3(titleColor)),
                     const SizedBox(height: 8),
-
-                    Text(
-                      messageText,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: isDark
-                            ? Colors.white70
-                            : AppColors.lightTextSecondary,
-                        fontSize: 13,
-                        height: 1.32,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
+                    Text(messageText,textAlign: TextAlign.center,style: AppTextStyles.bodyLarge(messageTextClr)),
 
                     const SizedBox(height: 20),
 
@@ -278,14 +232,8 @@ class MessageActionSheet {
                                   borderRadius: BorderRadius.circular(999),
                                 ),
                               ),
-                              child: Text(
-                                "Cancel",
-                                style: TextStyle(
-                                  color: isDark ? Colors.white : Colors.black87,
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
+                              child:Text('Cancel',style: AppTextStyles.bodyLarge(messageTextClr))
+  
                             ),
                           ),
                         ),
@@ -300,18 +248,9 @@ class MessageActionSheet {
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: confirmColor,
                                 elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(999),
-                                ),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.authButton)),
                               ),
-                              child: Text(
-                                confirmText,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
+                              child:Text(confirmText,style: AppTextStyles.bodyLarge(Colors.white))
                             ),
                           ),
                         ),

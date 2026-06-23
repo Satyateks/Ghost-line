@@ -1,18 +1,14 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../core/theme/app_colors.dart';
-import '../../../core/widgets/avatar_widget.dart';
-import '../../home/controller/home_controller.dart';
-import '../../home/model/chat_item_model.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/avatar_widget.dart';
+import '../../../home/controller/home_controller.dart';
+import '../../../home/model/chat_item_model.dart';
 
-class ForwardMessageScreen extends StatelessWidget {
-  final dynamic message;
-
-  ForwardMessageScreen({
-    super.key,
-    required this.message,
-  });
+class InviteFriend extends StatelessWidget {
+   InviteFriend({super.key});
 
   final HomeController homeController = Get.find<HomeController>();
   final TextEditingController searchController = TextEditingController();
@@ -58,10 +54,10 @@ class ForwardMessageScreen extends StatelessWidget {
                           ),
                           const SizedBox(width: 6),
                           Text(
-                            "Chat to",
+                            "Invite a friend",
                             style: TextStyle(
                               color: isDark ? Colors.white : Colors.black,
-                              fontSize: 12.5,
+                              fontSize: 16,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -150,6 +146,7 @@ class ForwardMessageScreen extends StatelessWidget {
                 ),
               ),
             ),
+
             Expanded(
               child: Obx(() {
                 final allChats = homeController.chats;
@@ -182,9 +179,9 @@ class ForwardMessageScreen extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(8, 0, 10, 90),
                   children: [
                     if (recentChats.isNotEmpty) ...[
-                      _ForwardSectionTitle(title: "Recents"),
+                      _ShareSectionTitle(title: "Recents"),
                       ...recentChats.map(
-                        (chat) => _ForwardContactTile(
+                        (chat) => _ShareContactTile(
                           chat: chat,
                           isSelected: selectedChatIds.contains(chat.id),
                           onTap: () {
@@ -196,9 +193,9 @@ class ForwardMessageScreen extends StatelessWidget {
 
                     if (contacts.isNotEmpty) ...[
                       const SizedBox(height: 8),
-                      _ForwardSectionTitle(title: "Contacts"),
+                      _ShareSectionTitle(title: "Contacts"),
                       ...contacts.map(
-                        (chat) => _ForwardContactTile(
+                        (chat) => _ShareContactTile(
                           chat: chat,
                           isSelected: selectedChatIds.contains(chat.id),
                           onTap: () {
@@ -216,9 +213,7 @@ class ForwardMessageScreen extends StatelessWidget {
       ),
 
       bottomNavigationBar: Obx(() {
-        if (selectedChatIds.isEmpty) {
-          return const SizedBox.shrink();
-        }
+        if (selectedChatIds.isEmpty) return const SizedBox.shrink();
 
         return SafeArea(
           top: false,
@@ -226,13 +221,13 @@ class ForwardMessageScreen extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(14, 8, 14, 14),
             child: ElevatedButton(
               onPressed: () {
-                homeController.forwardMessage( message: message, chatIds: selectedChatIds);
+                // homeController.forwardMessage( message: message, chatIds: selectedChatIds);
 
                 Get.back();
 
                 Get.snackbar(
-                  "Forwarded",
-                  "Message forwarded successfully",
+                  "Share Link",
+                  "Link share successfully",
                   snackPosition: SnackPosition.BOTTOM,
                 );
               },
@@ -245,7 +240,7 @@ class ForwardMessageScreen extends StatelessWidget {
                 ),
               ),
               child: Text(
-                "Forward to ${selectedChatIds.length} chat",
+                "Share to ${selectedChatIds.length} chat",
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 14,
@@ -266,10 +261,10 @@ class ForwardMessageScreen extends StatelessWidget {
   }
 }
 
-class _ForwardSectionTitle extends StatelessWidget {
+class _ShareSectionTitle extends StatelessWidget {
   final String title;
 
-  const _ForwardSectionTitle({
+  const _ShareSectionTitle({
     required this.title,
   });
 
@@ -291,12 +286,12 @@ class _ForwardSectionTitle extends StatelessWidget {
   }
 }
 
-class _ForwardContactTile extends StatelessWidget {
+class _ShareContactTile extends StatelessWidget {
   final ChatItemModel chat;
   final bool isSelected;
   final VoidCallback onTap;
 
-  const _ForwardContactTile({
+  const _ShareContactTile({
     required this.chat,
     required this.isSelected,
     required this.onTap,
@@ -330,7 +325,7 @@ class _ForwardContactTile extends StatelessWidget {
                 AvatarWidget(
                   name: chat.name,
                   imageUrl: chat.avatar,
-                  size: 45,
+                  size: 50,
                   isOnline: chat.isOnline,
                   showStatus: false,
                 ),
@@ -372,9 +367,9 @@ class _ForwardContactTile extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: nameColor,
-                      fontSize: 14.5,
+                      fontSize: 18,
                       height: 1.05,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
 
@@ -386,14 +381,22 @@ class _ForwardContactTile extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: phoneColor,
-                      fontSize: 13,
-                      height: 1.05,
+                      fontSize: 14,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
                 ],
               ),
             ),
+                Text(
+                    'Invite',
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: AppColors.buttonBlue,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
           ],
         ),
       ),

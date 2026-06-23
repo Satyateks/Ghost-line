@@ -19,14 +19,16 @@ class AuthScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         resizeToAvoidBottomInset: true,
-        backgroundColor: Colors.black,
+        backgroundColor: isDark ? Colors.black : AppColors.lightBg,
         body: Container(
-          decoration: const BoxDecoration(
-            gradient: AppColors.darkBgGradient,
+          decoration: BoxDecoration(
+            gradient: isDark ? AppColors.darkBgGradient : AppColors.lightBgGradient,
           ),
           child: SafeArea(
             child: LayoutBuilder(
@@ -76,19 +78,11 @@ class AuthScreen extends StatelessWidget {
 
                         Container(
                           width: double.infinity,
-                          constraints: BoxConstraints(
-                            minHeight: constraints.maxHeight,
-                          ),
+                          constraints: BoxConstraints(minHeight: constraints.maxHeight),
                           alignment: Alignment.bottomCenter,
-                          padding: const EdgeInsets.only(
-                            left: 8,
-                            right: 8,
-                            bottom: 24,
-                          ),
+                          padding: const EdgeInsets.only(left: 8, right: 8, bottom: 4),
                           child: Padding(
-                            padding: EdgeInsets.only(
-                              top: size.height * 0.54,
-                            ),
+                            padding: EdgeInsets.only(top: size.height * 0.54),
                             child: Obx(
                               () => AnimatedSwitcher(
                                 duration: const Duration(milliseconds: 280),
@@ -96,19 +90,14 @@ class AuthScreen extends StatelessWidget {
                                 switchOutCurve: Curves.easeInCubic,
                                 transitionBuilder: (child, animation) {
                                   return FadeTransition(
-                                    opacity: animation,
+                                    opacity: animation,alwaysIncludeSemantics: true,
                                     child: SlideTransition(
-                                      position: Tween<Offset>(
-                                        begin: const Offset(0, 0.04),
-                                        end: Offset.zero,
-                                      ).animate(animation),
+                                      position: Tween<Offset>(begin: const Offset(0, 0.04), end: Offset.zero).animate(animation),
                                       child: child,
                                     ),
                                   );
                                 },
-                                child: _cardByType(
-                                  authCtrl.currentCard.value,
-                                ),
+                                child: _cardByType( authCtrl.currentCard.value ),
                               ),
                             ),
                           ),
@@ -172,24 +161,29 @@ class _LoginCard extends StatelessWidget {
           Center(
             child: GestureDetector(
               onTap: controller.showCreateAccount,
-              child: RichText(
-                text: TextSpan(
-                  text: "Don't have an account? ",
-                  style: TextStyle(
-                    color: Colors.white.withOpacity(0.62),
-                    fontSize: 10,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  children: const [
-                    TextSpan(
-                      text: "Create account",
+              child: Builder(
+                builder: (context) {
+                  final isDark = Theme.of(context).brightness == Brightness.dark;
+                  return RichText(
+                    text: TextSpan(
+                      text: "Don't have an account? ",
                       style: TextStyle(
-                        color: AppColors.primaryBlue,
-                        fontWeight: FontWeight.w700,
+                        color: isDark ? Colors.white.withOpacity(0.62) : AppColors.lightTextMuted,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
                       ),
+                      children: const [
+                        TextSpan(
+                          text: "Create account",
+                          style: TextStyle(fontSize: 15,
+                            color: AppColors.primaryBlue,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  );
+                },
               ),
             ),
           ),
@@ -240,24 +234,29 @@ class _CreateAccountCard extends StatelessWidget {
           Center(
             child: GestureDetector(
               onTap: controller.showLogin,
-              child: RichText(
-                text: TextSpan(
-                  text: "Have an existing account ",
-                  style: TextStyle(
-                    color: Colors.white.withOpacity(0.62),
-                    fontSize: 10,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  children: const [
-                    TextSpan(
-                      text: "Log in",
+              child: Builder(
+                builder: (context) {
+                  final isDark = Theme.of(context).brightness == Brightness.dark;
+                  return RichText(
+                    text: TextSpan(
+                      text: "Have an existing account ",
                       style: TextStyle(
-                        color: AppColors.primaryBlue,
-                        fontWeight: FontWeight.w700,
+                        color: isDark ? Colors.white.withOpacity(0.62) : AppColors.lightTextMuted,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
                       ),
+                      children: const [
+                        TextSpan(
+                          text: "Log in",
+                          style: TextStyle(fontSize: 14,
+                            color: AppColors.primaryBlue,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  );
+                },
               ),
             ),
           ),
@@ -284,6 +283,9 @@ class _OtpCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final textSecondary = isDark ? Colors.white : AppColors.lightTextPrimary;
+    
     return _AuthGlassCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -294,25 +296,25 @@ class _OtpCard extends StatelessWidget {
                 onTap: controller.showLogin,
                 child: Icon(
                   Icons.arrow_back_ios_new_rounded,
-                  color: Colors.white.withOpacity(0.82),
-                  size: 14,
+                  color: textSecondary,
+                  size: 24,
                 ),
               ),
               const SizedBox(width: 6),
-              const _AuthTitle("Enter OTP"),
+              _AuthTitle("Enter OTP"),
             ],
           ),
 
-          const SizedBox(height: 4),
+          const SizedBox(height: 11),
 
           Row(
             children: [
               Text(
                 "An OTP was sent to xxx90",
                 style: TextStyle(
-                  color: Colors.white.withOpacity(0.45),
-                  fontSize: 9.5,
-                  fontWeight: FontWeight.w500,
+                  color: textSecondary,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
               const Spacer(),
@@ -322,7 +324,7 @@ class _OtpCard extends StatelessWidget {
                   "Change Number",
                   style: TextStyle(
                     color: AppColors.primaryBlue,
-                    fontSize: 9.5,
+                    fontSize: 12,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -330,13 +332,12 @@ class _OtpCard extends StatelessWidget {
             ],
           ),
 
-          const SizedBox(height: 14),
+          const SizedBox(height: 17),
 
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: List.generate(
-              6,
-              (index) => _OtpBox(
+              6, (index) => _OtpBox(
                 controller: controller.otpControllers[index],
                 isLast: index == 5,
               ),
@@ -350,9 +351,9 @@ class _OtpCard extends StatelessWidget {
             child: Text(
               "Resend in 35s",
               style: TextStyle(
-                color: Colors.white.withOpacity(0.45),
-                fontSize: 9.5,
-                fontWeight: FontWeight.w500,
+                color: textSecondary,
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
               ),
             ),
           ),
@@ -384,14 +385,11 @@ class _UsernameCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const _AuthTitle("Choose a Username"),
-          const SizedBox(height: 12),
+          const SizedBox(height: 21),
 
-          _AuthField(
-            controller: controller.usernameCtrl,
-            hint: "Choose a Username",
-          ),
+          _AuthField( controller: controller.usernameCtrl, hint: "Choose a Username"),
 
-          const SizedBox(height: 62),
+          const SizedBox(height: 27),
 
           _AuthPrimaryButton(
             title: "Continue",
@@ -411,10 +409,12 @@ class _AuthTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    
     return Text(
       title,
-      style: AppTextStyles.authTitle(Colors.white).copyWith(
-        fontSize: 13,
+      style: AppTextStyles.authTitle(isDark ? Colors.white : AppColors.lightTextPrimary).copyWith(
+        fontSize: 21,height: 1.24,
         fontWeight: FontWeight.w700,
       ),
     );
@@ -434,32 +434,37 @@ class _AuthField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final textColor = isDark ? Colors.white : AppColors.lightTextPrimary;
+    final hintColor = isDark ? Colors.white.withOpacity(0.44) : AppColors.lightTextMuted;
+    final fieldBgColor = isDark ? Colors.white.withOpacity(0.08) : AppColors.lightBorder.withOpacity(0.5);
+    
     return SizedBox(
-      height: 31,
+      height: 41,
       child: TextFormField(
         controller: controller,
         obscureText: obscureText,
         cursorColor: AppColors.primaryBlue,
-        style: const TextStyle(
-          color: Colors.white,
+        style: TextStyle(
+          color: textColor,
           fontSize: 10.5,
           fontWeight: FontWeight.w500,
         ),
         decoration: InputDecoration(
           hintText: hint,
           hintStyle: TextStyle(
-            color: Colors.white.withOpacity(0.44),
+            color: hintColor,
             fontSize: 9.7,
             fontWeight: FontWeight.w500,
           ),
           filled: true,
-          fillColor: Colors.white.withOpacity(0.08),
+          fillColor: fieldBgColor,
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 11,
             vertical: 0,
           ),
-          border: _fieldBorder(),
-          enabledBorder: _fieldBorder(),
+          border: _fieldBorder(color: isDark ? Colors.transparent : AppColors.lightBorder),
+          enabledBorder: _fieldBorder(color: isDark ? Colors.transparent : AppColors.lightBorder),
           focusedBorder: _fieldBorder(
             color: AppColors.primaryBlue.withOpacity(0.65),
           ),
@@ -490,8 +495,10 @@ class _AuthPrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    
     return SizedBox(
-      height: 34,
+      height: 41,
       width: double.infinity,
       child: ElevatedButton(
         onPressed: onTap,
@@ -506,8 +513,8 @@ class _AuthPrimaryButton extends StatelessWidget {
         ),
         child: Text(
           title,
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: isDark ? Colors.white : Colors.white,
             fontSize: 10.8,
             fontWeight: FontWeight.w600,
           ),
@@ -528,28 +535,25 @@ class _OtpBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final textColor = isDark ? Colors.white : AppColors.lightTextPrimary;
+    final fieldBgColor = isDark ? Colors.white.withOpacity(0.08) : AppColors.lightBorder.withOpacity(0.5);
+    
     return SizedBox(
-      height: 38,
-      width: 34,
+      height: 48,
+      width: 51,
       child: TextFormField(
         controller: controller,
         maxLength: 1,
         textAlign: TextAlign.center,
         keyboardType: TextInputType.number,
-        inputFormatters: [
-          FilteringTextInputFormatter.digitsOnly,
-          LengthLimitingTextInputFormatter(1),
-        ],
+        inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(1)],
         cursorColor: AppColors.primaryBlue,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 14,
-          fontWeight: FontWeight.w700,
-        ),
+        style: TextStyle(color: textColor, fontSize: 14, fontWeight: FontWeight.w700),
         decoration: InputDecoration(
           counterText: "",
           filled: true,
-          fillColor: Colors.white.withOpacity(0.08),
+          fillColor: fieldBgColor,
           contentPadding: EdgeInsets.zero,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(AppRadius.full),
@@ -557,13 +561,8 @@ class _OtpBox extends StatelessWidget {
           ),
         ),
         onChanged: (value) {
-          if (value.isNotEmpty && !isLast) {
-            FocusScope.of(context).nextFocus();
-          }
-
-          if (value.isEmpty) {
-            FocusScope.of(context).previousFocus();
-          }
+          if (value.isNotEmpty && !isLast) FocusScope.of(context).nextFocus();
+          if (value.isEmpty) FocusScope.of(context).previousFocus();
         },
       ),
     );
@@ -575,12 +574,16 @@ class _AuthIntroText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final titleColor = isDark ? Colors.white : AppColors.lightTextPrimary;
+    final subtitleColor = isDark ? Colors.white.withOpacity(0.58) : AppColors.lightTextSecondary;
+    
     return Column(
       children: [
         Text(
-          "Lorem ipsum dolor sit amet\nconsectetur nunc",
+          "Find Your Dream Home\nWithout the Hassle",
           textAlign: TextAlign.center,
-          style: AppTextStyles.h3(Colors.white).copyWith(
+          style: AppTextStyles.h3(titleColor).copyWith(
             fontSize: 16,
             height: 1.16,
             fontWeight: FontWeight.w600,
@@ -588,10 +591,10 @@ class _AuthIntroText extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          "Lorem ipsum dolor sit amet consectetur. Blandit\nsed sed dis mattis consequat et.",
+          "Discover premium properties, connect with trusted owners,\nand lock your perfect space today.",
           textAlign: TextAlign.center,
           style: AppTextStyles.bodySmall(
-            Colors.white.withOpacity(0.58),
+            subtitleColor,
           ).copyWith(
             fontSize: 10.5,
             height: 1.25,
@@ -609,25 +612,24 @@ class _AuthGlassCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    
     return ClipRRect(
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(24),
       child: BackdropFilter(
-        filter: ImageFilter.blur(
-          sigmaX: 18,
-          sigmaY: 18,
-        ),
+        filter: ImageFilter.blur( sigmaX: 18, sigmaY: 18),
         child: Container(
           width: double.infinity,
-          padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+          padding: const EdgeInsets.fromLTRB(12, 21, 12, 24),
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.075),
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-              color: Colors.white.withOpacity(0.07),
-            ),
+            color: isDark 
+                ? Colors.white.withOpacity(0.075)
+                : Colors.white.withOpacity(0.85),
+            borderRadius: BorderRadius.circular(24),
+            border: Border.all(color: isDark ? Colors.white.withOpacity(0.07) : Colors.white.withOpacity(0.5)),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.35),
+                color: isDark ? Colors.black.withOpacity(0.35) : Colors.black.withOpacity(0.1),
                 blurRadius: 24,
                 offset: const Offset(0, 12),
               ),

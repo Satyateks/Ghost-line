@@ -12,6 +12,7 @@ class AppAssets {
   static const String onboarding = '$_images/onboarding.png';
   static const String authBg = '$_images/auth_bg.png';
   static const String defaultAvatar = '$_images/default_avatar.png';
+  static const String logout = '$_images/logout.png';
 
   /// Icons
   static const String chatIcon = '$_icons/chat.svg';

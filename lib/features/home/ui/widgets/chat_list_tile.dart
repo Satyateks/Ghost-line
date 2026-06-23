@@ -37,12 +37,12 @@ class ChatListTile extends StatelessWidget {
             AvatarWidget(
               name: chat.name,
               imageUrl: chat.avatar,
-              size: 48,
+              size: 56,
               isOnline: chat.isOnline,
               showStatus: false,
             ),
 
-            const SizedBox(width: 10),
+            const SizedBox(width: 8),
 
             Expanded(
               child: Column(
@@ -50,19 +50,7 @@ class ChatListTile extends StatelessWidget {
                 children: [
                 Row(
                   children: [
-                    Expanded(
-                      child: Text(
-                        chat.name,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: nameColor,
-                          fontSize: 16,
-                          height: 1.05,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
+                    Expanded(child: Text(chat.name, maxLines: 1, overflow: TextOverflow.ellipsis, style: AppTextStyles.bodyHighLarge(nameColor))),
 
                     if (chat.isMuted) ...[
                       const SizedBox(width: 5),
@@ -84,17 +72,7 @@ class ChatListTile extends StatelessWidget {
                   ],
                 ),
                   const SizedBox(height: 4),
-
-                  Text(
-                    chat.message,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: msgColor,
-                      fontSize: 13.2,
-                      height: 1.12,
-                    ),
-                  ),
+                  Text(chat.message, maxLines: 2, overflow: TextOverflow.ellipsis, style: AppTextStyles.bodyLarge(msgColor)),
                 ],
               ),
             ),
@@ -104,35 +82,17 @@ class ChatListTile extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(
-                  chat.time,
-                  style: TextStyle(
-                    color: timeColor,
-                    fontSize: 11,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-
+                Text(chat.time,style: AppTextStyles.bodyMedium(timeColor)),
                 const SizedBox(height: 8),
                       
                 if (chat.unreadCount > 0)
                   Container(
-                    height: 20,
+                    height: 24,
                     constraints: const BoxConstraints(minWidth: 20),
                     padding: const EdgeInsets.symmetric(horizontal: 6),
                     alignment: Alignment.center,
-                    decoration: const BoxDecoration(
-                      color: AppColors.buttonBlue,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Text(
-                      chat.unreadCount.toString(),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 11,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
+                    decoration: const BoxDecoration(color: AppColors.buttonBlue, shape: BoxShape.circle),
+                    child: Text(chat.unreadCount.toString(),style: AppTextStyles.bodyMedium(Colors.white)),
                   )
                 else
                   const SizedBox(height: 20),
@@ -160,10 +120,10 @@ class ChatActionMenu {
     required VoidCallback onDelete,
   }) async {
     final overlay = Overlay.of(context).context.findRenderObject() as RenderBox;
-
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final selected = await showMenu<String>(
       context: context,
-      color:const Color(0xFF3F3F3F),
+      color:isDark ? AppColors.darkBg : AppColors.lightBg,
       elevation: 0,
       constraints: const BoxConstraints(
         minWidth: 190,
@@ -262,12 +222,14 @@ class _ChatActionItem extends StatelessWidget {
   final String title;
   final bool isDanger;
   final bool isLast;
+  final bool isDark;
 
   const _ChatActionItem({
     required this.icon,
     required this.title,
     this.isDanger = false,
     this.isLast = false,
+    this.isDark = false,
   });
 
   @override
@@ -277,7 +239,7 @@ class _ChatActionItem extends StatelessWidget {
       decoration: BoxDecoration(
         // color: const Color(0xFF3F3F3F),
         borderRadius: BorderRadius.vertical(
-          top: title == "Archive" ? const Radius.circular(14) : Radius.zero,
+          top: title == "Archive" ? const Radius.circular(AppRadius.full) : Radius.zero,
           bottom: isLast ? const Radius.circular(14) : Radius.zero,
         ),
       ),
@@ -291,14 +253,14 @@ class _ChatActionItem extends StatelessWidget {
                   Icon(
                     icon,
                     size: 21,
-                    color: isDanger ? Colors.redAccent : Colors.white70,
+                    color: isDanger ? Colors.redAccent :isDark ? Colors.white : AppColors.lightTextPrimary,
                   ),
                   const SizedBox(width: 10),
                   Expanded(
                     child: Text(
                       title,
                       style: TextStyle(
-                        color: isDanger ? Colors.redAccent : Colors.white,
+                        color: isDanger ? Colors.redAccent :isDark ? Colors.white : AppColors.lightTextPrimary,
                         fontSize: 15.5,height: 2,
                         fontWeight: FontWeight.w500,
                       ),

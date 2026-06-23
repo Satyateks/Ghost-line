@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AppTextStyles {
   AppTextStyles._();
 
-  static const String fontFamily = 'Inter';
+  static const String fontFamily = 'Satoshi';
 
   static TextStyle h1(Color color) => TextStyle(
     fontFamily: fontFamily,
@@ -57,6 +57,13 @@ class AppTextStyles {
   static TextStyle bodyLarge(Color color) => TextStyle(
     fontFamily: fontFamily,
     fontSize: 16,
+    height: 1.4,
+    fontWeight: FontWeight.w500,
+    color: color,
+  );
+  static TextStyle bodyHighLarge(Color color) => TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 18,
     height: 1.4,
     fontWeight: FontWeight.w500,
     color: color,

@@ -4,10 +4,9 @@ import '../model/profile_models.dart';
 
 class ProfileController extends GetxController {
   final RxString name = 'Satyam Mishra'.obs;
-  final RxString username = '@AnilChaudhry123'.obs;
+  final RxString username = '@satyamishra95391'.obs;
   final RxString phone = '+91 9565494959'.obs;
-  final RxString avatar =
-      'https://images.unsplash.com/photo-1500648767791-00dcc994a43e'.obs;
+  final RxString avatar = 'https://images.unsplash.com/photo-1504593811423-6dd665756598'.obs;
 
   final RxList<ProfileMenuModel> menus = <ProfileMenuModel>[].obs;
   final RxList<SwitchUserModel> switchUsers = <SwitchUserModel>[].obs;
@@ -67,19 +66,23 @@ class ProfileController extends GetxController {
   void _loadSwitchUsers() {
     switchUsers.assignAll([
       SwitchUserModel(
-        name: 'Satyam Mishra',
-        username: '@AnilChaudhry123',
-        phone: '+91 9565494959',
-        avatar:
-            'https://images.unsplash.com/photo-1500648767791-00dcc994a43e',
-        isCurrent: true,
-      ),
-      SwitchUserModel(
         name: 'Sneha Singh',
         username: '@sneha_singh',
         phone: '+91 9876543210',
-        avatar:
-            'https://images.unsplash.com/photo-1494790108377-be9c29b29330',
+        avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330',
+      ),
+      SwitchUserModel(
+        name: 'Satyam Mishra',
+        username: '@Satyammish1',
+        phone: '+91 9565494959',
+        avatar: 'https://images.unsplash.com/photo-1504593811423-6dd665756598',
+        isCurrent: true,
+      ),
+      SwitchUserModel(
+        name: 'Sejal Pawar',
+        username: '@sjal_singh',
+        phone: '+91 9876523210',
+        avatar: 'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df',
       ),
     ]);
   }
@@ -225,3 +228,4 @@ class ProfileController extends GetxController {
     ];
   }
 }
+

@@ -70,14 +70,8 @@ class MessageBubble extends StatelessWidget {
             context: context,
             details: details,
             message: message,
-            onCopy: () {
-              Clipboard.setData(
-                ClipboardData(text: message.message),
-              );
-            },
-            onForward: () {
-              Get.to( () => ForwardMessageScreen(message: message));
-            },
+            onCopy: () => Clipboard.setData(ClipboardData(text: message.message)),
+            onForward: ()=> Get.to( () => ForwardMessageScreen(message: message)),
             onDelete: () {
               MessageActionSheet.show(
                 context: context,
@@ -106,8 +100,7 @@ class MessageBubble extends StatelessWidget {
                 },
               );
             },
-            onStar: () {
-              MessageActionSheet.show(
+            onStar: () { MessageActionSheet.show(
                 context: context,
                 icon: Icons.star_border_rounded,
                 title: "Star Message?",
@@ -122,10 +115,7 @@ class MessageBubble extends StatelessWidget {
             },
           );
         },
-        child: Text(
-          message.message,
-          style: AppTextStyles.bodyLarge(textColor),
-        ),
+        child: Text(message.message, style: AppTextStyles.bodyLarge(textColor)),
       );
 
      /* content = Text(
@@ -140,14 +130,8 @@ class MessageBubble extends StatelessWidget {
     return Align(
       alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
-        margin: EdgeInsets.only(
-          bottom: 10,
-          left: isMe ? 70 : 0,
-          right: isMe ? 0 : 70,
-        ),
-        padding: message.type == MessageType.image
-            ? const EdgeInsets.all(4)
-            : const EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+        margin: EdgeInsets.only( bottom: 10, left: isMe ? 70 : 0, right: isMe ? 0 : 70),
+        padding: message.type == MessageType.image ? const EdgeInsets.all(4) : const EdgeInsets.symmetric(horizontal: 13, vertical: 10),
         decoration: BoxDecoration(
           color: message.type == MessageType.image ? Colors.transparent : bubbleColor,
           borderRadius: BorderRadius.only(

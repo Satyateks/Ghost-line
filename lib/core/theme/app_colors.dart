@@ -37,7 +37,7 @@ class AppColors {
   static const Color online = Color(0xFF22C55E);
 
   /// Buttons
-  static const Color buttonBlue = Color(0xFF4285F4);
+  static const Color buttonBlue = Color(0xFF3C81F6);
   static const Color buttonDisabled = Color(0x664285F4);
 
   static const Color transparent = Colors.transparent;

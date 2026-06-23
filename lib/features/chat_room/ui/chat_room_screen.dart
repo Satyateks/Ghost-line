@@ -79,8 +79,8 @@ class _DisappearInfo extends StatelessWidget {
           'Messages will disappear after 24 hours',
           style: TextStyle(
             color: isDark ? Colors.white38 : Colors.black45,
-            fontSize: 11,
-            fontWeight: FontWeight.w500,
+            fontSize: 12,
+            fontWeight: FontWeight.w400,
           ),
         ),
       ],
@@ -88,7 +88,7 @@ class _DisappearInfo extends StatelessWidget {
   }
 }
 
-class _DateSeparator extends StatelessWidget {
+class   _DateSeparator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -97,8 +97,8 @@ class _DateSeparator extends StatelessWidget {
       'Today 02:11 PM',
       style: TextStyle(
         color: isDark ? Colors.white38 : Colors.black38,
-        fontSize: 11,
-        fontWeight: FontWeight.w500,
+        fontSize: 12,
+        fontWeight: FontWeight.w400,
       ),
     );
   }

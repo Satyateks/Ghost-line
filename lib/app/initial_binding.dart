@@ -7,6 +7,7 @@ import '../features/chat_room/controller/chat_room_controller.dart';
 import '../features/contact/controller/contact_controller.dart';
 import '../features/home/controller/home_controller.dart';
 import '../features/profile/contoller/profile_controller.dart';
+import '../features/profile/ui/widgets/language.dart';
 import '../features/update/controller/updates_controller.dart';
 import '../features/user_profile/controller/user_profile_controller.dart';
 import '../features/user_profile/internal/media_links_docs/contoller/media_links_docs_controller.dart.dart';
@@ -28,6 +29,7 @@ class InitialBinding extends Bindings {
     Get.put(UpdatesController());
     Get.put(ContactController());
     Get.put(VoicemailController());
+    Get.put(LanguageController());
   }
 
 }

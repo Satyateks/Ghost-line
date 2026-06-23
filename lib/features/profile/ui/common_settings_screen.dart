@@ -56,7 +56,7 @@ class _Header extends StatelessWidget {
 
     return InkWell(
       onTap: Get.back,
-      borderRadius: BorderRadius.circular(999),
+      borderRadius: BorderRadius.circular(80),
       child: Container(
         height: 42,
         padding: const EdgeInsets.symmetric(horizontal: 14),
@@ -64,7 +64,7 @@ class _Header extends StatelessWidget {
           color: isDark
               ? Colors.white.withOpacity(0.08)
               : Colors.white.withOpacity(0.78),
-          borderRadius: BorderRadius.circular(999),
+          borderRadius: BorderRadius.circular(80),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -121,7 +121,13 @@ class _Card extends StatelessWidget {
           final item = items[index];
 
           return InkWell(
-            onTap: () => onTap(item),
+            onTap: () {
+              if (item.onTap != null) {
+                item.onTap!();
+              } else {
+                onTap(item);
+              }
+            },
             child: Column(
               children: [
                 SizedBox(
@@ -187,3 +193,4 @@ class _Card extends StatelessWidget {
     );
   }
 }
+

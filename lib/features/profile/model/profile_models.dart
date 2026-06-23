@@ -65,6 +65,7 @@ class SettingItemModel {
   final String? subtitle;
   final IconData icon;
   final bool isDanger;
+  final VoidCallback? onTap;
 
   SettingItemModel({
     required this.type,
@@ -72,6 +73,7 @@ class SettingItemModel {
     required this.icon,
     this.subtitle,
     this.isDanger = false,
+    this.onTap,
   });
 }
 

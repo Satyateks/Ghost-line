@@ -27,17 +27,17 @@ class ProfileHeaderCard extends StatelessWidget {
     final subColor = isDark ? Colors.white70 : AppColors.lightTextSecondary;
 
     return ClipRRect(
-      borderRadius: BorderRadius.circular(34),
+      borderRadius: BorderRadius.circular(24),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 22, sigmaY: 22),
         child: Container(
           width: double.infinity,
-          padding: const EdgeInsets.fromLTRB(22, 20, 22, 20),
+          padding: const EdgeInsets.fromLTRB(16, 20, 16, 20),
           decoration: BoxDecoration(
             color: isDark
                 ? Colors.white.withOpacity(0.12)
                 : Colors.white.withOpacity(0.82),
-            borderRadius: BorderRadius.circular(34),
+            borderRadius: BorderRadius.circular(24),
             border: Border.all(
               color: isDark
                   ? Colors.white.withOpacity(0.12)
@@ -49,7 +49,7 @@ class ProfileHeaderCard extends StatelessWidget {
               AvatarWidget(
                 name: name,
                 imageUrl: avatar,
-                size: 82,
+                size: 64,
                 showStatus: false,
               ),
 
@@ -65,8 +65,8 @@ class ProfileHeaderCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         color: titleColor,
-                        fontSize: 23,
-                        fontWeight: FontWeight.w800,
+                        fontSize: 22,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                     const SizedBox(height: 5),
@@ -74,7 +74,7 @@ class ProfileHeaderCard extends StatelessWidget {
                       username,
                       style: TextStyle(
                         color: subColor,
-                        fontSize: 15,
+                        fontSize: 12,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -83,7 +83,7 @@ class ProfileHeaderCard extends StatelessWidget {
                       phone,
                       style: TextStyle(
                         color: subColor,
-                        fontSize: 15,
+                        fontSize: 12,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -97,7 +97,7 @@ class ProfileHeaderCard extends StatelessWidget {
                   'Switch account',
                   style: TextStyle(
                     color: AppColors.buttonBlue,
-                    fontSize: 15,
+                    fontSize: 12,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
