@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_text_styles.dart';
 import '../../../core/utils/snackbar_helper.dart';
 import '../../../core/widgets/avatar_widget.dart';
 import '../../../core/widgets/glass_scaffold.dart';
@@ -30,18 +31,12 @@ class UserProfileScreen extends StatelessWidget {
 
   void _handleOptionTap(BuildContext context, ProfileOptionModel item) {
     switch (item.type) {
-      case ProfileOptionType.invisible:
-        InvisibleBottomSheet.show(context: context, controller: controller);
-        break;
+      case ProfileOptionType.invisible: InvisibleBottomSheet.show(context: context, controller: controller); break;
       case ProfileOptionType.hideMobileNumber:
       case ProfileOptionType.callForwarding:
       case ProfileOptionType.callWaiting:
-      case ProfileOptionType.voicemail:
-        controller.toggleOption(item.type);
-        break;
-      case ProfileOptionType.mediaLinksDocs:
-        Get.to(() => MediaLinksDocsScreen(userName: name));
-        break;
+      case ProfileOptionType.voicemail: controller.toggleOption(item.type); break;
+      case ProfileOptionType.mediaLinksDocs: Get.to(() => MediaLinksDocsScreen(userName: name)); break;
     }
   }
 
@@ -51,9 +46,7 @@ class UserProfileScreen extends StatelessWidget {
 
   void _handleToggle1(ProfileOptionModel item) {
     item.value.value = !item.value.value;
-    item = item.copyWith(
-      subtitle: item.value.value ? 'On' : 'Off',
-    );
+    item = item.copyWith(subtitle: item.value.value ? 'On' : 'Off');
   }
 
   @override
@@ -75,12 +68,7 @@ class UserProfileScreen extends StatelessWidget {
 
                   const SizedBox(height: 34),
 
-                  AvatarWidget(
-                    name: name,
-                    imageUrl: avatar,
-                    size: 128,
-                    showStatus: false,
-                  ),
+                  AvatarWidget(name: name, imageUrl: avatar, size: 128, showStatus: false),
 
                   const SizedBox(height: 18),
 
@@ -150,15 +138,9 @@ class OptionsList extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
           decoration: BoxDecoration(
-            color: isDark
-                ? Colors.white.withOpacity(0.14)
-                : Colors.white.withOpacity(0.78),
+            color: isDark ? Colors.white.withOpacity(0.14) : Colors.white.withOpacity(0.78),
             borderRadius: BorderRadius.circular(30),
-            border: Border.all(
-              color: isDark
-                  ? Colors.white.withOpacity(0.14)
-                  : Colors.white.withOpacity(0.95),
-            ),
+            border: Border.all(color: isDark ? Colors.white.withOpacity(0.14) : Colors.white.withOpacity(0.95)),
           ),
           child: Column(
             children: List.generate(options.length, (index) {
@@ -193,19 +175,10 @@ class BlurBackground extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: [
-        Image.network(
-          avatar,
-          fit: BoxFit.cover,
-          errorBuilder: (_, __, ___) => const SizedBox.shrink(),
-        ),
+        Image.network(avatar, fit: BoxFit.cover, errorBuilder: (_, __, ___) => const SizedBox.shrink()),
         BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 32, sigmaY: 32),
-          child: Container(
-            color: isDark
-                ? Colors.black.withOpacity(0.82)
-                : Colors.white.withOpacity(0.78),
-          ),
-        ),
+          child: Container(color: isDark ? Colors.black.withOpacity(0.82) : Colors.white.withOpacity(0.78))),
         Container(
           decoration: BoxDecoration(
             gradient: isDark
@@ -259,15 +232,9 @@ class TopBackChip extends StatelessWidget {
               height: 50,
               padding: const EdgeInsets.symmetric(horizontal: 14),
               decoration: BoxDecoration(
-                color: isDark
-                    ? Colors.white.withOpacity(0.10)
-                    : Colors.white.withOpacity(0.72),
+                color: isDark ? Colors.white.withOpacity(0.10) : Colors.white.withOpacity(0.72),
                 borderRadius: BorderRadius.circular(999),
-                border: Border.all(
-                  color: isDark
-                      ? Colors.white.withOpacity(0.14)
-                      : Colors.white.withOpacity(0.95),
-                ),
+                border: Border.all( color: isDark ? Colors.white.withOpacity(0.14) : Colors.white.withOpacity(0.95), ),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -278,14 +245,7 @@ class TopBackChip extends StatelessWidget {
                     color: isDark ? Colors.white : AppColors.lightTextPrimary,
                   ),
                   const SizedBox(width: 10),
-                  Text(
-                    name,
-                    style: TextStyle(
-                      color: isDark ? Colors.white : AppColors.lightTextPrimary,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
+                  Text(name, style: AppTextStyles.bodyHighLarge(isDark ? Colors.white : AppColors.lightTextPrimary,)),
                 ],
               ),
             ),

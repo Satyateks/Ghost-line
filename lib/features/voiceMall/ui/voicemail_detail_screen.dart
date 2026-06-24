@@ -52,10 +52,7 @@ class VoicemailDetailScreen extends StatelessWidget {
 
                       const SizedBox(width: 14),
 
-                      CircleAvatar(
-                        radius: 18,
-                        backgroundImage: NetworkImage(voicemail.image),
-                      ),
+                      CircleAvatar( radius: 18, backgroundImage: NetworkImage(voicemail.image)),
 
                       const SizedBox(width: 8),
 

@@ -28,6 +28,7 @@ class AvatarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final initials = _getInitials(name);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return InkWell(
       onTap: onTap,
@@ -45,7 +46,10 @@ class AvatarWidget extends StatelessWidget {
                 end: Alignment.bottomRight,
                 colors: [AppColors.primaryBlueLight, AppColors.primaryPurple],
               ),
-              border: Border.all(color: Colors.white.withOpacity(0.28), width: 1),
+              border: Border.all(
+                color: isDark ? Colors.white.withOpacity(0.28) : AppColors.lightBorder, 
+                width: 1,
+              ),
             ),
             child: ClipOval(child: _avatarChild(initials)),
           ),
@@ -57,7 +61,9 @@ class AvatarWidget extends StatelessWidget {
                 height: size * 0.24,
                 width: size * 0.24,
                 decoration: BoxDecoration(
-                  color: isOnline ? AppColors.online : AppColors.darkTextMuted,
+                  color: isOnline 
+                      ? AppColors.online 
+                      : (isDark ? AppColors.darkTextMuted : AppColors.lightTextMuted),
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: Theme.of(context).scaffoldBackgroundColor,
@@ -80,22 +86,12 @@ class AvatarWidget extends StatelessWidget {
       );
     }
 
-    if (asset != null && asset!.isNotEmpty) {
-      return Image.asset(
-        asset!,
-        fit: BoxFit.cover,
-        errorBuilder: (_, __, ___) => _initials(initials),
-      );
-    }
+    if (asset != null && asset!.isNotEmpty) {return Image.asset(asset!, fit: BoxFit.cover, errorBuilder: (_, __, ___) => _initials(initials));}
 
     return _initials(initials);
   }
 
-  Widget _initials(String initials) {
-    return Center(
-      child: Text(initials, style: AppTextStyles.buttonLarge(Colors.white)),
-    );
-  }
+  Widget _initials(String initials) {return Center(child: Text(initials, style: AppTextStyles.buttonLarge(Colors.white)));}
 
   String _getInitials(String value) {
     final words = value.trim().split(RegExp(r'\s+'));

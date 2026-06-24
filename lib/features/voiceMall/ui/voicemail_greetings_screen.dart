@@ -146,15 +146,8 @@ class VoicemailGreetingsScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            _GreetingActionIcon(
-                              icon: Icons.replay_rounded,
-                              onTap: () {},
-                            ),
-                            _GreetingActionIcon(
-                              icon: Icons.play_arrow_rounded,
-                              size: 32,
-                              onTap: () {},
-                            ),
+                            _GreetingActionIcon(icon: Icons.replay_rounded, onTap: () {}),
+                            _GreetingActionIcon(icon: Icons.play_arrow_rounded, size: 32, onTap: () {}, ),
                             _GreetingActionIcon(
                               icon: Icons.volume_up_outlined,
                               onTap: () {},

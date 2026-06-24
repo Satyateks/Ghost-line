@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import '../../home/controller/home_controller.dart';
 import '../../home/ui/widgets/main_bottom_nav.dart';
 import '../controller/voicemail_controller.dart';
+import 'voicemail_detail_screen.dart';
+import 'voicemail_greetings_screen.dart';
 import 'widgets/voicemail_tile.dart';
 
 class VoicemailScreen extends StatelessWidget {
@@ -74,7 +76,7 @@ class VoicemailScreen extends StatelessWidget {
                       const SizedBox(width: 10),
 
                       GestureDetector(
-                        onTap: controller.openGreetings,
+                        onTap: ()=>Get.to(VoicemailGreetingsScreen()),
                         child: Container(
                           height: 40,
                           padding: const EdgeInsets.symmetric(horizontal: 18),
@@ -109,13 +111,13 @@ class VoicemailScreen extends StatelessWidget {
                         if (controller.recentVoicemails.isNotEmpty) ...[
                           _SectionTitle(title: "Recents"),
                           const SizedBox(height: 6),
-                          ...controller.recentVoicemails.map((item) => VoicemailTile(voicemail: item, onTap: () => controller.openVoicemailDetail(item)))],
+                          ...controller.recentVoicemails.map((item) => VoicemailTile(voicemail: item, onTap: () =>Get.to(VoicemailDetailScreen(), arguments: item)))],
 
                         if (controller.olderVoicemails.isNotEmpty) ...[
                           const SizedBox(height: 18),
                           _SectionTitle(title: "Older"),
                           const SizedBox(height: 6),
-                          ...controller.olderVoicemails.map((item) => VoicemailTile(voicemail: item, onTap: () => controller.openVoicemailDetail(item)))],
+                          ...controller.olderVoicemails.map((item) => VoicemailTile(voicemail: item, onTap: () =>Get.to(VoicemailDetailScreen(), arguments: item)))],
 
                         if (controller.filteredVoicemails.isEmpty)
                           Padding(

@@ -34,9 +34,7 @@ class CallsScreen extends StatelessWidget {
 
           const SizedBox(height: 14),
 
-          CallsSearchBar(
-            onChanged: callsCtrl.updateSearch,
-          ),
+          CallsSearchBar(onChanged: callsCtrl.updateSearch),
 
           const SizedBox(height: 20),
 
@@ -83,14 +81,10 @@ class _CallsHeader extends StatelessWidget {
               height: 38,
               padding: const EdgeInsets.symmetric(horizontal: 14),
               decoration: BoxDecoration(
-                color: isDark
-                    ? Colors.white.withOpacity(0.08)
-                    : Colors.white.withOpacity(0.76),
+                color: isDark ? Colors.white.withOpacity(0.08) : Colors.white.withOpacity(0.76),
                 borderRadius: BorderRadius.circular(999),
                 border: Border.all(
-                  color: isDark
-                      ? Colors.white.withOpacity(0.10)
-                      : Colors.white.withOpacity(0.95),
+                  color: isDark ? Colors.white.withOpacity(0.10) : Colors.white.withOpacity(0.95),
                 ),
               ),
               child: Row(
@@ -129,12 +123,11 @@ class _SectionTitle extends StatelessWidget {
     return Text(
       title,
       style: TextStyle(
-        color: Theme.of(context).brightness == Brightness.dark
-            ? Colors.white
-            : AppColors.lightTextPrimary,
+        color: Theme.of(context).brightness == Brightness.dark ? Colors.white : AppColors.lightTextPrimary,
         fontSize: 16,
         fontWeight: FontWeight.w600,
       ),
     );
   }
 }
+

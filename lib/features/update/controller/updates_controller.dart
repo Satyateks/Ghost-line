@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../model/comment_model.dart';
 import '../model/post_model.dart';
 import '../model/story_model.dart';
+import '../model/suggestions_model.dart';
 
 class UpdatesController extends GetxController {
   final stories = <StoryModel>[].obs;
@@ -45,8 +45,7 @@ class UpdatesController extends GetxController {
       CommentModel(
         id: "${parentCommentId}_${DateTime.now().millisecondsSinceEpoch}",
         userName: "You",
-        userImage:
-            "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80",
+        userImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80",
         comment: replyText,
         likeCount: 0,
         replies: [],
@@ -69,6 +68,48 @@ class UpdatesController extends GetxController {
     loadPosts();
     loadComments();
   }
+  SuggestionsModel? _suggestData;
+  SuggestionsModel? get suggestData => _suggestData;
+
+suggestData ={
+    "data": [
+        {
+            "userid": 121,
+            "name": "Arun Kumar",
+            "phone": "9899261043",
+            "email": "arunkumar171212@gmail.com",
+            "profileImage": null,
+            "designation": null,
+            "following": false
+        },
+        {
+            "userid": 120,
+            "name": "Rajat",
+            "phone": "9991354221",
+            "email": "Rajatantil1996@gmail.com",
+            "profileImage": null,
+            "designation": null,
+            "following": false
+        },
+        {
+            "userid": 119,
+            "name": "toohina Mishra",
+            "phone": "8779889596",
+            "email": "Toohina.Mishra-CNT@larsentoubro.com",
+            "profileImage": null,
+            "designation": null,
+            "following": false
+        },
+    ],
+    "success": true,
+    "totalPages": 12,
+    "pageSize": 10,
+    "hasPrevious": false,
+    "hasNext": true,
+    "message": "Follow suggestions retrieved successfully",
+    "totalCount": 112,
+    "currentPage": 0
+}
 
   void loadStories() {
     stories.value = [
@@ -157,7 +198,6 @@ class UpdatesController extends GetxController {
         likeCount: 120,
         commentCount: 18,
       ),
-
       PostModel(
         id: "2",
         postTime: "09:45 PM",
@@ -174,7 +214,6 @@ class UpdatesController extends GetxController {
         likeCount: 88,
         commentCount: 11,
       ),
-
       PostModel(
         id: "3",
         postTime: "08:30 PM",
@@ -185,11 +224,10 @@ class UpdatesController extends GetxController {
             "Ye workstation setup complete karne me 6 mahine lage. "
             "RGB lights, mechanical keyboard, ultrawide monitor sab aa gaya. "
             "Ab bas kaam karne ka mann bhi aa jaye to setup perfect ho jayega. 😅",
-        mediaUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3",
+        mediaUrl: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d",
         likeCount: 245,
         commentCount: 34,
       ),
-
       PostModel(
         id: "4",
         postTime: "07:15 AM",
@@ -200,11 +238,10 @@ class UpdatesController extends GetxController {
             "Subah fitness ke liye bike ride par nikla tha. "
             "15 minute baad samajh aaya ki weather enjoy karne se zyada "
             "main traffic aur speed breakers se fight kar raha hoon. 🏍️😂",
-        mediaUrl: "https://images.unsplash.com/photo-1558980664-10ea292f2c9a",
+        mediaUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330",
         likeCount: 92,
         commentCount: 9,
       ),
-
       PostModel(
         id: "5",
         postTime: "03:20 PM",
@@ -219,7 +256,6 @@ class UpdatesController extends GetxController {
         likeCount: 177,
         commentCount: 23,
       ),
-
       PostModel(
         id: "6",
         postTime: "06:45 PM",
@@ -235,7 +271,6 @@ class UpdatesController extends GetxController {
         likeCount: 310,
         commentCount: 41,
       ),
-
       PostModel(
         id: "7",
         postTime: "11:00 AM",
@@ -250,7 +285,6 @@ class UpdatesController extends GetxController {
         likeCount: 428,
         commentCount: 57,
       ),
-
       PostModel(
         id: "8",
         postTime: "05:30 PM",
@@ -265,7 +299,6 @@ class UpdatesController extends GetxController {
         likeCount: 154,
         commentCount: 19,
       ),
-
       PostModel(
         id: "9",
         postTime: "09:00 PM",
@@ -280,7 +313,6 @@ class UpdatesController extends GetxController {
         likeCount: 502,
         commentCount: 68,
       ),
-
       PostModel(
         id: "10",
         postTime: "02:15 PM",
@@ -295,7 +327,6 @@ class UpdatesController extends GetxController {
         likeCount: 231,
         commentCount: 26,
       ),
-
       PostModel(
         id: "11",
         postTime: "01:00 PM",
@@ -311,7 +342,6 @@ class UpdatesController extends GetxController {
         likeCount: 391,
         commentCount: 49,
       ),
-
       PostModel(
         id: "12",
         postTime: "06:50 PM",
@@ -382,7 +412,6 @@ class UpdatesController extends GetxController {
           ),
         ],
       ),
-
       CommentModel(
         id: "2",
         userName: "Aman",
@@ -390,7 +419,6 @@ class UpdatesController extends GetxController {
         comment: "Great work bro 🔥",
         likeCount: 8,
       ),
-
       CommentModel(
         id: "3",
         userName: "Priya",
@@ -407,7 +435,6 @@ class UpdatesController extends GetxController {
           ),
         ],
       ),
-
       CommentModel(
         id: "4",
         userName: "Rahul",
@@ -415,7 +442,6 @@ class UpdatesController extends GetxController {
         comment: "Which package did you use for the video player?",
         likeCount: 6,
       ),
-
       CommentModel(
         id: "5",
         userName: "Simran",
@@ -423,7 +449,6 @@ class UpdatesController extends GetxController {
         comment: "This is one of the cleanest Flutter UIs I've seen recently ❤️",
         likeCount: 27,
       ),
-
       CommentModel(
         id: "6",
         userName: "Karan",
@@ -440,7 +465,6 @@ class UpdatesController extends GetxController {
           ),
         ],
       ),
-
       CommentModel(
         id: "7",
         userName: "Anjali",
@@ -448,7 +472,6 @@ class UpdatesController extends GetxController {
         comment: "Amazing attention to detail 👌",
         likeCount: 9,
       ),
-
       CommentModel(
         id: "8",
         userName: "Dev",
@@ -475,29 +498,22 @@ class UpdatesController extends GetxController {
       if (comments[i].id == commentId) {
         comments[i].isLiked = !comments[i].isLiked;
 
-        if (comments[i].isLiked) {
-          comments[i].likeCount++;
-        } else {
-          comments[i].likeCount--;
-        }
-
+        if (comments[i].isLiked) comments[i].likeCount++;
+        else comments[i].likeCount--;
         comments.refresh();
         return;
       }
 
-      final replyIndex =
-          comments[i].replies.indexWhere((reply) => reply.id == commentId);
+      final replyIndex = comments[i].replies.indexWhere((reply) => reply.id == commentId);
 
       if (replyIndex != -1) {
         final reply = comments[i].replies[replyIndex];
 
         reply.isLiked = !reply.isLiked;
 
-        if (reply.isLiked) {
-          reply.likeCount++;
-        } else {
-          reply.likeCount--;
-        }
+        if (reply.isLiked) reply.likeCount++;
+        else reply.likeCount--;
+        
 
         comments[i].replies[replyIndex] = reply;
         comments.refresh();

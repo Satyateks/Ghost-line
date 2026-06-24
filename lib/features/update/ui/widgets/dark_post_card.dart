@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ghostline/core/utils/utils_route.dart';
+import 'package:video_player/video_player.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -42,38 +43,70 @@ class DarkPostCard extends StatelessWidget {
           const SizedBox(height: 6),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(18),
-              child: Stack(
-                children: [
-                  CachedNetworkImage(
-                    imageUrl: post.mediaUrl,
-                    width: double.infinity,
-                    height: 199,
-                    fit: BoxFit.cover,
-                  ),
+            child: post.isVideo
+                ? _VideoPreview(videoUrl: post.mediaUrl)
+                : ClipRRect(
+                    borderRadius: BorderRadius.circular(18),
+                    child: CachedNetworkImage(
+                      imageUrl: post.mediaUrl,
+                      width: double.infinity,
+                      height: 199,
+                      fit: BoxFit.cover,
 
-                  if (post.isVideo)
-                    Positioned.fill(
-                      child: Center(
-                        child: Container(
-                          height: 54,
-                          width: 54,
-                          decoration: BoxDecoration(
-                            color: Colors.black.withOpacity(0.45),
-                            shape: BoxShape.circle,
+                      // Loading state
+                      progressIndicatorBuilder:
+                          (context, url, downloadProgress) {
+                        return Container(
+                          height: 199,
+                          color: isDark? Colors.grey.shade100:Colors.black.withOpacity(0.05),
+                          child: Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                CircularProgressIndicator(
+                                  value: downloadProgress.progress,
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  downloadProgress.progress != null
+                                      ? "${(downloadProgress.progress! * 100).toStringAsFixed(0)}%"
+                                      : "Loading image...",
+                                ),
+                              ],
+                            ),
                           ),
-                          child: Icon(
-                            Icons.play_arrow_rounded,
-                            color: isDark ? Colors.white : AppColors.lightTextPrimary,
-                            size: 36,
+                        );
+                      },
+
+                      // Error state
+                      errorWidget: (context, url, error) {
+                        debugPrint("Image Error: $error");
+                        debugPrint("Image URL: $url");
+
+                        return Container(
+                          height: 199,
+                          color: isDark? Colors.grey.shade100:Colors.black.withOpacity(0.05),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.broken_image_outlined,
+                                size: 40,
+                                color: Colors.grey,
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                "Image unavailable",
+                                style: TextStyle(
+                                  color: msgColor,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ),
+                        );
+                      },
                     ),
-                ],
-              ),
-            ),
+                  ),
           ),
 
           Padding(
@@ -178,6 +211,81 @@ class _IconAction extends StatelessWidget {
               color: color,
               size: size,
             ),
+    );
+  }
+}
+
+class _VideoPreview extends StatefulWidget {
+  final String videoUrl;
+  const _VideoPreview({ required this.videoUrl });
+
+  @override
+  State<_VideoPreview> createState() => _VideoPreviewState();
+}
+
+class _VideoPreviewState extends State<_VideoPreview> {
+  late VideoPlayerController controller;
+  bool isReady = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller = VideoPlayerController.networkUrl(
+      Uri.parse(widget.videoUrl),
+    )..initialize().then((_) {
+        if (!mounted) return;
+        setState(() => isReady = true);
+      });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (!isReady) {
+      return Container(
+        height: 199,
+        alignment: Alignment.center,
+        child: const CircularProgressIndicator(),
+      );
+    }
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(18),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          AspectRatio(
+            aspectRatio: controller.value.aspectRatio,
+            child: VideoPlayer(controller),
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                controller.value.isPlaying
+                    ? controller.pause()
+                    : controller.play();
+              });
+            },
+            child: CircleAvatar(
+              radius: 28,
+              backgroundColor: Colors.black.withOpacity(0.45),
+              child: Icon(
+                controller.value.isPlaying
+                    ? Icons.pause_rounded
+                    : Icons.play_arrow_rounded,
+                color: Colors.white,
+                size: 34,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

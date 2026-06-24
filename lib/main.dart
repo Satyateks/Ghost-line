@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -25,14 +27,12 @@ class GhostLineApp extends StatelessWidget {
       initialBinding: InitialBinding(),
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      /// phone ke system dark/light mode ke according
       themeMode: ThemeMode.system,
       // theme: ThemeData(//colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       //   fontFamily: 'Inter', useMaterial3: true,
       //   scaffoldBackgroundColor: const Color(0xFF111111),
-      //   useMaterial3: true,
-      // ),
-      home: AuthScreen(),
+      //   useMaterial3: true),
+      home:AuthScreen(),
       builder: (context, child) {
         return Stack(
           children: [
@@ -43,5 +43,6 @@ class GhostLineApp extends StatelessWidget {
       },
     );
   }
-}
+} 
+ 
 

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ghostline/features/voiceMall/ui/voicemail_detail_screen.dart';
-import 'package:ghostline/features/voiceMall/ui/voicemail_greetings_screen.dart';
 
 import '../model/greeting_model.dart';
 import '../model/voicemail_model.dart';
@@ -126,11 +124,13 @@ class VoicemailController extends GetxController {
         id: "1",
         title: "Hey there, Drop your m...",
         date: "15/06/2026",
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
       ),
       GreetingModel(
         id: "2",
         title: "Hey there, Drop your m...",
         date: "15/06/2026",
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
       ),
     ];
   }
@@ -156,13 +156,6 @@ class VoicemailController extends GetxController {
     return filteredVoicemails.where((item) => !item.isRecent).toList();
   }
 
-  void openVoicemailDetail(VoicemailModel voicemail) {
-    Get.to(VoicemailDetailScreen(), arguments: voicemail);
-  }
-
-  void openGreetings() {
-    Get.to(VoicemailGreetingsScreen());
-  }
 
   void toggleVoicemailPlay(String id) {
     for (final item in voicemails) {
