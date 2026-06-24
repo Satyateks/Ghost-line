@@ -11,6 +11,10 @@ class AppAssets {
   static const String ghostLogo1 = '$_images/ghostlineLogo1.png';
   static const String onboarding = '$_images/onboarding.png';
   static const String authBg = '$_images/authbg.png';
+  static const String premiumImg = '$_images/premiumImg.png';
+  static const String premiumBg = '$_images/premiumBg.png';
+  static const String premiumBgl = '$_images/premiumBgl.png';
+  static const String premiumheader = '$_images/premiumheader.png';
   static const String authBgLight = '$_images/authBgLight.png';
   static const String defaultAvatar = '$_images/default_avatar.png';
   static const String logout = '$_images/logout.png';
