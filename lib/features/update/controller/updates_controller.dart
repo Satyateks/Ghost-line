@@ -64,6 +64,7 @@ class UpdatesController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    _suggestData = SuggestionsModel.fromJson(suggestDataMap);
     loadStories();
     loadPosts();
     loadComments();
@@ -71,35 +72,116 @@ class UpdatesController extends GetxController {
   SuggestionsModel? _suggestData;
   SuggestionsModel? get suggestData => _suggestData;
 
-suggestData ={
+  Map<String, dynamic> suggestDataMap = {
     "data": [
-        {
-            "userid": 121,
-            "name": "Arun Kumar",
-            "phone": "9899261043",
-            "email": "arunkumar171212@gmail.com",
-            "profileImage": null,
-            "designation": null,
-            "following": false
-        },
-        {
-            "userid": 120,
-            "name": "Rajat",
-            "phone": "9991354221",
-            "email": "Rajatantil1996@gmail.com",
-            "profileImage": null,
-            "designation": null,
-            "following": false
-        },
-        {
-            "userid": 119,
-            "name": "toohina Mishra",
-            "phone": "8779889596",
-            "email": "Toohina.Mishra-CNT@larsentoubro.com",
-            "profileImage": null,
-            "designation": null,
-            "following": false
-        },
+      {
+        "userid": 121,
+        "name": "Arun Kumar",
+        "phone": "9899261043",
+        "email": "arunkumar171212@gmail.com",
+        "profileImage": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&q=80",
+        "designation": 'Software Engineer',
+        "following": false
+      },
+      {
+        "userid": 120,
+        "name": "Priya",
+        "phone": "9991354221",
+        "email": "Priya996@gmail.com",
+        "profileImage": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&q=80",
+        "designation": 'UX Designer',
+        "following": false
+      },
+      {
+        "userid": 119,
+        "name": "Toohina Mishra",
+        "phone": "8779889596",
+        "email": "Toohina.Mishra-CNT@larsentoubro.com",
+        "profileImage":
+            "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300&q=80",
+        "designation": 'Software Engineer',
+        "following": false
+      },
+      {
+        "userid": 118,
+        "name": "Rahul Sharma",
+        "phone": "9876543210",
+        "email": "rahul.sharma@gmail.com",
+        "profileImage":
+            "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&q=80",
+        "designation": "Software Engineer",
+        "following": true
+      },
+      {
+        "userid": 117,
+        "name": "Neha Verma",
+        "phone": "9811122233",
+        "email": "neha.verma@gmail.com",
+        "profileImage":
+            "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&q=80",
+        "designation": "UI/UX Designer",
+        "following": false
+      },
+      {
+        "userid": 116,
+        "name": "Amit Singh",
+        "phone": "9822233344",
+        "email": "amit.singh@gmail.com",
+        "profileImage":
+            "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300&q=80",
+        "designation": "Product Manager",
+        "following": true
+      },
+      {
+        "userid": 115,
+        "name": "Sneha Gupta",
+        "phone": "9833344455",
+        "email": "sneha.gupta@gmail.com",
+        "profileImage":
+            "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&q=80",
+        "designation": "Marketing Lead",
+        "following": false
+      },
+      {
+        "userid": 114,
+        "name": "Vikas Yadav",
+        "phone": "9844455566",
+        "email": "vikas.yadav@gmail.com",
+        "profileImage":
+            "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&q=80",
+        "designation": "Business Analyst",
+        "following": false
+      },
+      {
+        "userid": 113,
+        "name": "Pooja Kapoor",
+        "phone": "9855566677",
+        "email": "pooja.kapoor@gmail.com",
+        "profileImage":
+            "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=300&q=80",
+        "designation": "HR Manager",
+        "following": true
+      },
+      {
+        "userid": 112,
+        "name": "Rohit Mehta",
+        "phone": "9866677788",
+        "email": "rohit.mehta@gmail.com",
+        "profileImage":
+            "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&q=80",
+        "designation": "DevOps Engineer",
+        "following": false
+      },
+      {
+        "userid": 111,
+        "name": "Anjali Jain",
+        "phone": "9877788899",
+        "email": "anjali.jain@gmail.com",
+        "profileImage":
+            "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&q=80",
+        "designation": "QA Engineer",
+        "following": false
+      }
     ],
     "success": true,
     "totalPages": 12,
@@ -109,7 +191,7 @@ suggestData ={
     "message": "Follow suggestions retrieved successfully",
     "totalCount": 112,
     "currentPage": 0
-}
+  };
 
   void loadStories() {
     stories.value = [
@@ -118,6 +200,7 @@ suggestData ={
         name: "Your Story",
         image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&q=80",
         isOwnStory: true,
+        
       ),
       StoryModel(
         id: "1",
@@ -520,6 +603,29 @@ suggestData ={
         return;
       }
     }
+  }
+
+  Future<Map<String, dynamic>?> followBack(dynamic userId) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    
+    if (_suggestData?.data != null) {
+      for (var user in _suggestData!.data!) {
+        if (user.userid == userId) {
+          final isFollowing = user.following ?? false;
+          user.following = !isFollowing;
+          
+          return {
+            'action': !isFollowing ? 'followed' : 'unfollowed',
+            'message': !isFollowing ? 'Followed successfully' : 'Unfollowed successfully',
+          };
+        }
+      }
+    }
+    
+    return {
+      'action': 'followed',
+      'message': 'Followed successfully',
+    };
   }
 
 

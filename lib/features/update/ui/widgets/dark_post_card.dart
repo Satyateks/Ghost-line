@@ -67,11 +67,7 @@ class DarkPostCard extends StatelessWidget {
                                   value: downloadProgress.progress,
                                 ),
                                 const SizedBox(height: 8),
-                                Text(
-                                  downloadProgress.progress != null
-                                      ? "${(downloadProgress.progress! * 100).toStringAsFixed(0)}%"
-                                      : "Loading image...",
-                                ),
+                                Text(downloadProgress.progress != null ? "${(downloadProgress.progress! * 100).toStringAsFixed(0)}%" : "Loading image..."),
                               ],
                             ),
                           ),
@@ -139,7 +135,7 @@ class DarkPostCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 10),
-          Divider(height: 1, thickness: 0.4, color:isDark ? Colors.white.withOpacity(0.1) : Colors.black.withOpacity(0.05), indent: 12, endIndent: 12),
+          Divider(height: 1, thickness: 0.4, color:isDark ? Colors.white.withOpacity(0.5) : Colors.black.withOpacity(0.6), indent: 12, endIndent: 12),
         ],
       ),
     );
