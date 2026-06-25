@@ -1,10 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:ghostline/core/utils/utils_route.dart';
+
 import 'package:video_player/video_player.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/utils/app_assets.dart';
 import '../../model/post_model.dart';
 
 class DarkPostCard extends StatelessWidget {
@@ -67,11 +68,7 @@ class DarkPostCard extends StatelessWidget {
                                   value: downloadProgress.progress,
                                 ),
                                 const SizedBox(height: 8),
-                                Text(
-                                  downloadProgress.progress != null
-                                      ? "${(downloadProgress.progress! * 100).toStringAsFixed(0)}%"
-                                      : "Loading image...",
-                                ),
+                                Text(downloadProgress.progress != null ? "${(downloadProgress.progress! * 100).toStringAsFixed(0)}%" : "Loading image..."),
                               ],
                             ),
                           ),
@@ -139,7 +136,7 @@ class DarkPostCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 10),
-          Divider(height: 1, thickness: 0.4, color:isDark ? Colors.white.withOpacity(0.1) : Colors.black.withOpacity(0.05), indent: 12, endIndent: 12),
+          Divider(height: 1, thickness: 0.4, color:isDark ? Colors.white.withOpacity(0.5) : Colors.black.withOpacity(0.6), indent: 12, endIndent: 12),
         ],
       ),
     );

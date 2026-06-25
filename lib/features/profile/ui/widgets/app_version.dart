@@ -2,9 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ghostline/core/utils/app_assets.dart';
+
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/utils/app_assets.dart';
 import '../../../../core/widgets/glass_scaffold.dart';
 
 class AppVersionPage extends StatelessWidget {

@@ -10,7 +10,8 @@ import '../../../core/theme/theme_route.dart';
 import '../../../core/utils/utils_route.dart';
 import '../../home/ui/home_screen.dart';
 import '../controller/authCtl.dart';
-
+import 'premiumScreen.dart';
+  
 
 class AuthScreen extends StatelessWidget {
   AuthScreen({super.key});
@@ -46,8 +47,7 @@ class AuthScreen extends StatelessWidget {
                         Positioned(
                           top: size.height * 0.065, left: 0, right: 0,
                           child: Center(
-                            child: Image.asset(AppAssets.ghostLogo, height: size.height * 0.045, fit: BoxFit.contain),
-                          ),
+                            child:isDark? Image.asset(AppAssets.ghostLogo, height: size.height * 0.045, fit: BoxFit.contain): Image.asset(AppAssets.ghostLogo1, height: size.height * 0.045, fit: BoxFit.contain),  ),
                         ),
           
                         Positioned(
@@ -106,7 +106,11 @@ class AuthScreen extends StatelessWidget {
       case AuthCardType.login: return _LoginCard(key: const ValueKey('login'), controller: authCtrl);
       case AuthCardType.createAccount: return _CreateAccountCard( key: const ValueKey('createAccount'), controller: authCtrl);
       case AuthCardType.otp: return _OtpCard(key: const ValueKey('otp'), controller: authCtrl);
-      case AuthCardType.username: return _UsernameCard( key: const ValueKey('username'), controller: authCtrl);
+      case AuthCardType.username: return _UsernameCard(key: const ValueKey('username'), controller: authCtrl);
+      case AuthCardType.forgetPwd: return _ForgetPwdCard(key: const ValueKey('forgetPwd'), controller: authCtrl);
+      case AuthCardType.setPwd: return _SetPwdCard(key: const ValueKey('setPwd'), controller: authCtrl);
+      case AuthCardType.forgetOtp: return _PwdOtpCard(key: const ValueKey('forgetOtp'), controller: authCtrl);
+      case AuthCardType.sendOtp: return _SendOtpCard(key: const ValueKey('sendOtp'), controller: authCtrl);
     }
   }
 }
@@ -142,8 +146,23 @@ class _LoginCard extends StatelessWidget {
           ),
 
           const SizedBox(height: 9),
+           Row(
+            children: [
+              GestureDetector(onTap: controller.showCreateAccount,
+                child: Text(
+                  "Create account",
+                  style:AppTextStyles.bodyMedium(AppColors.primaryBlue).copyWith(fontWeight: FontWeight.w700),
+                ),
+              ),
+              const Spacer(),
+              GestureDetector(
+                onTap: controller.showForgetPwd,
+                child: Text("Forget password?",style:AppTextStyles.bodyMedium(AppColors.primaryBlue).copyWith(fontWeight: FontWeight.w700)),
+              ),
+            ],
+          ),
 
-          Center(
+         /* Center(
             child: GestureDetector(
               onTap: controller.showCreateAccount,
               child: Builder(
@@ -171,14 +190,11 @@ class _LoginCard extends StatelessWidget {
                 },
               ),
             ),
-          ),
+          ),*/
 
           const SizedBox(height: 15),
 
-          _AuthPrimaryButton(
-            title: "Continue",
-            onTap: controller.showOtp,
-          ),
+          _AuthPrimaryButton(title: "Continue", onTap: controller.showOtp),
         ],
       ),
     );
@@ -345,10 +361,7 @@ class _OtpCard extends StatelessWidget {
 
           const SizedBox(height: 16),
 
-          _AuthPrimaryButton(
-            title: "Continue",
-            onTap: controller.showUsername,
-          ),
+          _AuthPrimaryButton(title: "Continue", onTap: controller.showUsername),
         ],
       ),
     );
@@ -387,6 +400,241 @@ class _UsernameCard extends StatelessWidget {
     );
   }
 }
+
+class _ForgetPwdCard extends StatelessWidget {
+  final AuthUiController controller;
+
+  const _ForgetPwdCard({
+    super.key,
+    required this.controller,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final textSecondary = isDark ? Colors.white : AppColors.lightTextPrimary;
+    return _AuthGlassCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+           Row(
+            children: [
+              GestureDetector(
+                onTap: controller.showLogin,
+                child: Icon( Icons.arrow_back_ios_new_rounded,
+                  color: textSecondary,
+                  size: 24,
+                ),
+              ),
+              const SizedBox(width: 6),
+              const _AuthTitle("forget password"),
+            ],
+          ),
+          const SizedBox(height: 21),
+
+          _AuthField( controller: controller.forgetPwdCtrl, hint: "enter username"),
+
+          const SizedBox(height: 27),
+
+          _AuthPrimaryButton(
+            title: "Send verification",
+            onTap:controller.showSendOtp,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SendOtpCard extends StatelessWidget {
+  final AuthUiController controller;
+
+  const _SendOtpCard({
+    super.key,
+    required this.controller,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    final titleColor = isDark ? Colors.white : AppColors.lightTextPrimary;
+    final subColor = isDark ? Colors.white60 : AppColors.lightTextSecondary;
+    final dividerColor = isDark ? Colors.white.withOpacity(0.10) : Colors.black.withOpacity(0.08);
+    final textSecondary = isDark ? Colors.white : AppColors.lightTextPrimary;
+
+    return _AuthGlassCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              GestureDetector(
+                onTap: controller.showForgetPwd,
+                child: Icon(
+                  Icons.arrow_back_ios_new_rounded,
+                  color: textSecondary,
+                  size: 24,
+                ),
+              ),
+              const SizedBox(width: 6),
+              _AuthTitle( "Send OTP to" ),
+            ],
+          ),
+
+          
+
+          const SizedBox(height: 22),
+
+          _OtpOptionTile(
+            icon: Icons.mail_outline_rounded,
+            title: "Mail",
+            value: "*******dev@gmail.com",
+            titleColor: titleColor,
+            subColor: subColor,
+            onTap: controller.showForgetOtp
+          ),
+
+          Divider( height: 7, thickness: 0.7, color: dividerColor),
+
+          _OtpOptionTile(
+            icon: Icons.phone_outlined,
+            title: "Phone",
+            value: "*******79",
+            titleColor: titleColor,
+            subColor: subColor,
+            onTap: controller.showForgetOtp
+          ),const SizedBox(height: 27),
+        ],
+      ),
+    );
+  }
+}
+
+class _PwdOtpCard extends StatelessWidget {
+  final AuthUiController controller;
+
+  const _PwdOtpCard({ super.key, required this.controller});
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final textSecondary = isDark ? Colors.white : AppColors.lightTextPrimary;
+    
+    return _AuthGlassCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              GestureDetector(
+                onTap: controller.showSendOtp,
+                child: Icon(
+                  Icons.arrow_back_ios_new_rounded,
+                  color: textSecondary,
+                  size: 24,
+                ),
+              ),
+              const SizedBox(width: 6),
+              _AuthTitle("Enter OTP"),
+            ],
+          ),
+
+          const SizedBox(height: 11),
+
+          Row(
+            children: [
+              Text(
+                "An OTP was sent to xxx90",
+                style: TextStyle(
+                  color: textSecondary,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              const Spacer(),
+              GestureDetector(
+                onTap: controller.showSendOtp,
+                child: const Text(
+                  "Choose another method",
+                  style: TextStyle(
+                    color: AppColors.primaryBlue,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 17),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: List.generate(
+              6, (index) => _OtpBox(
+                controller: controller.otpControllers[index],
+                isLast: index == 5,
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 8),
+
+          Align(
+            alignment: Alignment.centerRight,
+            child: Text(
+              "Resend in 35s",
+              style: TextStyle(
+                color: textSecondary,
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 16),
+
+          _AuthPrimaryButton(
+            title: "Continue",
+            onTap:controller.showSetPwd,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SetPwdCard extends StatelessWidget {
+  final AuthUiController controller;
+
+  const _SetPwdCard({
+    super.key,
+    required this.controller,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return _AuthGlassCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+           const _AuthTitle("Choose new password"),
+          const SizedBox(height: 21),
+
+          _AuthField( controller: controller.newPwdCtrl, hint: "New password"),
+          const SizedBox(height: 8),
+          _AuthField( controller: controller.cNewPwdCtrl, hint: "Confirm new password"),
+
+          const SizedBox(height: 27),
+
+          _AuthPrimaryButton(title: "Done", onTap: ()=>Get.to(() => PremiumScreen())),
+        ],
+      ),
+    );
+  }
+}
+
 class _AuthTitle extends StatelessWidget {
   final String title;
 
@@ -589,39 +837,98 @@ class _AuthIntroText extends StatelessWidget {
 class _AuthGlassCard extends StatelessWidget {
   final Widget child;
 
-  const _AuthGlassCard({ required this.child });
+  const _AuthGlassCard({required this.child});
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(24),
-      child: BackdropFilter(
-        filter: ImageFilter.blur( sigmaX: 18, sigmaY: 18),
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.fromLTRB(12, 27, 12, 24),
-          decoration: BoxDecoration(
-            color: isDark ? Colors.white.withOpacity(0.075) : Colors.white.withOpacity(0.85),
-            borderRadius: BorderRadius.circular(24),
-            border: Border.all(color: isDark ? Colors.white.withOpacity(0.07) : Colors.white.withOpacity(0.5)),
-            boxShadow: [
-              BoxShadow(
-                color: isDark ? Colors.black.withOpacity(0.35) : Colors.black.withOpacity(0.1),
-                blurRadius: 24,
-                offset: const Offset(0, 12),
-              ),
-            ],
+
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(isDark ? 0.45 : 0.18),
+            blurRadius: 40,
+            spreadRadius: 2,
+            offset: const Offset(0, 16),
           ),
-          child: child,
+          BoxShadow(
+            color: Colors.black.withOpacity(isDark ? 0.25 : 0.08),
+            blurRadius: 80,
+            spreadRadius: 8,
+            offset: const Offset(0, 24),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(24),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.fromLTRB(12, 27, 12, 24),
+            decoration: BoxDecoration(
+              color: isDark ? Colors.black.withOpacity(0.75) : AppColors.lightBg.withOpacity(0.9),
+              borderRadius: BorderRadius.circular(24),
+              border: Border.all(
+                color: isDark ? Colors.white.withOpacity(0.08) : Colors.white.withOpacity(0.6),
+              ),
+            ),
+            child: child,
+          ),
         ),
       ),
     );
   }
 }
 
+class _OtpOptionTile extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String value;
+  final Color titleColor;
+  final Color subColor;
+  final VoidCallback onTap;
 
+  const _OtpOptionTile({
+    required this.icon,
+    required this.title,
+    required this.value,
+    required this.titleColor,
+    required this.subColor,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(14),
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: Row(
+          children: [
+            Icon(icon, size: 24, color: titleColor),
+            const SizedBox(width: 4),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title, style: AppTextStyles.bodyHighLarge(titleColor)),
+                  const SizedBox(height: 2),
+                  Text(value, style: AppTextStyles.bodySmall(subColor).copyWith(fontWeight: FontWeight.w400)),
+                ],
+              ),
+            ),
+
+            Icon(Icons.arrow_forward_ios_rounded, size: 18, color: titleColor),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 
 

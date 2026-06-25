@@ -36,7 +36,7 @@ class AuthController extends GetxController {
   }
 }
 
-enum AuthCardType { login, createAccount, otp, username }
+enum AuthCardType {login, createAccount, otp, username, forgetPwd,sendOtp,forgetOtp, setPwd}
 
 class AuthUiController extends GetxController {
   final Rx<AuthCardType> currentCard = AuthCardType.login.obs;
@@ -48,6 +48,9 @@ class AuthUiController extends GetxController {
   final createPasswordCtrl = TextEditingController();
 
   final usernameCtrl = TextEditingController();
+  final forgetPwdCtrl = TextEditingController();
+  final newPwdCtrl = TextEditingController();
+  final cNewPwdCtrl = TextEditingController();
 
   final otpControllers = List.generate(6, (_) => TextEditingController());
 
@@ -55,17 +58,13 @@ class AuthUiController extends GetxController {
     currentCard.value = AuthCardType.login;
   }
 
-  void showCreateAccount() {
-    currentCard.value = AuthCardType.createAccount;
-  }
-
-  void showOtp() {
-    currentCard.value = AuthCardType.otp;
-  }
-
-  void showUsername() {
-    currentCard.value = AuthCardType.username;
-  }
+  void showCreateAccount() {currentCard.value = AuthCardType.createAccount;}
+  void showOtp() {currentCard.value = AuthCardType.otp;}
+  void showUsername() {currentCard.value = AuthCardType.username;}
+  void showForgetPwd() {currentCard.value = AuthCardType.forgetPwd;}
+  void showSendOtp() {currentCard.value = AuthCardType.sendOtp;}
+  void showForgetOtp() {currentCard.value = AuthCardType.forgetOtp;}
+  void showSetPwd() {currentCard.value = AuthCardType.setPwd;}
 
   @override
   void onClose() {
