@@ -30,14 +30,13 @@ class GhostLineApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       // theme: ThemeData(//colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       //   fontFamily: 'Inter', useMaterial3: true,
-      //   scaffoldBackgroundColor: const Color(0xFF111111),
-      //   useMaterial3: true),
+      //   scaffoldBackgroundColor: const Color(0xFF111111),useMaterial3: true),
       home:AuthScreen(),
       builder: (context, child) {
         return Stack(
           children: [
             child ?? const SizedBox.shrink(),
-            const Positioned( top: 51, left: 0, right: 0, child: NoInternetBanner()),
+            const Positioned(top: 51, left: 0, right: 0, child: NoInternetBanner()),
           ],
         );
       },
