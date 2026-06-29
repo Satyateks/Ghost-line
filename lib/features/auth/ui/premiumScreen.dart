@@ -16,9 +16,7 @@ class PremiumScreen extends StatelessWidget {
       backgroundColor:isDark ? Colors.black : AppColors.lightBg,
       body: Stack(
         children: [
-          Positioned( top: 0, left: -60, right: -60,
-            child:isDark? Image.asset(AppAssets.premiumBg): Image.asset(AppAssets.premiumBgl),
-          ),
+          Positioned(top: 0, left: -60, right: -60, child:isDark? Image.asset(AppAssets.premiumBg): Image.asset(AppAssets.premiumBgl)),
 
           SafeArea(
             child: Column(
