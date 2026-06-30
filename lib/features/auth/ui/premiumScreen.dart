@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ghostline/core/theme/theme_route.dart';
-import 'package:ghostline/features/home/ui/home_screen.dart';
 
+
+import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_text_styles.dart';
 import '../../../core/utils/app_assets.dart';
+import '../../home/ui/home_screen.dart';
 
 class PremiumScreen extends StatelessWidget {
   const PremiumScreen({super.key});
@@ -16,7 +18,9 @@ class PremiumScreen extends StatelessWidget {
       backgroundColor:isDark ? Colors.black : AppColors.lightBg,
       body: Stack(
         children: [
-          Positioned(top: 0, left: -60, right: -60, child:isDark? Image.asset(AppAssets.premiumBg): Image.asset(AppAssets.premiumBgl)),
+          Positioned( top: 0, left: -60, right: -60,
+            child:isDark? Image.asset(AppAssets.premiumBg): Image.asset(AppAssets.premiumBgl),
+          ),
 
           SafeArea(
             child: Column(

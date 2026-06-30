@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
-import 'package:ghostline/data/services/services_route.dart';
+import 'package:ghostline/data/services/storage_service.dart';
 import '../../core/utils/app_constants.dart';
+import 'network_controller.dart';
 
 class ApiService {
   ApiService._();

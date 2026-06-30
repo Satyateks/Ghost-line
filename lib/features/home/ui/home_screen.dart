@@ -2,8 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ghostline/core/theme/theme_route.dart';
 
+
+import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../../chat_room/ui/chat_room_screen.dart';
 import '../controller/home_controller.dart';

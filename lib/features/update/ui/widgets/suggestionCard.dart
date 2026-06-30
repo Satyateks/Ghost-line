@@ -2,9 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ghostline/core/theme/theme_route.dart';
-import 'package:ghostline/core/utils/app_assets.dart';
-import 'package:ghostline/features/update/controller/updates_controller.dart';
+
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/utils/app_assets.dart';
+import '../../controller/updates_controller.dart';
 
 
 

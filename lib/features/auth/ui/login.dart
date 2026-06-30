@@ -47,8 +47,7 @@ class AuthScreen extends StatelessWidget {
                         Positioned(
                           top: size.height * 0.065, left: 0, right: 0,
                           child: Center(
-                            child:isDark? Image.asset(AppAssets.ghostLogo, height: size.height * 0.045, fit: BoxFit.contain): Image.asset(AppAssets.ghostLogo1, height: size.height * 0.045, fit: BoxFit.contain),
-                          ),
+                            child:isDark? Image.asset(AppAssets.ghostLogo, height: size.height * 0.045, fit: BoxFit.contain): Image.asset(AppAssets.ghostLogo1, height: size.height * 0.045, fit: BoxFit.contain),  ),
                         ),
           
                         Positioned(

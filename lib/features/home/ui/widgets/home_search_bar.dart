@@ -45,15 +45,15 @@ class HomeSearchBar extends StatelessWidget {
                         end: Alignment.bottomCenter,
                         colors: isDark
                             ? [
-                                Colors.white.withOpacity(0.120),
-                                Colors.white.withOpacity(0.075),
-                                Colors.white.withOpacity(0.050),
-                              ]
+                          Colors.white.withOpacity(0.120),
+                          Colors.white.withOpacity(0.075),
+                          Colors.white.withOpacity(0.050),
+                        ]
                             : [
-                                Colors.white.withOpacity(0.92),
-                                Colors.white.withOpacity(0.78),
-                                Colors.white.withOpacity(0.68),
-                              ],
+                          Colors.white.withOpacity(0.92),
+                          Colors.white.withOpacity(0.78),
+                          Colors.white.withOpacity(0.68),
+                        ],
                       ),
                     ),
                   ),
@@ -155,15 +155,15 @@ class _SearchOuterGlowPainter extends CustomPainter {
         end: Alignment.bottomRight,
         colors: isDark
             ? [
-                Colors.white.withOpacity(0.13),
-                Colors.white.withOpacity(0.035),
-                Colors.black.withOpacity(0.30),
-              ]
+          Colors.white.withOpacity(0.13),
+          Colors.white.withOpacity(0.035),
+          Colors.black.withOpacity(0.30),
+        ]
             : [
-                Colors.white.withOpacity(0.78),
-                Colors.white.withOpacity(0.30),
-                Colors.black.withOpacity(0.08),
-              ],
+          Colors.white.withOpacity(0.78),
+          Colors.white.withOpacity(0.30),
+          Colors.black.withOpacity(0.08),
+        ],
         stops: const [0.0, 0.45, 1.0],
       ).createShader(rect);
 
@@ -208,15 +208,15 @@ class _SearchGlassBorderPainter extends CustomPainter {
         end: Alignment.bottomCenter,
         colors: isDark
             ? [
-                Colors.white.withOpacity(0.22),
-                Colors.white.withOpacity(0.075),
-                Colors.black.withOpacity(0.32),
-              ]
+          Colors.white.withOpacity(0.22),
+          Colors.white.withOpacity(0.075),
+          Colors.black.withOpacity(0.32),
+        ]
             : [
-                Colors.white.withOpacity(0.85),
-                Colors.white.withOpacity(0.42),
-                Colors.black.withOpacity(0.08),
-              ],
+          Colors.white.withOpacity(0.85),
+          Colors.white.withOpacity(0.42),
+          Colors.black.withOpacity(0.08),
+        ],
         stops: const [0.0, 0.48, 1.0],
       ).createShader(rect);
 
@@ -264,19 +264,19 @@ class _SearchGlassBorderPainter extends CustomPainter {
         end: Alignment.centerRight,
         colors: isDark
             ? [
-                Colors.white.withOpacity(0.00),
-                Colors.white.withOpacity(0.035),
-                Colors.white.withOpacity(0.070),
-                Colors.white.withOpacity(0.035),
-                Colors.white.withOpacity(0.00),
-              ]
+          Colors.white.withOpacity(0.00),
+          Colors.white.withOpacity(0.035),
+          Colors.white.withOpacity(0.070),
+          Colors.white.withOpacity(0.035),
+          Colors.white.withOpacity(0.00),
+        ]
             : [
-                Colors.black.withOpacity(0.00),
-                Colors.black.withOpacity(0.030),
-                Colors.black.withOpacity(0.055),
-                Colors.black.withOpacity(0.030),
-                Colors.black.withOpacity(0.00),
-              ],
+          Colors.black.withOpacity(0.00),
+          Colors.black.withOpacity(0.030),
+          Colors.black.withOpacity(0.055),
+          Colors.black.withOpacity(0.030),
+          Colors.black.withOpacity(0.00),
+        ],
         stops: const [0.0, 0.22, 0.50, 0.78, 1.0],
       ).createShader(rect);
 
@@ -318,5 +318,3 @@ class _SearchGlassBorderPainter extends CustomPainter {
     return oldDelegate.isDark != isDark;
   }
 }
-
-

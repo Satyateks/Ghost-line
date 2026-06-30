@@ -1,10 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:ghostline/core/utils/utils_route.dart';
+
 import 'package:video_player/video_player.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/utils/app_assets.dart';
 import '../../model/post_model.dart';
 
 class DarkPostCard extends StatelessWidget {
