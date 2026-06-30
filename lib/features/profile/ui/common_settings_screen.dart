@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../model/profile_models.dart';
-import 'account_settings_screen.dart';
+import '../../../../core/widgets/custom_bottomSheet.dart';
 
 
 class CommonSettingsScreen extends StatelessWidget {
@@ -16,6 +16,224 @@ class CommonSettingsScreen extends StatelessWidget {
     required this.title,
     required this.items,
   });
+
+  Widget _buildBottomSheetContent(BuildContext context, SettingItemModel item) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    
+    Widget buildRadioSelection(List<String> options, String currentSelection) {
+      return StatefulBuilder(
+        builder: (context, setState) {
+          String selected = currentSelection;
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(item.title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: isDark ? Colors.white : AppColors.lightTextPrimary)),
+              const SizedBox(height: 16),
+              ...options.map((option) => RadioListTile<String>(
+                title: Text(option),
+                value: option,
+                groupValue: selected,
+                onChanged: (val) {
+                  setState(() => selected = val!);
+                },
+                contentPadding: EdgeInsets.zero,
+                activeColor: AppColors.buttonBlue,
+              )),
+              const SizedBox(height: 16),
+              SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: Get.back,
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    backgroundColor: AppColors.buttonBlue,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
+                  ),
+                  child: const Text('Save', style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w700)),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
+    switch (item.type) {
+      case SettingItemType.lastSeenOnline:
+      case SettingItemType.profilePhoto:
+      case SettingItemType.about:
+      case SettingItemType.status:
+      case SettingItemType.posts:
+      case SettingItemType.phoneNumber:
+      case SettingItemType.groups:
+        return buildRadioSelection(['Everyone', 'My Contacts', 'Nobody'], item.subtitle ?? 'Everyone');
+      
+      case SettingItemType.messageNotifications:
+      case SettingItemType.groupNotifications:
+      case SettingItemType.callNotifications:
+        return StatefulBuilder(
+          builder: (context, setState) {
+            bool useTone = true;
+            bool useVibration = true;
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(item.title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: isDark ? Colors.white : AppColors.lightTextPrimary)),
+                const SizedBox(height: 16),
+                SwitchListTile(
+                  title: const Text("Tone"),
+                  value: useTone,
+                  onChanged: (val) => setState(() => useTone = val),
+                  contentPadding: EdgeInsets.zero,
+                  activeColor: AppColors.buttonBlue,
+                ),
+                SwitchListTile(
+                  title: const Text("Vibration"),
+                  value: useVibration,
+                  onChanged: (val) => setState(() => useVibration = val),
+                  contentPadding: EdgeInsets.zero,
+                  activeColor: AppColors.buttonBlue,
+                ),
+                const SizedBox(height: 16),
+                SizedBox(
+                  width: double.infinity,
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: Get.back,
+                    style: ElevatedButton.styleFrom(
+                      elevation: 0,
+                      backgroundColor: AppColors.buttonBlue,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
+                    ),
+                    child: const Text('Save', style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w700)),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+
+      case SettingItemType.chatBackup:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(item.title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: isDark ? Colors.white : AppColors.lightTextPrimary)),
+            const SizedBox(height: 16),
+            const Text("Last Backup: 2:00 AM\nSize: 200 MB"),
+            const SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton(
+                onPressed: () {
+                  Get.back();
+                  Get.snackbar('Backup', 'Backup started successfully');
+                },
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  backgroundColor: AppColors.buttonBlue,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
+                ),
+                child: const Text('Back Up Now', style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w700)),
+              ),
+            ),
+          ],
+        );
+        
+      case SettingItemType.chatWallpaper:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(item.title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: isDark ? Colors.white : AppColors.lightTextPrimary)),
+            const SizedBox(height: 16),
+            const Text("Select a new wallpaper for your chats."),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(child: AspectRatio(aspectRatio: 1, child: Container(color: Colors.blue[100], margin: const EdgeInsets.all(4)))),
+                Expanded(child: AspectRatio(aspectRatio: 1, child: Container(color: Colors.green[100], margin: const EdgeInsets.all(4)))),
+                Expanded(child: AspectRatio(aspectRatio: 1, child: Container(color: Colors.pink[100], margin: const EdgeInsets.all(4)))),
+              ],
+            ),
+            const SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton(
+                onPressed: Get.back,
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  backgroundColor: AppColors.buttonBlue,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
+                ),
+                child: const Text('Close', style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w700)),
+              ),
+            ),
+          ],
+        );
+
+      case SettingItemType.chatHistory:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(item.title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: isDark ? Colors.white : AppColors.lightTextPrimary)),
+            const SizedBox(height: 16),
+            ListTile(
+              leading: const Icon(Icons.import_export),
+              title: const Text("Export Chat"),
+              onTap: Get.back,
+            ),
+            ListTile(
+              leading: const Icon(Icons.archive),
+              title: const Text("Archive All Chats"),
+              onTap: Get.back,
+            ),
+            ListTile(
+              leading: const Icon(Icons.delete_sweep, color: Colors.red),
+              title: const Text("Clear All Chats", style: TextStyle(color: Colors.red)),
+              onTap: Get.back,
+            ),
+            ListTile(
+              leading: const Icon(Icons.delete_forever, color: Colors.red),
+              title: const Text("Delete All Chats", style: TextStyle(color: Colors.red)),
+              onTap: Get.back,
+            ),
+          ],
+        );
+
+      default:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(item.title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: isDark ? Colors.white : AppColors.lightTextPrimary)),
+            const SizedBox(height: 16),
+            const Text("Action not implemented yet."),
+            const SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton(
+                onPressed: Get.back,
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  backgroundColor: AppColors.buttonBlue,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
+                ),
+                child: const Text('Close', style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w700)),
+              ),
+            ),
+          ],
+        );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +250,9 @@ class CommonSettingsScreen extends StatelessWidget {
             _Card(
               items: items,
               onTap: (item) {
-                SettingActionSheet.show(
+                CustomContentBottomSheet.show(
                   context: context,
-                  item: item,
+                  child: _buildBottomSheetContent(context, item),
                 );
               },
             ),

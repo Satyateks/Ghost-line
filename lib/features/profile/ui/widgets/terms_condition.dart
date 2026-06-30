@@ -1,5 +1,7 @@
 
 
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -105,33 +107,91 @@ class _Header extends StatelessWidget {
     return InkWell(
       onTap: Get.back,
       borderRadius: BorderRadius.circular(80),
-      child: Container(
-        height: 42,
-        padding: const EdgeInsets.symmetric(horizontal: 14),
-        decoration: BoxDecoration(
-          color: isDark
-              ? Colors.white.withOpacity(0.08)
-              : Colors.white.withOpacity(0.78),
-          borderRadius: BorderRadius.circular(80),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              Icons.arrow_back_ios_new_rounded,
-              size: 15,
-              color: isDark ? Colors.white : AppColors.lightTextPrimary,
-            ),
-            const SizedBox(width: 8),
-            Text(
-              title,
-              style: TextStyle(
-                color: isDark ? Colors.white : AppColors.lightTextPrimary,
-                fontSize: 15,
-                fontWeight: FontWeight.w600,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(80),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(
+            sigmaX: 24,
+            sigmaY: 24,
+          ),
+          child: Container(
+            height: 42,
+            padding: const EdgeInsets.symmetric(horizontal: 14),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(80),
+
+              // Glass color
+              color: isDark
+                  ? const Color(0xFF1A1A1C).withOpacity(0.60)
+                  : Colors.white.withOpacity(0.55),
+
+              // Hairline border
+              border: Border.all(
+                width: 0.5,
+                color: isDark
+                    ? Colors.white.withOpacity(0.12)
+                    : Colors.white.withOpacity(0.85),
               ),
+
+              // Apple-like highlight
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: isDark
+                    ? [
+                        Colors.white.withOpacity(0.06),
+                        Colors.white.withOpacity(0.015),
+                      ]
+                    : [
+                        Colors.white.withOpacity(0.45),
+                        Colors.white.withOpacity(0.08),
+                      ],
+              ),
+
+              boxShadow: [
+                // Main shadow
+                BoxShadow(
+                  color: Colors.black.withOpacity(
+                    isDark ? 0.35 : 0.10,
+                  ),
+                  blurRadius: 24,
+                  offset: const Offset(0, 10),
+                ),
+
+                // Top highlight
+                BoxShadow(
+                  color: Colors.white.withOpacity(
+                    isDark ? 0.05 : 0.35,
+                  ),
+                  blurRadius: 2,
+                  offset: const Offset(0, -1),
+                ),
+              ],
             ),
-          ],
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.arrow_back_ios_new_rounded,
+                  size: 15,
+                  color: isDark
+                      ? Colors.white
+                      : AppColors.lightTextPrimary,
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  title,
+                  style: TextStyle(
+                    color: isDark
+                        ? Colors.white
+                        : AppColors.lightTextPrimary,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

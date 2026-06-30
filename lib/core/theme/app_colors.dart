@@ -21,7 +21,7 @@ class AppColors {
 
   /// Light Theme
   static const Color primarybgsLight = Color(0xFFF2F5FB);
-  static const Color lightBg = Color(0x66FFFFFF);
+  static const Color lightBg = Color(0x66F2F5FB);
   static const Color lightBgSoft = Color(0xFFFFFFFF);
   static const Color lightCard = Color(0xFFFFFFFF);
   static const Color lightTextPrimary = Color(0xFF0F172A);
@@ -48,7 +48,7 @@ class AppColors {
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
     colors: [
-      Color(0xFF242323),
+      Color(0xFF070707),
       Color(0xFF111111),
       Color(0xFF050505),
     ],
@@ -59,9 +59,9 @@ class AppColors {
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
     colors: [
-      Color(0xFFFFFFFF),
+      Color(0xFFF2F5FB),
       Color(0xFFF8FAFC),
-      Color(0xFFEFF6FF),
+      Color(0xFFF2F5FB),
     ],
   );
 
