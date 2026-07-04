@@ -3,7 +3,7 @@ class AppAssets {
 
   /// Base paths
   static const String _images = 'assets/img';
-  static const String _icons = 'assets/icons';
+  static const String _icons = 'assets/img';
   static const String _lottie = 'assets/lottie';
 
   /// Images
@@ -30,6 +30,22 @@ class AppAssets {
   static const String userIcon = '$_images/user.png';
   static const String profileIcon = '$_icons/profile.svg';
   static const String searchIcon = '$_icons/search.svg';
+
+
+  static const String accountIcon = '$_images/account.svg';
+  static const String privacyIcon = '$_images/privacy.svg';
+  static const String notificationIcon = '$_images/notification.svg';
+  static const String listIcon = '$_images/list.svg';
+  static const String languageIcon = '$_images/language.svg';
+  static const String inviteIcon = '$_images/invite.svg';
+  static const String commentIcon = '$_images/comment.svg';
+  static const String keysIcon = '$_images/keys.svg';
+  static const String hashtagIcon = '$_images/hashtag.svg';
+  static const String deleteIcon = '$_images/delete.svg';
+  static const String removeUserIcon = '$_images/removeUser.svg';
+  static const String incognitoIcon = '$_images/Incognito.svg';
+  static const String Icon = '$_images/language.svg';
+  static const String infoIcon = '$_images/info.svg';
 
   
   /// bottom bar

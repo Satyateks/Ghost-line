@@ -9,6 +9,7 @@
 # packages, and plugins designed to encourage good coding practices.
 analyzer:
   errors:
+    curly_braces_in_flow_control_structures: ignore
     deprecated_member_use: ignore
     file_names: ignore
 include: package:flutter_lints/flutter.yaml

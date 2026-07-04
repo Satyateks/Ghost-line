@@ -27,7 +27,7 @@ class InviteFriend extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
-              child: Row(
+              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
                     onTap: () => Get.back(),
@@ -63,6 +63,15 @@ class InviteFriend extends StatelessWidget {
                           ),
                         ],
                       ),
+                    ),
+                  ),
+                   Text(
+                    'Share link',
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: AppColors.buttonBlue,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
                 ],
@@ -193,7 +202,7 @@ class InviteFriend extends StatelessWidget {
 
                     if (contacts.isNotEmpty) ...[
                       const SizedBox(height: 8),
-                      _ShareSectionTitle(title: "Contacts"),
+                      _ShareSectionTitle(title: "Your contacts"),
                       ...contacts.map(
                         (chat) => _ShareContactTile(
                           chat: chat,
@@ -278,8 +287,8 @@ class _ShareSectionTitle extends StatelessWidget {
         title,
         style: TextStyle(
           color: isDark ? Colors.white : Colors.black,
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
+          fontSize: 20,
+          fontWeight: FontWeight.w700,
         ),
       ),
     );

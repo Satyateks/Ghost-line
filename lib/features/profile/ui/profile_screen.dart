@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ghostline/core/utils/utils_route.dart';
 
 
 import '../../../core/theme/app_colors.dart';
-import '../../../core/utils/snackbar_helper.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../../home/controller/home_controller.dart';
 import '../../home/ui/widgets/main_bottom_nav.dart';
@@ -95,7 +95,7 @@ class ProfileScreen extends StatelessWidget {
 
       case ProfileMenuType.notification: Get.to( () => CommonSettingsScreen( title: 'Notification', items: controller.notificationItems()), ); break;
 
-      case ProfileMenuType.chats: Get.to( () => CommonSettingsScreen( title: 'Chats', items: controller.chatItems(), ), ); break;
+      case ProfileMenuType.chats: Get.to( () => CommonSettingsScreen(title: 'Chats', items: controller.chatItems(), ), ); break;
 
       case ProfileMenuType.info:
         Get.to(
@@ -105,22 +105,20 @@ class ProfileScreen extends StatelessWidget {
               SettingItemModel(
                 type: SettingItemType.about,
                 title: 'Terms & Conditions',
-                subtitle: 'Read our terms and conditions',
-                icon: Icons.description_outlined,
+                // subtitle: 'Read our terms and conditions',
+                icon: AppAssets.listIcon,
                 onTap: () => Get.to(() => const TermsConditionPage()),
               ),
               SettingItemModel(
                 type: SettingItemType.about,
                 title: 'Privacy Policy',
-                subtitle: 'Read our privacy policy',
-                icon: Icons.privacy_tip_outlined,
+                icon: AppAssets.incognitoIcon,
                 onTap: () => Get.to(() => const PrivacyPolicyPage()),
               ),
               SettingItemModel(
                 type: SettingItemType.about,
                 title: 'App Info',
-                subtitle: 'Version 1.0.0',
-                icon: Icons.info_outline,
+                icon: AppAssets.infoIcon,
                 onTap: () => Get.to(() => const AppInfoPage()),
               ),
             ],
@@ -137,57 +135,49 @@ class ProfileScreen extends StatelessWidget {
                 type: SettingItemType.about,
                 title: 'Family',
                 subtitle: 'Mom, Dad, Sis and 4 others',
-                icon: Icons.family_restroom_outlined,
                 onTap: () => Get.to(() => const TermsConditionPage()),
               ),
               SettingItemModel(
                 type: SettingItemType.about,
                 title: 'Unread',
                 subtitle: '3 new messages from recent chats', 
-                icon: Icons.mark_chat_unread_outlined,
                 onTap: () => Get.to(() => const PrivacyPolicyPage()),
               ),
               SettingItemModel(
                 type: SettingItemType.about,
                 title: 'Groups',
                 subtitle: 'Design Team, Weekend Plans, Tech Talk', 
-                icon: Icons.groups_outlined,
                 onTap: () => Get.to(() => const AppInfoPage()),
               ),
               SettingItemModel(
                 type: SettingItemType.about,
                 title: 'Favorites',
                 subtitle: 'Starred contacts and pinned chats',
-                icon: Icons.star_border_rounded,
                 onTap: () => Get.to(() => const AppInfoPage()),
               ),
               SettingItemModel(
                 type: SettingItemType.about,
                 title: 'Friends',
                 subtitle: 'Rahul, Amit, Priya and 12 more',
-                icon: Icons.people_alt_outlined,
                 onTap: () => Get.to(() => const AppInfoPage()),
               ),
               SettingItemModel(
                 type: SettingItemType.about,
                 title: 'Office',
                 subtitle: 'Manager, HR, QA Team and 8 others',
-                icon: Icons.business_center_outlined,
                 onTap: () => Get.to(() => const AppInfoPage()),
               ),
               SettingItemModel(
                 type: SettingItemType.about,
                 title: 'Calls',
                 subtitle: '2 missed calls • Yesterday, 10:45 PM',
-                icon: Icons.phone_in_talk_outlined,
                 onTap: () => Get.to(() => const AppInfoPage()),
               ),
             ],
           ),
         );
         break;
-      case ProfileMenuType.inviteFriends:
-      Get.to( () => InviteFriend());break;
+      case ProfileMenuType.inviteFriends: Get.to(() => InviteFriend());break;
       case ProfileMenuType.language: Get.to( () => LanguageScreen() ); break;
         // Get.to( () => 
         // CommonSettingsScreen(title: menu.title,
