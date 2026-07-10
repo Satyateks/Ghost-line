@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:ghostline/core/theme/theme_route.dart';
 
@@ -287,15 +288,8 @@ class _SettingsCard extends StatelessWidget {
                     height: 70,
                     child: Row(
                       children: [
-                        Icon(
-                          item.icon,
-                          color: item.isDanger
-                              ? AppColors.error
-                              : isDark
-                                  ? Colors.white
-                                  : AppColors.lightTextPrimary,
-                          size: 27,
-                        ),
+                        // Icon( item.icon, color: item.isDanger ? AppColors.error : isDark ? Colors.white : AppColors.lightTextPrimary, size: 27),
+                        SvgPicture.asset(item.icon!, width: 24, height: 24, colorFilter: ColorFilter.mode(item.isDanger ? AppColors.error : isDark ? Colors.white : AppColors.lightTextPrimary, BlendMode.srcIn)),
                         const SizedBox(width: 12),
                         Expanded(
                           child: Column(
@@ -307,25 +301,23 @@ class _SettingsCard extends StatelessWidget {
                                 style: TextStyle(
                                   color: item.isDanger
                                       ? AppColors.error
-                                      : isDark
-                                          ? Colors.white
-                                          : AppColors.lightTextPrimary,
+                                      : isDark ? Colors.white : AppColors.lightTextPrimary,
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
-                              if (item.subtitle != null) ...[
-                                const SizedBox(height: 3),
-                                Text(
-                                  item.subtitle!,
-                                  style: TextStyle(
-                                    color: isDark
-                                        ? Colors.white60
-                                        : AppColors.lightTextMuted,
-                                    fontSize: 13,
-                                  ),
-                                ),
-                              ],
+                              // if (item.subtitle != null) ...[
+                              //   const SizedBox(height: 3),
+                              //   Text(
+                              //     item.subtitle!,
+                              //     style: TextStyle(
+                              //       color: isDark
+                              //           ? Colors.white60
+                              //           : AppColors.lightTextMuted,
+                              //       fontSize: 13,
+                              //     ),
+                              //   ),
+                              // ],
                             ],
                           ),
                         ),

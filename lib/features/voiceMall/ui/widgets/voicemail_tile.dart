@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/theme/app_text_styles.dart';
 import '../../model/voicemail_model.dart';
 
 
@@ -21,21 +22,15 @@ class VoicemailTile extends StatelessWidget {
 
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(14),
+      borderRadius: BorderRadius.circular(16),
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 8),
         decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(color: dividerColor, width: 0.5),
-          ),
+          border: Border(bottom: BorderSide(color: dividerColor, width: 0.5)),
         ),
         child: Row(
           children: [
-            CircleAvatar(
-              radius: 22,
-              backgroundImage: NetworkImage(voicemail.image),
-            ),
-
+            CircleAvatar(radius: 20, backgroundImage: NetworkImage(voicemail.image)),
             const SizedBox(width: 10),
 
             Expanded(
@@ -44,51 +39,24 @@ class VoicemailTile extends StatelessWidget {
                 children: [
                   Text(
                     voicemail.name,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: textColor,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style:AppTextStyles.bodyLarge(textColor).copyWith(fontWeight: FontWeight.w600)
                   ),
                   const SizedBox(height: 2),
                   Text(
                     voicemail.message,
-                    maxLines: 1,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: secondaryColor,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w400,
-                    ),
+                    style:AppTextStyles.bodyLarge(secondaryColor)
                   ),
                 ],
               ),
             ),
-
-            const SizedBox(width: 8),
-
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(
-                  voicemail.date,
-                  style: TextStyle(
-                    color: textColor,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
+                Text(voicemail.date, style: AppTextStyles.bodyMedium(textColor)),
                 const SizedBox(height: 3),
-                Text(
-                  voicemail.duration,
-                  style: TextStyle(
-                    color: textColor,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
+                Text(voicemail.duration,style: AppTextStyles.bodyMedium(textColor)),
               ],
             ),
           ],

@@ -1,8 +1,8 @@
-
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ghostline/core/theme/app_text_styles.dart';
 
 import '../../../core/widgets/glass_scaffold.dart';
 import '../../home/controller/home_controller.dart';
@@ -24,8 +24,9 @@ class VoicemailScreen extends StatelessWidget {
     final isDark = theme.brightness == Brightness.dark;
 
     // return Scaffold( backgroundColor: theme.scaffoldBackgroundColor,
-     return GlassScaffold(
-      safeArea: true, resizeToAvoidBottomInset: true,
+    return GlassScaffold(
+      safeArea: true,
+      resizeToAvoidBottomInset: true,
       bottomNavigationBar: MainBottomNav(controller: homeCtrl),
       body: Stack(
         children: [
@@ -66,15 +67,15 @@ class VoicemailScreen extends StatelessWidget {
                                         end: Alignment.bottomCenter,
                                         colors: isDark
                                             ? [
-                                          Colors.white.withOpacity(0.120),
-                                          Colors.white.withOpacity(0.075),
-                                          Colors.white.withOpacity(0.050),
-                                        ]
+                                                Colors.white.withOpacity(0.120),
+                                                Colors.white.withOpacity(0.075),
+                                                Colors.white.withOpacity(0.050),
+                                              ]
                                             : [
-                                          Colors.white.withOpacity(0.92),
-                                          Colors.white.withOpacity(0.78),
-                                          Colors.white.withOpacity(0.66),
-                                        ],
+                                                Colors.white.withOpacity(0.92),
+                                                Colors.white.withOpacity(0.78),
+                                                Colors.white.withOpacity(0.66),
+                                              ],
                                       ),
                                     ),
                                   ),
@@ -107,11 +108,13 @@ class VoicemailScreen extends StatelessWidget {
                                   prefixIcon: Icon(
                                     Icons.search_rounded,
                                     size: 20,
-                                    color: theme.colorScheme.onSurface.withOpacity(0.56),
+                                    color: theme.colorScheme.onSurface
+                                        .withOpacity(0.56),
                                   ),
                                   hintText: "Search name, numbers",
                                   hintStyle: TextStyle(
-                                    color: theme.colorScheme.onSurface.withOpacity(0.52),
+                                    color: theme.colorScheme.onSurface
+                                        .withOpacity(0.52),
                                     fontSize: 13,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -139,28 +142,25 @@ class VoicemailScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-      
+
                     const SizedBox(width: 10),
 
                     GestureDetector(
                       onTap: () => Get.to(() => VoicemailGreetingsScreen()),
                       child: CustomPaint(
-                        painter: _GreetingPillOuterGlowPainter(
-                          isDark: isDark,
-                        ),
+                        painter: _GreetingPillOuterGlowPainter(isDark: isDark),
                         foregroundPainter: _GreetingPillBorderPainter(
                           isDark: isDark,
                         ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(999),
                           child: BackdropFilter(
-                            filter: ImageFilter.blur(
-                              sigmaX: 14,
-                              sigmaY: 14,
-                            ),
+                            filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
                             child: Container(
                               height: 40,
-                              padding: const EdgeInsets.symmetric(horizontal: 18),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 18,
+                              ),
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(999),
@@ -169,21 +169,22 @@ class VoicemailScreen extends StatelessWidget {
                                   end: Alignment.bottomCenter,
                                   colors: isDark
                                       ? [
-                                    Colors.white.withOpacity(0.120),
-                                    Colors.white.withOpacity(0.075),
-                                    Colors.white.withOpacity(0.050),
-                                  ]
+                                          Colors.white.withOpacity(0.120),
+                                          Colors.white.withOpacity(0.075),
+                                          Colors.white.withOpacity(0.050),
+                                        ]
                                       : [
-                                    Colors.white.withOpacity(0.92),
-                                    Colors.white.withOpacity(0.78),
-                                    Colors.white.withOpacity(0.66),
-                                  ],
+                                          Colors.white.withOpacity(0.92),
+                                          Colors.white.withOpacity(0.78),
+                                          Colors.white.withOpacity(0.66),
+                                        ],
                                 ),
                               ),
                               child: Text(
                                 "Greetings",
                                 style: TextStyle(
-                                  color: theme.colorScheme.onSurface.withOpacity(0.92),
+                                  color: theme.colorScheme.onSurface
+                                      .withOpacity(0.92),
                                   fontSize: 13,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -192,11 +193,11 @@ class VoicemailScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
-      
+
               Expanded(
                 child: Obx(
                   () => ListView(
@@ -206,14 +207,15 @@ class VoicemailScreen extends StatelessWidget {
                       if (controller.recentVoicemails.isNotEmpty) ...[
                         _SectionTitle(title: "Recents"),
                         const SizedBox(height: 6),
-                        ...controller.recentVoicemails.map((item) => VoicemailTile(voicemail: item, onTap: () =>Get.to(VoicemailDetailScreen(), arguments: item)))],
-      
+                        ...controller.recentVoicemails.map((item) => VoicemailTile(voicemail: item,onTap: () => Get.to(VoicemailDetailScreen(),arguments: item)))],
+
                       if (controller.olderVoicemails.isNotEmpty) ...[
                         const SizedBox(height: 18),
                         _SectionTitle(title: "Older"),
                         const SizedBox(height: 6),
-                        ...controller.olderVoicemails.map((item) => VoicemailTile(voicemail: item, onTap: () =>Get.to(VoicemailDetailScreen(), arguments: item)))],
-      
+                        ...controller.olderVoicemails.map((item) => VoicemailTile(voicemail: item, onTap: () => Get.to(VoicemailDetailScreen(), arguments: item))),
+                      ],
+
                       if (controller.filteredVoicemails.isEmpty)
                         Padding(
                           padding: const EdgeInsets.only(top: 120),
@@ -241,37 +243,25 @@ class VoicemailScreen extends StatelessWidget {
 class _SectionTitle extends StatelessWidget {
   final String title;
 
-  const _SectionTitle({
-    required this.title
-  });
+  const _SectionTitle({required this.title});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: TextStyle(
-        color: Theme.of(context).colorScheme.onSurface,
-        fontSize: 15,
-        fontWeight: FontWeight.w600,
-      ),
+      style: AppTextStyles.bodyHighLarge(Theme.of(context).colorScheme.onSurface),
     );
   }
 }
+
 class _MiniSearchOuterGlowPainter extends CustomPainter {
   final bool isDark;
 
-  const _MiniSearchOuterGlowPainter({
-    required this.isDark,
-  });
+  const _MiniSearchOuterGlowPainter({required this.isDark});
 
   @override
   void paint(Canvas canvas, Size size) {
-    final rect = Rect.fromLTWH(
-      1.5,
-      1.5,
-      size.width - 3,
-      size.height - 3,
-    );
+    final rect = Rect.fromLTWH(1.5, 1.5, size.width - 3, size.height - 3);
 
     final rrect = RRect.fromRectAndRadius(
       rect,
@@ -281,24 +271,21 @@ class _MiniSearchOuterGlowPainter extends CustomPainter {
     final paint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.3
-      ..maskFilter = const MaskFilter.blur(
-        BlurStyle.normal,
-        3.0,
-      )
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3.0)
       ..shader = LinearGradient(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
         colors: isDark
             ? [
-          Colors.white.withOpacity(0.13),
-          Colors.white.withOpacity(0.035),
-          Colors.black.withOpacity(0.30),
-        ]
+                Colors.white.withOpacity(0.13),
+                Colors.white.withOpacity(0.035),
+                Colors.black.withOpacity(0.30),
+              ]
             : [
-          Colors.white.withOpacity(0.82),
-          Colors.white.withOpacity(0.32),
-          Colors.black.withOpacity(0.07),
-        ],
+                Colors.white.withOpacity(0.82),
+                Colors.white.withOpacity(0.32),
+                Colors.black.withOpacity(0.07),
+              ],
         stops: const [0.0, 0.45, 1.0],
       ).createShader(rect);
 
@@ -323,18 +310,8 @@ class _MiniSearchGlassBorderPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final radius = size.height / 2;
-
-    final rect = Rect.fromLTWH(
-      1,
-      1,
-      size.width - 2,
-      size.height - 2,
-    );
-
-    final rrect = RRect.fromRectAndRadius(
-      rect,
-      Radius.circular(radius),
-    );
+    final rect = Rect.fromLTWH(1, 1, size.width - 2, size.height - 2);
+    final rrect = RRect.fromRectAndRadius(rect, Radius.circular(radius));
 
     // Main thin border
     final borderPaint = Paint()
@@ -345,15 +322,15 @@ class _MiniSearchGlassBorderPainter extends CustomPainter {
         end: Alignment.bottomCenter,
         colors: isDark
             ? [
-          Colors.white.withOpacity(0.22),
-          Colors.white.withOpacity(0.075),
-          Colors.black.withOpacity(0.32),
-        ]
+                Colors.white.withOpacity(0.22),
+                Colors.white.withOpacity(0.075),
+                Colors.black.withOpacity(0.32),
+              ]
             : [
-          Colors.white.withOpacity(0.90),
-          Colors.white.withOpacity(0.46),
-          Colors.black.withOpacity(0.08),
-        ],
+                Colors.white.withOpacity(0.90),
+                Colors.white.withOpacity(0.46),
+                Colors.black.withOpacity(0.08),
+              ],
         stops: const [0.0, 0.48, 1.0],
       ).createShader(rect);
 
@@ -364,10 +341,7 @@ class _MiniSearchGlassBorderPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.0
       ..strokeCap = StrokeCap.round
-      ..maskFilter = const MaskFilter.blur(
-        BlurStyle.normal,
-        0.75,
-      )
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 0.75)
       ..shader = LinearGradient(
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
@@ -392,28 +366,25 @@ class _MiniSearchGlassBorderPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0.9
       ..strokeCap = StrokeCap.round
-      ..maskFilter = const MaskFilter.blur(
-        BlurStyle.normal,
-        0.75,
-      )
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 0.75)
       ..shader = LinearGradient(
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
         colors: isDark
             ? [
-          Colors.white.withOpacity(0.00),
-          Colors.white.withOpacity(0.030),
-          Colors.white.withOpacity(0.060),
-          Colors.white.withOpacity(0.030),
-          Colors.white.withOpacity(0.00),
-        ]
+                Colors.white.withOpacity(0.00),
+                Colors.white.withOpacity(0.030),
+                Colors.white.withOpacity(0.060),
+                Colors.white.withOpacity(0.030),
+                Colors.white.withOpacity(0.00),
+              ]
             : [
-          Colors.black.withOpacity(0.00),
-          Colors.black.withOpacity(0.025),
-          Colors.black.withOpacity(0.050),
-          Colors.black.withOpacity(0.025),
-          Colors.black.withOpacity(0.00),
-        ],
+                Colors.black.withOpacity(0.00),
+                Colors.black.withOpacity(0.025),
+                Colors.black.withOpacity(0.050),
+                Colors.black.withOpacity(0.025),
+                Colors.black.withOpacity(0.00),
+              ],
         stops: const [0.0, 0.22, 0.50, 0.78, 1.0],
       ).createShader(rect);
 
@@ -424,12 +395,7 @@ class _MiniSearchGlassBorderPainter extends CustomPainter {
     );
 
     // Inner soft depth
-    final innerRect = Rect.fromLTWH(
-      3.5,
-      3.5,
-      size.width - 7,
-      size.height - 7,
-    );
+    final innerRect = Rect.fromLTWH(3.5, 3.5, size.width - 7, size.height - 7);
 
     final innerRRect = RRect.fromRectAndRadius(
       innerRect,
@@ -439,10 +405,7 @@ class _MiniSearchGlassBorderPainter extends CustomPainter {
     final innerShadowPaint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0.9
-      ..maskFilter = const MaskFilter.blur(
-        BlurStyle.normal,
-        1.0,
-      )
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 1.0)
       ..color = isDark
           ? Colors.black.withOpacity(0.20)
           : Colors.white.withOpacity(0.24);
@@ -456,21 +419,15 @@ class _MiniSearchGlassBorderPainter extends CustomPainter {
         oldDelegate.primaryColor != primaryColor;
   }
 }
+
 class _GreetingPillOuterGlowPainter extends CustomPainter {
   final bool isDark;
 
-  const _GreetingPillOuterGlowPainter({
-    required this.isDark,
-  });
+  const _GreetingPillOuterGlowPainter({required this.isDark});
 
   @override
   void paint(Canvas canvas, Size size) {
-    final rect = Rect.fromLTWH(
-      1.5,
-      1.5,
-      size.width - 3,
-      size.height - 3,
-    );
+    final rect = Rect.fromLTWH(1.5, 1.5, size.width - 3, size.height - 3);
 
     final rrect = RRect.fromRectAndRadius(
       rect,
@@ -480,24 +437,21 @@ class _GreetingPillOuterGlowPainter extends CustomPainter {
     final paint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.3
-      ..maskFilter = const MaskFilter.blur(
-        BlurStyle.normal,
-        3.0,
-      )
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3.0)
       ..shader = LinearGradient(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
         colors: isDark
             ? [
-          Colors.white.withOpacity(0.13),
-          Colors.white.withOpacity(0.035),
-          Colors.black.withOpacity(0.30),
-        ]
+                Colors.white.withOpacity(0.13),
+                Colors.white.withOpacity(0.035),
+                Colors.black.withOpacity(0.30),
+              ]
             : [
-          Colors.white.withOpacity(0.82),
-          Colors.white.withOpacity(0.32),
-          Colors.black.withOpacity(0.07),
-        ],
+                Colors.white.withOpacity(0.82),
+                Colors.white.withOpacity(0.32),
+                Colors.black.withOpacity(0.07),
+              ],
         stops: const [0.0, 0.45, 1.0],
       ).createShader(rect);
 
@@ -513,25 +467,15 @@ class _GreetingPillOuterGlowPainter extends CustomPainter {
 class _GreetingPillBorderPainter extends CustomPainter {
   final bool isDark;
 
-  const _GreetingPillBorderPainter({
-    required this.isDark,
-  });
+  const _GreetingPillBorderPainter({required this.isDark});
 
   @override
   void paint(Canvas canvas, Size size) {
     final radius = size.height / 2;
 
-    final rect = Rect.fromLTWH(
-      1,
-      1,
-      size.width - 2,
-      size.height - 2,
-    );
+    final rect = Rect.fromLTWH(1, 1, size.width - 2, size.height - 2);
 
-    final rrect = RRect.fromRectAndRadius(
-      rect,
-      Radius.circular(radius),
-    );
+    final rrect = RRect.fromRectAndRadius(rect, Radius.circular(radius));
 
     // Main thin border
     final borderPaint = Paint()
@@ -542,15 +486,15 @@ class _GreetingPillBorderPainter extends CustomPainter {
         end: Alignment.bottomCenter,
         colors: isDark
             ? [
-          Colors.white.withOpacity(0.22),
-          Colors.white.withOpacity(0.075),
-          Colors.black.withOpacity(0.32),
-        ]
+                Colors.white.withOpacity(0.22),
+                Colors.white.withOpacity(0.075),
+                Colors.black.withOpacity(0.32),
+              ]
             : [
-          Colors.white.withOpacity(0.90),
-          Colors.white.withOpacity(0.46),
-          Colors.black.withOpacity(0.08),
-        ],
+                Colors.white.withOpacity(0.90),
+                Colors.white.withOpacity(0.46),
+                Colors.black.withOpacity(0.08),
+              ],
         stops: const [0.0, 0.48, 1.0],
       ).createShader(rect);
 
@@ -561,10 +505,7 @@ class _GreetingPillBorderPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.0
       ..strokeCap = StrokeCap.round
-      ..maskFilter = const MaskFilter.blur(
-        BlurStyle.normal,
-        0.75,
-      )
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 0.75)
       ..shader = LinearGradient(
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
@@ -589,28 +530,25 @@ class _GreetingPillBorderPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0.9
       ..strokeCap = StrokeCap.round
-      ..maskFilter = const MaskFilter.blur(
-        BlurStyle.normal,
-        0.75,
-      )
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 0.75)
       ..shader = LinearGradient(
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
         colors: isDark
             ? [
-          Colors.white.withOpacity(0.00),
-          Colors.white.withOpacity(0.030),
-          Colors.white.withOpacity(0.060),
-          Colors.white.withOpacity(0.030),
-          Colors.white.withOpacity(0.00),
-        ]
+                Colors.white.withOpacity(0.00),
+                Colors.white.withOpacity(0.030),
+                Colors.white.withOpacity(0.060),
+                Colors.white.withOpacity(0.030),
+                Colors.white.withOpacity(0.00),
+              ]
             : [
-          Colors.black.withOpacity(0.00),
-          Colors.black.withOpacity(0.025),
-          Colors.black.withOpacity(0.050),
-          Colors.black.withOpacity(0.025),
-          Colors.black.withOpacity(0.00),
-        ],
+                Colors.black.withOpacity(0.00),
+                Colors.black.withOpacity(0.025),
+                Colors.black.withOpacity(0.050),
+                Colors.black.withOpacity(0.025),
+                Colors.black.withOpacity(0.00),
+              ],
         stops: const [0.0, 0.22, 0.50, 0.78, 1.0],
       ).createShader(rect);
 
@@ -621,12 +559,7 @@ class _GreetingPillBorderPainter extends CustomPainter {
     );
 
     // Inner soft depth
-    final innerRect = Rect.fromLTWH(
-      3.5,
-      3.5,
-      size.width - 7,
-      size.height - 7,
-    );
+    final innerRect = Rect.fromLTWH(3.5, 3.5, size.width - 7, size.height - 7);
 
     final innerRRect = RRect.fromRectAndRadius(
       innerRect,
@@ -636,10 +569,7 @@ class _GreetingPillBorderPainter extends CustomPainter {
     final innerShadowPaint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0.9
-      ..maskFilter = const MaskFilter.blur(
-        BlurStyle.normal,
-        1.0,
-      )
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 1.0)
       ..color = isDark
           ? Colors.black.withOpacity(0.20)
           : Colors.white.withOpacity(0.24);

@@ -52,22 +52,18 @@ class ChatListTile extends StatelessWidget {
                   children: [
                     Expanded(child: Text(chat.name, maxLines: 1, overflow: TextOverflow.ellipsis, style: AppTextStyles.bodyHighLarge(nameColor))),
 
+                    if (chat.isArchived) ...[
+                      const SizedBox(width: 5),
+                      Icon(Icons.archive, size: 14, color: timeColor),
+                    ],
                     if (chat.isMuted) ...[
                       const SizedBox(width: 5),
-                      Icon(
-                        Icons.notifications_off_outlined,
-                        size: 14,
-                        color: timeColor,
-                      ),
+                      Icon(Icons.notifications_off_outlined,size: 14, color: timeColor),
                     ],
 
                     if (chat.isBlocked) ...[
                       const SizedBox(width: 5),
-                      const Icon(
-                        Icons.block_rounded,
-                        size: 14,
-                        color: Colors.redAccent,
-                      ),
+                      const Icon(Icons.block_rounded, size: 14, color: Colors.redAccent),
                     ],
                   ],
                 ),
@@ -195,9 +191,7 @@ class ChatActionMenu {
           ),
         ),
       ],
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(14),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
     );
 
     if (selected == null) return;
@@ -268,8 +262,7 @@ class _ChatActionItem extends StatelessWidget {
             ),
           ),
 
-          if (!isLast)
-            Divider(
+          if (!isLast) Divider(
               height: 1,
               thickness: 0.4,
               color: Colors.black.withOpacity(0.4),

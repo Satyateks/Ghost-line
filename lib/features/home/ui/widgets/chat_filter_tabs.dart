@@ -3,6 +3,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ghostline/features/home/ui/widgets/favourite_list.dart';
 
 import '../../../../core/theme/theme_route.dart';
 import '../../controller/home_controller.dart';
@@ -17,7 +18,7 @@ class ChatFilterTabs extends StatelessWidget {
     return SizedBox(
       height: 34,
       child: Obx(
-            () => ListView.separated(
+        () => ListView.separated(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           scrollDirection: Axis.horizontal,
           physics: const BouncingScrollPhysics(),
@@ -47,10 +48,7 @@ class ChatFilterTabs extends StatelessWidget {
     );
   }
 
-  void _showAddTabBottomSheet(
-      BuildContext context,
-      HomeController controller,
-      ) {
+  void _showAddTabBottomSheet(BuildContext context, HomeController controller) {
     final TextEditingController textController = TextEditingController();
 
     showModalBottomSheet(
@@ -65,14 +63,9 @@ class ChatFilterTabs extends StatelessWidget {
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
           child: ClipRRect(
-            borderRadius: const BorderRadius.vertical(
-              top: Radius.circular(24),
-            ),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
             child: BackdropFilter(
-              filter: ImageFilter.blur(
-                sigmaX: 15,
-                sigmaY: 15,
-              ),
+              filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
               child: Container(
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
@@ -117,10 +110,7 @@ class ChatFilterTabs extends StatelessWidget {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(14),
                       child: BackdropFilter(
-                        filter: ImageFilter.blur(
-                          sigmaX: 12,
-                          sigmaY: 12,
-                        ),
+                        filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
                         child: TextField(
                           controller: textController,
                           style: TextStyle(
@@ -174,10 +164,9 @@ class ChatFilterTabs extends StatelessWidget {
                         ),
                         onPressed: () {
                           if (textController.text.trim().isNotEmpty) {
-                            controller.addCustomTab(
-                              textController.text.trim(),
-                            );
+                            controller.addCustomTab(textController.text.trim());
                             Get.back();
+                            Get.to(FavouriteScreen(message: textController.text.trim()));
                           }
                         },
                         child: const Text(
@@ -205,9 +194,7 @@ class ChatFilterTabs extends StatelessWidget {
 class _AddTabButton extends StatelessWidget {
   final VoidCallback onTap;
 
-  const _AddTabButton({
-    required this.onTap,
-  });
+  const _AddTabButton({required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -216,27 +203,21 @@ class _AddTabButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: SizedBox(
-        height: 30,
-        width: 40,
+        height: 40,
+        width: 60,
         child: Stack(
           alignment: Alignment.center,
           children: [
             Positioned.fill(
               child: CustomPaint(
-                painter: _ChipOuterGlowPainter(
-                  isDark: isDark,
-                  selected: false,
-                ),
+                painter: _ChipOuterGlowPainter(isDark: isDark, selected: false),
               ),
             ),
             Positioned.fill(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(999),
                 child: BackdropFilter(
-                  filter: ImageFilter.blur(
-                    sigmaX: 14,
-                    sigmaY: 14,
-                  ),
+                  filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(999),
@@ -245,36 +226,23 @@ class _AddTabButton extends StatelessWidget {
                         end: Alignment.bottomCenter,
                         colors: isDark
                             ? [
-                          Colors.white.withOpacity(0.120),
-                          Colors.white.withOpacity(0.075),
-                          Colors.white.withOpacity(0.050),
-                        ]
+                                const Color.from(alpha: 1, red: 1, green: 1, blue: 1).withOpacity(0.120),
+                                Colors.white.withOpacity(0.075),
+                                Colors.white.withOpacity(0.050),
+                              ]
                             : [
-                          Colors.white.withOpacity(0.86),
-                          Colors.white.withOpacity(0.70),
-                          Colors.white.withOpacity(0.58),
-                        ],
+                                Colors.white.withOpacity(0.86),
+                                Colors.white.withOpacity(0.70),
+                                Colors.white.withOpacity(0.58),
+                              ],
                       ),
                     ),
                   ),
                 ),
               ),
             ),
-            Positioned.fill(
-              child: CustomPaint(
-                painter: _ChipGlassBorderPainter(
-                  isDark: isDark,
-                  selected: false,
-                ),
-              ),
-            ),
-            Icon(
-              Icons.add_rounded,
-              size: 20,
-              color: isDark
-                  ? Colors.white.withOpacity(0.78)
-                  : Colors.black.withOpacity(0.58),
-            ),
+            Positioned.fill(child: CustomPaint( painter: _ChipGlassBorderPainter( isDark: isDark, selected: false))),
+             Icon(Icons.add, size: 20),
           ],
         ),
       ),
@@ -300,60 +268,39 @@ class _FilterChip extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: AnimatedScale(
-        scale: selected ? 1.02 : 1.0,
+        scale: selected ? 1.1 : 1.05,
         duration: const Duration(milliseconds: 180),
         curve: Curves.easeOut,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 180),
-          height: 30,
-          constraints: const BoxConstraints(
-            minWidth: 54,
-          ),
+          height: 60,
+          constraints: const BoxConstraints(minWidth: 77),
           child: Stack(
             alignment: Alignment.center,
             children: [
-              Positioned.fill(
-                child: CustomPaint(
-                  painter: _ChipOuterGlowPainter(
-                    isDark: isDark,
-                    selected: selected,
-                  ),
-                ),
-              ),
+              Positioned.fill( child: CustomPaint( painter: _ChipOuterGlowPainter(isDark: isDark, selected: selected))),
 
               // Main glass body
               Positioned.fill(
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(999),
+                  borderRadius: BorderRadius.circular(11),
                   child: BackdropFilter(
-                    filter: ImageFilter.blur(
-                      sigmaX: 14,
-                      sigmaY: 14,
-                    ),
+                    filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
                     child: Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(999),
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: selected
-                              ? [
-                            AppColors.primaryBlue.withOpacity(0.56),
-                            AppColors.primaryBlue.withOpacity(0.40),
-                            AppColors.primaryBlue.withOpacity(0.28),
-                          ]
-                              : isDark
-                              ? [
-                            Colors.white.withOpacity(0.120),
-                            Colors.white.withOpacity(0.075),
-                            Colors.white.withOpacity(0.050),
-                          ]
-                              : [
-                            Colors.white.withOpacity(0.86),
-                            Colors.white.withOpacity(0.70),
-                            Colors.white.withOpacity(0.58),
-                          ],
-                        ),
+                        borderRadius: BorderRadius.circular(80),
+                        border: Border.all(color: selected ? AppColors.primaryBlue : Colors.white, width: 2), // Border thickness
+   
+                        color: selected?AppColors.primaryBlue.withOpacity(0.56):isDark? Colors.white.withOpacity(0.120):Colors.white.withOpacity(0.86)
+                        // gradient: LinearGradient(
+                        //   begin: Alignment.topCenter,
+                        //   end: Alignment.bottomCenter,
+                        //   colors: selected
+                        //       ? [ AppColors.primaryBlue.withOpacity(0.56), AppColors.primaryBlue.withOpacity(0.40), AppColors.primaryBlue.withOpacity(0.28), ]
+                        //       : isDark
+                        //       ? [ Colors.white.withOpacity(0.120), Colors.white.withOpacity(0.075), Colors.white.withOpacity(0.050), ]
+                        //       : [ Colors.white.withOpacity(0.86), Colors.white.withOpacity(0.70), Colors.white.withOpacity(0.58), ],
+                        // ),
                       ),
                     ),
                   ),
@@ -361,30 +308,14 @@ class _FilterChip extends StatelessWidget {
               ),
 
               // Thin border + top/bottom shine
-              Positioned.fill(
-                child: CustomPaint(
-                  painter: _ChipGlassBorderPainter(
-                    isDark: isDark,
-                    selected: selected,
-                  ),
-                ),
-              ),
+              Positioned.fill(child: CustomPaint(painter: _ChipGlassBorderPainter(isDark: isDark, selected: selected))),
 
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: selected
-                        ? Colors.white
-                        : isDark
-                        ? Colors.white.withOpacity(0.72)
-                        : Colors.black.withOpacity(0.58),
-                    fontSize: 12,
-                    fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
-                  ),
+              Text( title, maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: selected ? Colors.white : isDark ? Colors.white.withOpacity(0.72) :AppColors.lightTextPrimary,
+                  fontSize: selected ?14:12,
+                  fontWeight: selected ? FontWeight.w700 : FontWeight.w400,
                 ),
               ),
             ],
@@ -399,52 +330,38 @@ class _ChipOuterGlowPainter extends CustomPainter {
   final bool isDark;
   final bool selected;
 
-  const _ChipOuterGlowPainter({
-    required this.isDark,
-    required this.selected,
-  });
+  const _ChipOuterGlowPainter({required this.isDark, required this.selected});
 
   @override
   void paint(Canvas canvas, Size size) {
-    final rect = Rect.fromLTWH(
-      1.5,
-      1.5,
-      size.width - 3,
-      size.height - 3,
-    );
+    final rect = Rect.fromLTWH(1.5, 1.5, size.width - 3, size.height - 3);
 
-    final rrect = RRect.fromRectAndRadius(
-      rect,
-      Radius.circular(size.height / 2),
-    );
+    final rrect = RRect.fromRectAndRadius(rect, Radius.circular(size.height / 2));
 
     final paint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = selected ? 2.6 : 2.2
-      ..maskFilter = const MaskFilter.blur(
-        BlurStyle.normal,
-        3.0,
-      )
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3.0)
       ..shader = LinearGradient(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
         colors: selected
             ? [
-          AppColors.primaryBlue.withOpacity(0.38),
-          Colors.white.withOpacity(0.10),
-          Colors.black.withOpacity(isDark ? 0.30 : 0.08),
-        ]
+                AppColors.primaryBlue,
+                Colors.white.withOpacity(0.10),
+                Colors.black.withOpacity(isDark ? 0.30 : 0.08),
+              ]
             : isDark
             ? [
-          Colors.white.withOpacity(0.12),
-          Colors.white.withOpacity(0.035),
-          Colors.black.withOpacity(0.28),
-        ]
+                Colors.white.withOpacity(0.12),
+                Colors.white.withOpacity(0.035),
+                Colors.black.withOpacity(0.28),
+              ]
             : [
-          Colors.white.withOpacity(0.78),
-          Colors.white.withOpacity(0.28),
-          Colors.black.withOpacity(0.07),
-        ],
+                Colors.white.withOpacity(0.78),
+                Colors.white.withOpacity(0.28),
+                Colors.black.withOpacity(0.07),
+              ],
         stops: const [0.0, 0.45, 1.0],
       ).createShader(rect);
 
@@ -453,8 +370,7 @@ class _ChipOuterGlowPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _ChipOuterGlowPainter oldDelegate) {
-    return oldDelegate.isDark != isDark ||
-        oldDelegate.selected != selected;
+    return oldDelegate.isDark != isDark || oldDelegate.selected != selected;
   }
 }
 
@@ -462,26 +378,15 @@ class _ChipGlassBorderPainter extends CustomPainter {
   final bool isDark;
   final bool selected;
 
-  const _ChipGlassBorderPainter({
-    required this.isDark,
-    required this.selected,
-  });
+  const _ChipGlassBorderPainter({required this.isDark, required this.selected});
 
   @override
   void paint(Canvas canvas, Size size) {
     final radius = size.height / 2;
 
-    final rect = Rect.fromLTWH(
-      1,
-      1,
-      size.width - 2,
-      size.height - 2,
-    );
+    final rect = Rect.fromLTWH(1, 1, size.width - 2, size.height - 2);
 
-    final rrect = RRect.fromRectAndRadius(
-      rect,
-      Radius.circular(radius),
-    );
+    final rrect = RRect.fromRectAndRadius(rect, Radius.circular(radius));
 
     // Main thin border
     final borderPaint = Paint()
@@ -492,21 +397,21 @@ class _ChipGlassBorderPainter extends CustomPainter {
         end: Alignment.bottomCenter,
         colors: selected
             ? [
-          Colors.white.withOpacity(0.34),
-          AppColors.primaryBlue.withOpacity(0.28),
-          Colors.black.withOpacity(isDark ? 0.32 : 0.10),
-        ]
+                Colors.white.withOpacity(0.34),
+                AppColors.primaryBlue.withOpacity(0.28),
+                Colors.black.withOpacity(isDark ? 0.32 : 0.10),
+              ]
             : isDark
             ? [
-          Colors.white.withOpacity(0.22),
-          Colors.white.withOpacity(0.075),
-          Colors.black.withOpacity(0.32),
-        ]
+                Colors.white.withOpacity(0.22),
+                Colors.white.withOpacity(0.075),
+                Colors.black.withOpacity(0.32),
+              ]
             : [
-          Colors.white.withOpacity(0.85),
-          Colors.white.withOpacity(0.42),
-          Colors.black.withOpacity(0.08),
-        ],
+                Colors.white.withOpacity(0.85),
+                Colors.white.withOpacity(0.42),
+                Colors.black.withOpacity(0.08),
+              ],
         stops: const [0.0, 0.48, 1.0],
       ).createShader(rect);
 
@@ -517,18 +422,15 @@ class _ChipGlassBorderPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.0
       ..strokeCap = StrokeCap.round
-      ..maskFilter = const MaskFilter.blur(
-        BlurStyle.normal,
-        0.75,
-      )
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 0.75)
       ..shader = LinearGradient(
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
         colors: [
           Colors.white.withOpacity(0.00),
-          Colors.white.withOpacity(selected ? 0.16 : isDark ? 0.10 : 0.34),
-          Colors.white.withOpacity(selected ? 0.32 : isDark ? 0.18 : 0.62),
-          Colors.white.withOpacity(selected ? 0.14 : isDark ? 0.08 : 0.28),
+          Colors.white.withOpacity( selected ? 0.16 : isDark ? 0.10 : 0.34),
+          Colors.white.withOpacity( selected ? 0.32 : isDark ? 0.18 : 0.62),
+          Colors.white.withOpacity( selected ? 0.14 : isDark ? 0.08 : 0.28),
           Colors.white.withOpacity(0.00),
         ],
         stops: const [0.0, 0.22, 0.50, 0.78, 1.0],
@@ -545,36 +447,33 @@ class _ChipGlassBorderPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0.9
       ..strokeCap = StrokeCap.round
-      ..maskFilter = const MaskFilter.blur(
-        BlurStyle.normal,
-        0.75,
-      )
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 0.75)
       ..shader = LinearGradient(
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
         colors: selected
             ? [
-          Colors.white.withOpacity(0.00),
-          Colors.black.withOpacity(0.08),
-          Colors.black.withOpacity(0.16),
-          Colors.black.withOpacity(0.08),
-          Colors.white.withOpacity(0.00),
-        ]
+                Colors.white.withOpacity(0.00),
+                Colors.black.withOpacity(0.08),
+                Colors.black.withOpacity(0.16),
+                Colors.black.withOpacity(0.08),
+                Colors.white.withOpacity(0.00),
+              ]
             : isDark
             ? [
-          Colors.white.withOpacity(0.00),
-          Colors.white.withOpacity(0.030),
-          Colors.white.withOpacity(0.060),
-          Colors.white.withOpacity(0.030),
-          Colors.white.withOpacity(0.00),
-        ]
+                Colors.white.withOpacity(0.00),
+                Colors.white.withOpacity(0.030),
+                Colors.white.withOpacity(0.060),
+                Colors.white.withOpacity(0.030),
+                Colors.white.withOpacity(0.00),
+              ]
             : [
-          Colors.black.withOpacity(0.00),
-          Colors.black.withOpacity(0.025),
-          Colors.black.withOpacity(0.050),
-          Colors.black.withOpacity(0.025),
-          Colors.black.withOpacity(0.00),
-        ],
+                Colors.black.withOpacity(0.00),
+                Colors.black.withOpacity(0.025),
+                Colors.black.withOpacity(0.050),
+                Colors.black.withOpacity(0.025),
+                Colors.black.withOpacity(0.00),
+              ],
         stops: const [0.0, 0.22, 0.50, 0.78, 1.0],
       ).createShader(rect);
 
@@ -585,12 +484,7 @@ class _ChipGlassBorderPainter extends CustomPainter {
     );
 
     // Inner depth
-    final innerRect = Rect.fromLTWH(
-      3,
-      3,
-      size.width - 6,
-      size.height - 6,
-    );
+    final innerRect = Rect.fromLTWH(3, 3, size.width - 6, size.height - 6);
 
     final innerRRect = RRect.fromRectAndRadius(
       innerRect,
@@ -600,22 +494,78 @@ class _ChipGlassBorderPainter extends CustomPainter {
     final innerShadowPaint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0.9
-      ..maskFilter = const MaskFilter.blur(
-        BlurStyle.normal,
-        1.0,
-      )
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 1.0)
       ..color = selected
           ? Colors.black.withOpacity(0.16)
-          : isDark
-          ? Colors.black.withOpacity(0.20)
-          : Colors.white.withOpacity(0.24);
+          : isDark ? Colors.black.withOpacity(0.20) : Colors.white.withOpacity(0.24);
 
     canvas.drawRRect(innerRRect, innerShadowPaint);
   }
 
   @override
   bool shouldRepaint(covariant _ChipGlassBorderPainter oldDelegate) {
-    return oldDelegate.isDark != isDark ||
-        oldDelegate.selected != selected;
+    return oldDelegate.isDark != isDark || oldDelegate.selected != selected;
   }
 }
+
+
+class CustomTab extends StatelessWidget {
+  final String label; // The text displayed below the icon (e.g., "Statement")
+  final String? imgPath; // Made optional
+  final bool isSelected; 
+  final VoidCallback? onTap; 
+
+  const CustomTab({
+    Key? key,
+    required this.label,
+    this.imgPath, // No longer required
+    this.isSelected = false,
+    this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    // Define colors based on selection status
+    final Color borderColor = isSelected ? AppColors.primaryBlue : Color(0xDD42E365).withOpacity(0.21);
+    final Color backgroundColor = isSelected ? AppColors.primaryBlueLight : AppColors.error; // Light Green or White
+    // final Color iconColor = isSelected ? CustomClr.primaryBlue : const Color(0xFF385E9D); // Dark Teal/Blue
+
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 7),
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(100), // Pill shape
+          border: Border.all(color: borderColor, width: isSelected ? 1.5 : 1.0), // Thicker border for selected state
+          boxShadow: [
+            // A very subtle internal shadow for depth, though less prominent in your image
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.05),
+              spreadRadius: 1,
+              blurRadius: 2,
+              offset: const Offset(0, 1),
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min, 
+          children: [
+            if (imgPath != null) ...[
+              Image.asset(imgPath!),
+              const SizedBox(width: 7),
+            ],
+            Text(label,style:TextStyle(fontWeight: isSelected ?FontWeight.w600:FontWeight.w500,
+                color: isSelected? Colors.black : Color(0xFF2D3748)) ,
+
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+
+

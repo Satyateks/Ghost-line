@@ -1,14 +1,16 @@
 // ignore_for_file: deprecated_member_use
 
-import 'dart:ui';
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:ghostline/features/auth/ui/authGlassCard.dart';
 
 import '../../../core/theme/theme_route.dart';
 import '../../../core/utils/utils_route.dart';
 import '../../home/ui/home_screen.dart';
+
 import '../controller/authCtl.dart';
 import 'premiumScreen.dart';
   
@@ -28,7 +30,7 @@ class AuthScreen extends StatelessWidget {
         resizeToAvoidBottomInset: true,
         backgroundColor: isDark ? Colors.black : AppColors.lightBg,
         body: Container(decoration: BoxDecoration(gradient: isDark ? AppColors.darkBgGradient : AppColors.lightBgGradient),
-          child: SafeArea(
+          child: SafeArea(top: false,
             child: LayoutBuilder(
               builder: (context, constraints) {
                 final size = MediaQuery.sizeOf(context);
@@ -36,36 +38,27 @@ class AuthScreen extends StatelessWidget {
           
                 return SingleChildScrollView(
                   keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-                  padding: EdgeInsets.only(bottom: bottomInset + 12),
+                  padding: EdgeInsets.only(bottom: bottomInset + 7),
                   child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      minHeight: constraints.maxHeight,
-                    ),
+                    constraints: BoxConstraints(minHeight: constraints.maxHeight),
                     child: Stack(
                       children: [
                         Positioned.fill(child: Image.asset(isDark? AppAssets.authBg: AppAssets.authBgLight,alignment: Alignment.topCenter, fit: BoxFit.fill)),
-                        Positioned(
-                          top: size.height * 0.065, left: 0, right: 0,
-                          child: Center(
-                            child:isDark? Image.asset(AppAssets.ghostLogo, height: size.height * 0.045, fit: BoxFit.contain): Image.asset(AppAssets.ghostLogo1, height: size.height * 0.045, fit: BoxFit.contain),  ),
+                        Positioned(top: size.height * 0.065, left: 0, right: 0,
+                          child: Center(child:isDark? Image.asset(AppAssets.ghostLogo, height: size.height * 0.045, fit: BoxFit.contain): Image.asset(AppAssets.ghostLogo1, height: size.height * 0.045, fit: BoxFit.contain),  ),
                         ),
           
-                        Positioned(
-                          top: size.height * 0.1, left: 8, right: 8,
-                          child: Image.asset(
-                            AppAssets.onboarding,
-                            height: size.height * 0.36,
-                            fit: BoxFit.contain,
+                        Positioned(top: size.height * 0.06, left: 4, right: 4,
+                          child: Image.asset(AppAssets.onboarding,fit: BoxFit.contain, // height: size.height * 0.36,
                           ),
                         ),
-          
                         Positioned(top: size.height * 0.49, left: 0, right: 0, child: const _AuthIntroText()),
           
                         Container(
                           width: double.infinity,
                           constraints: BoxConstraints(minHeight: constraints.maxHeight),
                           alignment: Alignment.bottomCenter,
-                          padding: const EdgeInsets.only(left: 8, right: 8, bottom: 4),
+                          padding: const EdgeInsets.only(left: 8, right: 8, bottom: 2),
                           child: Padding(
                             padding: EdgeInsets.only(top: size.height * 0.54),
                             child: Obx(
@@ -125,21 +118,21 @@ class _LoginCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _AuthGlassCard(
+    return AuthGlassCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const _AuthTitle("Log in"),
+          const AuthTitle("Log in"),
           const SizedBox(height: 12),
 
-          _AuthField(
+          AuthField(
             controller: controller.loginIdCtrl,
             hint: "Enter Username or mobile",
           ),
 
           const SizedBox(height: 8),
 
-          _AuthField(
+          AuthField(
             controller: controller.loginPasswordCtrl,
             hint: "Enter Password",
             obscureText: true,
@@ -168,22 +161,10 @@ class _LoginCard extends StatelessWidget {
               child: Builder(
                 builder: (context) {
                   final isDark = Theme.of(context).brightness == Brightness.dark;
-                  return RichText(
-                    text: TextSpan(
-                      text: "Don't have an account? ",
-                      style: TextStyle(
-                        color: isDark ? Colors.white.withOpacity(0.62) : AppColors.lightTextMuted,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                      ),
+                  return RichText( text: TextSpan( text: "Don't have an account? ",
+                      style: TextStyle( color: isDark ? Colors.white.withOpacity(0.62) : AppColors.lightTextMuted, fontSize: 14, fontWeight: FontWeight.w400, ),
                       children: const [
-                        TextSpan(
-                          text: "Create account",
-                          style: TextStyle(fontSize: 15,
-                            color: AppColors.primaryBlue,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
+                        TextSpan( text: "Create account", style: TextStyle(fontSize: 15, color: AppColors.primaryBlue, fontWeight: FontWeight.w700, ), ),
                       ],
                     ),
                   );
@@ -210,21 +191,21 @@ class _CreateAccountCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _AuthGlassCard(
+    return AuthGlassCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const _AuthTitle("Create an account"),
+          const AuthTitle("Create an account"),
           const SizedBox(height: 12),
 
-          _AuthField(
+          AuthField(
             controller: controller.createIdCtrl,
             hint: "Mobile or Email",
           ),
 
           const SizedBox(height: 8),
 
-          _AuthField(
+          AuthField(
             controller: controller.createPasswordCtrl,
             hint: "Choose Password",
             obscureText: true,
@@ -287,7 +268,7 @@ class _OtpCard extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final textSecondary = isDark ? Colors.white : AppColors.lightTextPrimary;
     
-    return _AuthGlassCard(
+    return AuthGlassCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -302,7 +283,7 @@ class _OtpCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 6),
-              _AuthTitle("Enter OTP"),
+              AuthTitle("Enter OTP"),
             ],
           ),
 
@@ -378,14 +359,14 @@ class _UsernameCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _AuthGlassCard(
+    return AuthGlassCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const _AuthTitle("Choose a Username"),
+          const AuthTitle("Choose a Username"),
           const SizedBox(height: 21),
 
-          _AuthField( controller: controller.usernameCtrl, hint: "Choose a Username"),
+          AuthField( controller: controller.usernameCtrl, hint: "Choose a Username"),
 
           const SizedBox(height: 27),
 
@@ -413,7 +394,7 @@ class _ForgetPwdCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final textSecondary = isDark ? Colors.white : AppColors.lightTextPrimary;
-    return _AuthGlassCard(
+    return AuthGlassCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -427,12 +408,12 @@ class _ForgetPwdCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 6),
-              const _AuthTitle("forget password"),
+              const AuthTitle("forget password"),
             ],
           ),
           const SizedBox(height: 21),
 
-          _AuthField( controller: controller.forgetPwdCtrl, hint: "enter username"),
+          AuthField( controller: controller.forgetPwdCtrl, hint: "enter username"),
 
           const SizedBox(height: 27),
 
@@ -463,7 +444,7 @@ class _SendOtpCard extends StatelessWidget {
     final dividerColor = isDark ? Colors.white.withOpacity(0.10) : Colors.black.withOpacity(0.08);
     final textSecondary = isDark ? Colors.white : AppColors.lightTextPrimary;
 
-    return _AuthGlassCard(
+    return AuthGlassCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -478,7 +459,7 @@ class _SendOtpCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 6),
-              _AuthTitle( "Send OTP to" ),
+              AuthTitle( "Send OTP to" ),
             ],
           ),
 
@@ -521,7 +502,7 @@ class _PwdOtpCard extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final textSecondary = isDark ? Colors.white : AppColors.lightTextPrimary;
     
-    return _AuthGlassCard(
+    return AuthGlassCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -536,7 +517,7 @@ class _PwdOtpCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 6),
-              _AuthTitle("Enter OTP"),
+              AuthTitle("Enter OTP"),
             ],
           ),
 
@@ -615,16 +596,16 @@ class _SetPwdCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _AuthGlassCard(
+    return AuthGlassCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-           const _AuthTitle("Choose new password"),
+            AuthTitle("Choose new password"),
           const SizedBox(height: 21),
 
-          _AuthField( controller: controller.newPwdCtrl, hint: "New password"),
+          AuthField( controller: controller.newPwdCtrl, hint: "New password"),
           const SizedBox(height: 8),
-          _AuthField( controller: controller.cNewPwdCtrl, hint: "Confirm new password"),
+          AuthField( controller: controller.cNewPwdCtrl, hint: "Confirm new password"),
 
           const SizedBox(height: 27),
 
@@ -635,123 +616,6 @@ class _SetPwdCard extends StatelessWidget {
   }
 }
 
-class _AuthTitle extends StatelessWidget {
-  final String title;
-
-  const _AuthTitle(this.title);
-
-  @override
-  Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    
-    return Text(
-      title, style: AppTextStyles.authTitle(isDark ? Colors.white : AppColors.lightTextPrimary).copyWith(fontSize: 22,height: 1.24, fontWeight: FontWeight.w700),
-    );
-  }
-}
-
-class _AuthField extends StatelessWidget {
-  final TextEditingController controller;
-  final String hint;
-  final bool obscureText;
-
-  const _AuthField({
-    required this.controller,
-    required this.hint,
-    this.obscureText = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final textColor = isDark ? Colors.white : AppColors.lightTextPrimary;
-    final hintColor = isDark ? Colors.white.withOpacity(0.44) : AppColors.lightTextMuted;
-    final fieldBgColor = isDark ? Colors.white.withOpacity(0.08) : AppColors.lightBorder.withOpacity(0.5);
-    
-    return SizedBox(
-      height: 41,
-      child: TextFormField(
-        controller: controller,
-        obscureText: obscureText,
-        cursorColor: AppColors.primaryBlue,
-        style: TextStyle(
-          color: textColor,
-          fontSize: 10.5,
-          fontWeight: FontWeight.w500,
-        ),
-        decoration: InputDecoration(
-          hintText: hint,
-          hintStyle: TextStyle(
-            color: hintColor,
-            fontSize: 9.7,
-            fontWeight: FontWeight.w500,
-          ),
-          filled: true,
-          fillColor: fieldBgColor,
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 11,
-            vertical: 0,
-          ),
-          border: _fieldBorder(color: isDark ? Colors.transparent : AppColors.lightBorder),
-          enabledBorder: _fieldBorder(color: isDark ? Colors.transparent : AppColors.lightBorder),
-          focusedBorder: _fieldBorder(
-            color: AppColors.primaryBlue.withOpacity(0.65),
-          ),
-        ),
-      ),
-    );
-  }
-
-  OutlineInputBorder _fieldBorder({Color? color}) {
-    return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(AppRadius.full),
-      borderSide: BorderSide(
-        color: color ?? Colors.transparent,
-        width: 1,
-      ),
-    );
-  }
-}
-
-class _AuthPrimaryButton extends StatelessWidget {
-  final String title;
-  final VoidCallback onTap;
-
-  const _AuthPrimaryButton({
-    required this.title,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    
-    return SizedBox(
-      height: 41,
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: onTap,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.buttonBlue,
-          elevation: 0,
-          shadowColor: Colors.transparent,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppRadius.full),
-          ),
-          padding: EdgeInsets.zero,
-        ),
-        child: Text(
-          title,
-          style: TextStyle(
-            color: isDark ? Colors.white : Colors.white,
-            fontSize: 10.8,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 class _OtpBox extends StatelessWidget {
   final TextEditingController controller;
@@ -770,7 +634,7 @@ class _OtpBox extends StatelessWidget {
     
     return SizedBox(
       height: 48,
-      width: 51,
+      width: 48,
       child: TextFormField(
         controller: controller,
         maxLength: 1,
@@ -822,66 +686,14 @@ class _AuthIntroText extends StatelessWidget {
         Text(
           "Discover premium properties, connect with trusted owners,\nand lock your perfect space today.",
           textAlign: TextAlign.center,
-          style: AppTextStyles.bodySmall(
-            subtitleColor,
-          ).copyWith(
-            fontSize: 16,
-            height: 1.25,
-          ),
+          style: AppTextStyles.bodyLarge(subtitleColor),
         ),
       ],
     );
   }
 }
 
-class _AuthGlassCard extends StatelessWidget {
-  final Widget child;
 
-  const _AuthGlassCard({required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(isDark ? 0.45 : 0.18),
-            blurRadius: 40,
-            spreadRadius: 2,
-            offset: const Offset(0, 16),
-          ),
-          BoxShadow(
-            color: Colors.black.withOpacity(isDark ? 0.25 : 0.08),
-            blurRadius: 80,
-            spreadRadius: 8,
-            offset: const Offset(0, 24),
-          ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(24),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
-          child: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.fromLTRB(12, 27, 12, 24),
-            decoration: BoxDecoration(
-              color: isDark ? Colors.black.withOpacity(0.75) : AppColors.lightBg.withOpacity(0.9),
-              borderRadius: BorderRadius.circular(24),
-              border: Border.all(
-                color: isDark ? Colors.white.withOpacity(0.08) : Colors.white.withOpacity(0.6),
-              ),
-            ),
-            child: child,
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 class _OtpOptionTile extends StatelessWidget {
   final IconData icon;
@@ -930,5 +742,46 @@ class _OtpOptionTile extends StatelessWidget {
   }
 }
 
+
+
+class _AuthPrimaryButton extends StatelessWidget {
+  final String title;
+  final VoidCallback onTap;
+
+  const _AuthPrimaryButton({
+    required this.title,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    
+    return SizedBox(
+      height: 45,
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: onTap,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.buttonBlue,
+          elevation: 0,
+          shadowColor: Colors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppRadius.full),
+          ),
+          padding: EdgeInsets.zero,
+        ),
+        child: Text(
+          title,
+          style: TextStyle(
+            color: isDark ? Colors.white : Colors.white,
+            fontSize: 16.8,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 

@@ -34,7 +34,7 @@ enum SettingItemType {
 class ProfileMenuModel {
   final ProfileMenuType type;
   final String title;
-  final IconData icon;
+  final String icon;
 
   ProfileMenuModel({
     required this.type,
@@ -63,14 +63,14 @@ class SettingItemModel {
   final SettingItemType type;
   final String title;
   final String? subtitle;
-  final IconData icon;
+  final String? icon;
   final bool isDanger;
   final VoidCallback? onTap;
 
   SettingItemModel({
     required this.type,
     required this.title,
-    required this.icon,
+    this.icon,
     this.subtitle,
     this.isDanger = false,
     this.onTap,

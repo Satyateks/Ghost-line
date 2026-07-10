@@ -34,8 +34,17 @@ class PremiumScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 11),
                   child: _PremiumCard(isDark: isDark),
                 ),
-
-                const SizedBox(height: 22),
+        SizedBox(
+          height: 220,
+          child: ListView.separated(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            scrollDirection: Axis.horizontal,
+            itemCount: 7,
+            separatorBuilder: (_, __) => const SizedBox(width: 14),
+            itemBuilder: (context, index) {return _PremiumCard(isDark: isDark);},
+          ),
+        ),
+                // const SizedBox(height: 22),
               ],
             ),
           ),
@@ -50,6 +59,7 @@ class _PremiumCard extends StatefulWidget {
   final bool isDark;
 
   const _PremiumCard({required this.isDark});
+  
 
   @override
   State<_PremiumCard> createState() => _PremiumCardState();

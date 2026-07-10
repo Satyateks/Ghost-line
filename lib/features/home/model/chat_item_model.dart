@@ -5,7 +5,7 @@ class ChatItemModel {
   final String time;
   final String avatar;
   final int unreadCount;
-  final bool isArchived;
+  bool isArchived;
   final bool isGroup;
   final bool isOnline;
   bool isMuted;

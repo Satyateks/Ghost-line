@@ -37,11 +37,11 @@ class HomeScreen extends StatelessWidget {
 
           HomeSearchBar(onChanged: controller.updateSearch),
 
-          const SizedBox(height: 10),
+          const SizedBox(height: 21),
 
           ChatFilterTabs(controller: controller),
 
-          const SizedBox(height: 8),
+          const SizedBox(height:11),
 
           Expanded(
             child: Obx(() {
@@ -100,10 +100,7 @@ class HomeScreen extends StatelessWidget {
                             //   message: "This will clear all messages from this chat, but the chat will stay in your list.",
                             //   confirmText: "Clear",
                             //   confirmColor: AppColors.buttonBlue,
-                            //   onConfirm: () {
-                            //     controller.clearChat(chat.id);
-                            //     Get.back();
-                            //   },
+                            //   onConfirm: () {controller.clearChat(chat.id);Get.back();},
                             // );
                           },
                           onDelete: () {

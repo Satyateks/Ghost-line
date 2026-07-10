@@ -22,21 +22,15 @@ class HomeSearchBar extends StatelessWidget {
         child: Stack(
           children: [
             // Soft outer glass glow
-            Positioned.fill(
-              child: CustomPaint(
-                painter: _SearchOuterGlowPainter(isDark: isDark),
-              ),
-            ),
+            Positioned.fill(child: CustomPaint( painter: _SearchGlassBorderPainter(isDark: isDark))),
+            // Positioned.fill(child: CustomPaint( painter: _SearchOuterGlowPainter(isDark: isDark))),
 
             // Main glass body
             Positioned.fill(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(999),
                 child: BackdropFilter(
-                  filter: ImageFilter.blur(
-                    sigmaX: 16,
-                    sigmaY: 16,
-                  ),
+                  filter: ImageFilter.blur(sigmaX: 16, sigmaY: 16),
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(999),
@@ -62,11 +56,7 @@ class HomeSearchBar extends StatelessWidget {
             ),
 
             // Thin border + shine
-            Positioned.fill(
-              child: CustomPaint(
-                painter: _SearchGlassBorderPainter(isDark: isDark),
-              ),
-            ),
+            Positioned.fill(child: CustomPaint(painter: _SearchGlassBorderPainter(isDark: isDark))),
 
             // TextField
             Positioned.fill(
@@ -83,23 +73,14 @@ class HomeSearchBar extends StatelessWidget {
                   prefixIcon: Icon(
                     Icons.search_rounded,
                     size: 23,
-                    color: isDark
-                        ? Colors.white.withOpacity(0.58)
-                        : Colors.black.withOpacity(0.42),
+                    color: isDark ? Colors.white.withOpacity(0.58) : Colors.black.withOpacity(0.42),
                   ),
                   hintText: 'Search friends, chat, media or groups',
                   hintStyle: TextStyle(
-                    color: isDark
-                        ? Colors.white.withOpacity(0.52)
-                        : Colors.black.withOpacity(0.42),
-                    fontSize: 12.5,
+                    color: isDark ? Colors.white.withOpacity(0.52) : Colors.black.withOpacity(0.42),
                     fontWeight: FontWeight.w500,
                   ),
-                  contentPadding: const EdgeInsets.only(
-                    top: 10,
-                    bottom: 10,
-                    right: 14,
-                  ),
+                  contentPadding: const EdgeInsets.only(top: 10, bottom: 10, right: 14),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(999),
                     borderSide: BorderSide.none,
@@ -125,31 +106,17 @@ class HomeSearchBar extends StatelessWidget {
 class _SearchOuterGlowPainter extends CustomPainter {
   final bool isDark;
 
-  const _SearchOuterGlowPainter({
-    required this.isDark,
-  });
+  const _SearchOuterGlowPainter({required this.isDark});
 
   @override
   void paint(Canvas canvas, Size size) {
-    final rect = Rect.fromLTWH(
-      1.5,
-      1.5,
-      size.width - 3,
-      size.height - 3,
-    );
+    final rect = Rect.fromLTWH( 1.5, 1.5, size.width - 3, size.height - 3);
 
-    final rrect = RRect.fromRectAndRadius(
-      rect,
-      Radius.circular(size.height / 2),
-    );
-
+    final rrect = RRect.fromRectAndRadius(rect, Radius.circular(size.height / 2));
     final paint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.4
-      ..maskFilter = const MaskFilter.blur(
-        BlurStyle.normal,
-        3.2,
-      )
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3.2)
       ..shader = LinearGradient(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
@@ -171,33 +138,21 @@ class _SearchOuterGlowPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _SearchOuterGlowPainter oldDelegate) {
-    return oldDelegate.isDark != isDark;
-  }
+  bool shouldRepaint(covariant _SearchOuterGlowPainter oldDelegate) {return oldDelegate.isDark != isDark;}
 }
 
 class _SearchGlassBorderPainter extends CustomPainter {
   final bool isDark;
 
-  const _SearchGlassBorderPainter({
-    required this.isDark,
-  });
+  const _SearchGlassBorderPainter({ required this.isDark});
 
   @override
   void paint(Canvas canvas, Size size) {
     final radius = size.height / 2;
 
-    final rect = Rect.fromLTWH(
-      1,
-      1,
-      size.width - 2,
-      size.height - 2,
-    );
+    final rect = Rect.fromLTWH(1, 1, size.width - 2, size.height - 2);
 
-    final rrect = RRect.fromRectAndRadius(
-      rect,
-      Radius.circular(radius),
-    );
+    final rrect = RRect.fromRectAndRadius(rect, Radius.circular(radius));
 
     // Main thin glass border
     final borderPaint = Paint()
@@ -227,10 +182,7 @@ class _SearchGlassBorderPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.05
       ..strokeCap = StrokeCap.round
-      ..maskFilter = const MaskFilter.blur(
-        BlurStyle.normal,
-        0.8,
-      )
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 0.8)
       ..shader = LinearGradient(
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
@@ -287,34 +239,19 @@ class _SearchGlassBorderPainter extends CustomPainter {
     );
 
     // Inner soft depth
-    final innerRect = Rect.fromLTWH(
-      3.5,
-      3.5,
-      size.width - 7,
-      size.height - 7,
-    );
+    final innerRect = Rect.fromLTWH(3.5, 3.5, size.width - 7, size.height - 7);
 
-    final innerRRect = RRect.fromRectAndRadius(
-      innerRect,
-      Radius.circular(radius),
-    );
-
+    final innerRRect = RRect.fromRectAndRadius(innerRect, Radius.circular(radius));
     final innerShadowPaint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.0
-      ..maskFilter = const MaskFilter.blur(
-        BlurStyle.normal,
-        1.0,
-      )
-      ..color = isDark
-          ? Colors.black.withOpacity(0.22)
-          : Colors.white.withOpacity(0.28);
-
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 1.0)
+      ..color = isDark ? Colors.black.withOpacity(0.22) : Colors.white.withOpacity(0.28);
     canvas.drawRRect(innerRRect, innerShadowPaint);
   }
 
   @override
-  bool shouldRepaint(covariant _SearchGlassBorderPainter oldDelegate) {
-    return oldDelegate.isDark != isDark;
-  }
+  bool shouldRepaint(covariant _SearchGlassBorderPainter oldDelegate) {return oldDelegate.isDark != isDark;}
 }
+
+

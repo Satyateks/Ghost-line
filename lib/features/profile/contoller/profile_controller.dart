@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
+import '../../../core/utils/app_assets.dart';
 import '../model/profile_models.dart';
 
 class ProfileController extends GetxController {
@@ -20,46 +21,14 @@ class ProfileController extends GetxController {
 
   void _loadMenus() {
     menus.assignAll([
-      ProfileMenuModel(
-        type: ProfileMenuType.account,
-        title: 'Account',
-        icon: Icons.person_outline_rounded,
-      ),
-      ProfileMenuModel(
-        type: ProfileMenuType.privacy,
-        title: 'Privacy',
-        icon: Icons.privacy_tip_outlined,
-      ),
-      ProfileMenuModel(
-        type: ProfileMenuType.notification,
-        title: 'Notification',
-        icon: Icons.notifications_none_rounded,
-      ),
-      ProfileMenuModel(
-        type: ProfileMenuType.chats,
-        title: 'Chats',
-        icon: Icons.chat_bubble_outline_rounded,
-      ),
-      ProfileMenuModel(
-        type: ProfileMenuType.list,
-        title: 'List',
-        icon: Icons.list_alt_rounded,
-      ),
-      ProfileMenuModel(
-        type: ProfileMenuType.language,
-        title: 'Language',
-        icon: Icons.translate_rounded,
-      ),
-      ProfileMenuModel(
-        type: ProfileMenuType.inviteFriends,
-        title: 'Invite friends',
-        icon: Icons.groups_2_outlined,
-      ),
-      ProfileMenuModel(
-        type: ProfileMenuType.info,
-        title: 'info',
-        icon: Icons.info_outline_rounded,
-      ),
+      ProfileMenuModel(type: ProfileMenuType.account, title: 'Account', icon: AppAssets.accountIcon),
+      ProfileMenuModel(type: ProfileMenuType.privacy, title: 'Privacy', icon: AppAssets.privacyIcon),
+      ProfileMenuModel(type: ProfileMenuType.notification, title: 'Notification', icon: AppAssets.notificationIcon),
+      ProfileMenuModel(type: ProfileMenuType.chats, title: 'Chats', icon: AppAssets.commentIcon),
+      ProfileMenuModel(type: ProfileMenuType.list, title: 'List', icon: AppAssets.listIcon),
+      ProfileMenuModel(type: ProfileMenuType.language, title: 'Language', icon: AppAssets.languageIcon),
+      ProfileMenuModel(type: ProfileMenuType.inviteFriends, title: 'Invite friends', icon: AppAssets.inviteIcon),
+      ProfileMenuModel(type: ProfileMenuType.info, title: 'info', icon: AppAssets.infoIcon),
     ]);
   }
 
@@ -110,26 +79,26 @@ class ProfileController extends GetxController {
         type: SettingItemType.changeUserName,
         title: 'Change user name',
         subtitle: username.value,
-        icon: Icons.person_outline_rounded,
+        icon: AppAssets.keysIcon,
       ),
       SettingItemModel(
         type: SettingItemType.changeNumber,
         title: 'Change number',
         subtitle: phone.value,
-        icon: Icons.call_outlined,
+        icon: AppAssets.hashtagIcon,
       ),
       SettingItemModel(
         type: SettingItemType.deleteAccount,
         title: 'Delete account',
         subtitle: 'Permanently delete your account',
-        icon: Icons.delete_outline_rounded,
+        icon: AppAssets.deleteIcon,
         isDanger: true,
       ),
       SettingItemModel(
         type: SettingItemType.removeAccount,
         title: 'Remove account',
         subtitle: 'Remove this account from this device',
-        icon: Icons.logout_rounded,
+        icon: AppAssets.removeUserIcon,
         isDanger: true,
       ),
     ];
@@ -141,43 +110,40 @@ class ProfileController extends GetxController {
         type: SettingItemType.lastSeenOnline,
         title: 'Last seen and online',
         subtitle: 'Nobody',
-        icon: Icons.access_time_rounded,
       ),
       SettingItemModel(
         type: SettingItemType.profilePhoto,
         title: 'Profile photo',
         subtitle: 'Everyone',
-        icon: Icons.photo_camera_outlined,
       ),
       SettingItemModel(
         type: SettingItemType.about,
         title: 'About',
         subtitle: 'My contacts',
-        icon: Icons.info_outline_rounded,
       ),
       SettingItemModel(
         type: SettingItemType.status,
         title: 'Status',
         subtitle: 'My contacts except...',
-        icon: Icons.circle_outlined,
+        icon: AppAssets.deleteIcon,
       ),
       SettingItemModel(
         type: SettingItemType.posts,
         title: 'Posts',
         subtitle: 'Everyone',
-        icon: Icons.dynamic_feed_outlined,
+        icon: AppAssets.deleteIcon,
       ),
       SettingItemModel(
         type: SettingItemType.phoneNumber,
         title: 'Phone number',
         subtitle: 'Nobody',
-        icon: Icons.call_outlined,
+        icon: AppAssets.deleteIcon,
       ),
       SettingItemModel(
         type: SettingItemType.groups,
         title: 'Groups',
         subtitle: 'My contacts',
-        icon: Icons.groups_2_outlined,
+        icon: AppAssets.deleteIcon,
       ),
     ];
   }
@@ -188,43 +154,26 @@ class ProfileController extends GetxController {
         type: SettingItemType.messageNotifications,
         title: 'Message notifications',
         subtitle: 'Tone, vibration, popup',
-        icon: Icons.notifications_none_rounded,
       ),
       SettingItemModel(
         type: SettingItemType.groupNotifications,
         title: 'Group notifications',
         subtitle: 'Tone, vibration',
-        icon: Icons.groups_2_outlined,
       ),
       SettingItemModel(
         type: SettingItemType.callNotifications,
         title: 'Call notifications',
         subtitle: 'Ringtone',
-        icon: Icons.call_outlined,
       ),
     ];
   }
 
   List<SettingItemModel> chatItems() {
     return [
-      SettingItemModel(
-        type: SettingItemType.chatBackup,
-        title: 'Chat backup',
-        subtitle: 'Back up your messages',
-        icon: Icons.cloud_upload_outlined,
-      ),
-      SettingItemModel(
-        type: SettingItemType.chatWallpaper,
-        title: 'Chat wallpaper',
-        subtitle: 'Change chat background',
-        icon: Icons.wallpaper_outlined,
-      ),
-      SettingItemModel(
-        type: SettingItemType.chatHistory,
-        title: 'Chat history',
-        subtitle: 'Export, clear or delete chats',
-        icon: Icons.history_rounded,
-      ),
+      SettingItemModel(type: SettingItemType.chatBackup, title: 'Chat backup'),
+      SettingItemModel( type: SettingItemType.chatWallpaper, title: 'Export chat',),
+      SettingItemModel(type: SettingItemType.chatHistory, title: 'Clear all chat',isDanger: true),
+      SettingItemModel(type: SettingItemType.chatHistory, title: 'Delete all chat',isDanger: true),
     ];
   }
 }

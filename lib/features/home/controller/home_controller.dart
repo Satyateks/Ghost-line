@@ -77,26 +77,12 @@ class HomeController extends GetxController {
     List<ChatItemModel> list = chats;
 
     switch (selectedFilter.value) {
-      case 'all':
-        list = chats;
-        break;
-
-      case 'archive':
-        list = chats.where((e) => e.isArchived).toList();
-        break;
-
-      case 'unread':
-        list = chats.where((e) => e.unreadCount > 0).toList();
-        break;
-
-      case 'groups':
-        list = chats.where((e) => e.isGroup).toList();
-        break;
-
-      default:
-        // for custom tabs like favorites, family, etc. which don't have built-in data currently
-        list = [];
-        break;
+      case 'all': list = chats; break;
+      case 'archive': list = chats.where((e) => e.isArchived).toList(); break;
+      case 'unread': list = chats.where((e) => e.unreadCount > 0).toList(); break;
+      case 'groups': list = chats.where((e) => e.isGroup).toList(); break;
+      default:list = []; break; // for custom tabs like favorites, family, etc. which don't have built-in data currently
+        
     }
 
     if (searchQuery.value.isNotEmpty) {
@@ -111,13 +97,16 @@ class HomeController extends GetxController {
   void deleteChat(String id) {chats.removeWhere((chat) => chat.id == id);}
 
   void archiveChat(String chatId) {
+   final index = chats.indexWhere((item) => item.id == chatId);
+    if (index == -1) return;
+    chats[index].isArchived = true;
+    chats.refresh();
     // archive logic
   }
 
   void muteChat(String chatId) {
     final index = chats.indexWhere((item) => item.id == chatId);
     if (index == -1) return;
-
     chats[index].isMuted = true;
     chats.refresh();
   }

@@ -1,5 +1,7 @@
 
 
+// ignore_for_file: unnecessary_underscores
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -33,7 +35,7 @@ class SuggestedForYouWidget extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemCount: users.length,
             separatorBuilder: (_, __) => const SizedBox(width: 14),
-            itemBuilder: (context, index) { return _SuggestionCard(user: users[index]); },
+            itemBuilder: (context, index) {return _SuggestionCard(user: users[index]);},
           ),
         ),
       ],
@@ -68,21 +70,12 @@ class _SuggestionCardState extends State<_SuggestionCard> {
 
     return Container(
       width: 145,
-      padding: const EdgeInsets.symmetric(
-        horizontal: 14,
-        vertical: 16,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
       decoration: BoxDecoration(
-        color: isDark
-            ? const Color(0xff1B1B1F)
-            : Colors.white,
+        color: isDark ? const Color(0xff1B1B1F) : Colors.white,
         borderRadius: BorderRadius.circular(22),
 
-        border: Border.all(
-          color: isDark
-              ? Colors.white10
-              : Colors.grey.shade200,
-        ),
+        border: Border.all(color: isDark ? Colors.white10 : Colors.grey.shade200),
 
         boxShadow: [
           BoxShadow(
@@ -118,12 +111,12 @@ class _SuggestionCardState extends State<_SuggestionCard> {
           const SizedBox(height: 6),
 
           /// Optional Designation
-          Text(
+          /*Text(
             widget.user.designation ?? "",
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
-            style:AppTextStyles.bodyMedium(isDark ? Colors.white :AppColors.lightTextSecondary)),
+            style:AppTextStyles.bodyMedium(isDark ? Colors.white :AppColors.lightTextSecondary)),*/
 
           const Spacer(),
 

@@ -45,13 +45,7 @@ class SettingActionSheet {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(
-                      item.icon,
-                      color: item.isDanger
-                          ? AppColors.error
-                          : AppColors.buttonBlue,
-                      size: 34,
-                    ),
+                    Icon(item.icon, color: item.isDanger ? AppColors.error : AppColors.buttonBlue, size: 34),
                     const SizedBox(height: 12),
                     Text(
                       item.title,
@@ -174,3 +168,4 @@ class SettingActionSheet {
     }
   }
 }
+

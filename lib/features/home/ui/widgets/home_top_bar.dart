@@ -22,9 +22,7 @@ class HomeTopBar extends StatelessWidget {
           const Spacer(),
 
           InkWell(
-            onTap: () => Get.to(
-                  () => ForwardMessageScreen(message: 'Satya..'),
-            ),
+            onTap: () => Get.to(() => ForwardMessageScreen(message: 'Satya..')),
             borderRadius: BorderRadius.circular(999),
             splashColor: Colors.white.withOpacity(0.06),
             highlightColor: Colors.white.withOpacity(0.03),

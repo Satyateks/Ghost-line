@@ -1,9 +1,9 @@
-
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../core/theme/theme_route.dart';
 import '../../../core/utils/app_assets.dart';
 import '../controller/voicemail_controller.dart';
 import '../model/voicemail_model.dart';
@@ -17,7 +17,8 @@ class VoicemailDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final VoicemailModel voicemail = Get.arguments as VoicemailModel;
-    final voicemail = ModalRoute.of(context)!.settings.arguments as VoicemailModel;
+    final voicemail =
+        ModalRoute.of(context)!.settings.arguments as VoicemailModel;
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
@@ -65,15 +66,27 @@ class VoicemailDetailScreen extends StatelessWidget {
                                           end: Alignment.bottomCenter,
                                           colors: isDark
                                               ? [
-                                            Colors.white.withOpacity(0.120),
-                                            Colors.white.withOpacity(0.075),
-                                            Colors.white.withOpacity(0.050),
-                                          ]
+                                                  Colors.white.withOpacity(
+                                                    0.120,
+                                                  ),
+                                                  Colors.white.withOpacity(
+                                                    0.075,
+                                                  ),
+                                                  Colors.white.withOpacity(
+                                                    0.050,
+                                                  ),
+                                                ]
                                               : [
-                                            Colors.white.withOpacity(0.92),
-                                            Colors.white.withOpacity(0.78),
-                                            Colors.white.withOpacity(0.66),
-                                          ],
+                                                  Colors.white.withOpacity(
+                                                    0.92,
+                                                  ),
+                                                  Colors.white.withOpacity(
+                                                    0.78,
+                                                  ),
+                                                  Colors.white.withOpacity(
+                                                    0.66,
+                                                  ),
+                                                ],
                                         ),
                                       ),
                                     ),
@@ -92,7 +105,9 @@ class VoicemailDetailScreen extends StatelessWidget {
 
                               Icon(
                                 Icons.arrow_back_ios_new,
-                                color: theme.colorScheme.onSurface.withOpacity(0.92),
+                                color: theme.colorScheme.onSurface.withOpacity(
+                                  0.92,
+                                ),
                                 size: 18,
                               ),
                             ],
@@ -102,34 +117,36 @@ class VoicemailDetailScreen extends StatelessWidget {
 
                       const SizedBox(width: 14),
 
-                      CircleAvatar( radius: 18, backgroundImage: NetworkImage(voicemail.image)),
+                      CircleAvatar(
+                        radius: 18,
+                        backgroundImage: NetworkImage(voicemail.image),
+                      ),
 
                       const SizedBox(width: 8),
 
                       Expanded(
                         child: Text(
                           voicemail.name,
-                          style: TextStyle(
-                            color: theme.colorScheme.onSurface,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
+                          style: AppTextStyles.bodyHighLarge(
+                            theme.colorScheme.onSurface,
                           ),
                         ),
                       ),
 
                       CustomPaint(
                         painter: _VideoCallPillOuterGlowPainter(isDark: isDark),
-                        foregroundPainter: _VideoCallPillBorderPainter(isDark: isDark),
+                        foregroundPainter: _VideoCallPillBorderPainter(
+                          isDark: isDark,
+                        ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(999),
                           child: BackdropFilter(
-                            filter: ImageFilter.blur(
-                              sigmaX: 16,
-                              sigmaY: 16,
-                            ),
+                            filter: ImageFilter.blur(sigmaX: 16, sigmaY: 16),
                             child: Container(
                               height: 42,
-                              padding: const EdgeInsets.symmetric(horizontal: 14),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 14,
+                              ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(999),
                                 gradient: LinearGradient(
@@ -137,15 +154,15 @@ class VoicemailDetailScreen extends StatelessWidget {
                                   end: Alignment.bottomCenter,
                                   colors: isDark
                                       ? [
-                                    Colors.white.withOpacity(0.120),
-                                    Colors.white.withOpacity(0.075),
-                                    Colors.white.withOpacity(0.050),
-                                  ]
+                                          Colors.white.withOpacity(0.120),
+                                          Colors.white.withOpacity(0.075),
+                                          Colors.white.withOpacity(0.050),
+                                        ]
                                       : [
-                                    Colors.white.withOpacity(0.92),
-                                    Colors.white.withOpacity(0.78),
-                                    Colors.white.withOpacity(0.66),
-                                  ],
+                                          Colors.white.withOpacity(0.92),
+                                          Colors.white.withOpacity(0.78),
+                                          Colors.white.withOpacity(0.66),
+                                        ],
                                 ),
                               ),
                               child: Row(
@@ -154,20 +171,22 @@ class VoicemailDetailScreen extends StatelessWidget {
                                   Image.asset(
                                     AppAssets.videoIcon,
                                     height: 22,
-                                    color: theme.colorScheme.onSurface.withOpacity(0.92),
+                                    color: theme.colorScheme.onSurface
+                                        .withOpacity(0.92),
                                   ),
                                   const SizedBox(width: 16),
                                   Image.asset(
                                     AppAssets.callIcon,
                                     height: 22,
-                                    color: theme.colorScheme.onSurface.withOpacity(0.92),
+                                    color: theme.colorScheme.onSurface
+                                        .withOpacity(0.92),
                                   ),
                                 ],
                               ),
                             ),
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -198,21 +217,15 @@ class VoicemailDetailScreen extends StatelessWidget {
     );
   }
 }
+
 class _BackCircleOuterGlowPainter extends CustomPainter {
   final bool isDark;
 
-  const _BackCircleOuterGlowPainter({
-    required this.isDark,
-  });
+  const _BackCircleOuterGlowPainter({required this.isDark});
 
   @override
   void paint(Canvas canvas, Size size) {
-    final rect = Rect.fromLTWH(
-      1.5,
-      1.5,
-      size.width - 3,
-      size.height - 3,
-    );
+    final rect = Rect.fromLTWH(1.5, 1.5, size.width - 3, size.height - 3);
 
     final circleRect = Rect.fromCircle(
       center: Offset(size.width / 2, size.height / 2),
@@ -222,24 +235,21 @@ class _BackCircleOuterGlowPainter extends CustomPainter {
     final paint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.3
-      ..maskFilter = const MaskFilter.blur(
-        BlurStyle.normal,
-        3.0,
-      )
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3.0)
       ..shader = LinearGradient(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
         colors: isDark
             ? [
-          Colors.white.withOpacity(0.13),
-          Colors.white.withOpacity(0.035),
-          Colors.black.withOpacity(0.30),
-        ]
+                Colors.white.withOpacity(0.13),
+                Colors.white.withOpacity(0.035),
+                Colors.black.withOpacity(0.30),
+              ]
             : [
-          Colors.white.withOpacity(0.82),
-          Colors.white.withOpacity(0.32),
-          Colors.black.withOpacity(0.07),
-        ],
+                Colors.white.withOpacity(0.82),
+                Colors.white.withOpacity(0.32),
+                Colors.black.withOpacity(0.07),
+              ],
         stops: const [0.0, 0.45, 1.0],
       ).createShader(rect);
 
@@ -255,18 +265,11 @@ class _BackCircleOuterGlowPainter extends CustomPainter {
 class _BackCircleBorderPainter extends CustomPainter {
   final bool isDark;
 
-  const _BackCircleBorderPainter({
-    required this.isDark,
-  });
+  const _BackCircleBorderPainter({required this.isDark});
 
   @override
   void paint(Canvas canvas, Size size) {
-    final rect = Rect.fromLTWH(
-      1,
-      1,
-      size.width - 2,
-      size.height - 2,
-    );
+    final rect = Rect.fromLTWH(1, 1, size.width - 2, size.height - 2);
 
     final circleRect = Rect.fromCircle(
       center: Offset(size.width / 2, size.height / 2),
@@ -282,15 +285,15 @@ class _BackCircleBorderPainter extends CustomPainter {
         end: Alignment.bottomCenter,
         colors: isDark
             ? [
-          Colors.white.withOpacity(0.24),
-          Colors.white.withOpacity(0.075),
-          Colors.black.withOpacity(0.34),
-        ]
+                Colors.white.withOpacity(0.24),
+                Colors.white.withOpacity(0.075),
+                Colors.black.withOpacity(0.34),
+              ]
             : [
-          Colors.white.withOpacity(0.92),
-          Colors.white.withOpacity(0.48),
-          Colors.black.withOpacity(0.08),
-        ],
+                Colors.white.withOpacity(0.92),
+                Colors.white.withOpacity(0.48),
+                Colors.black.withOpacity(0.08),
+              ],
         stops: const [0.0, 0.48, 1.0],
       ).createShader(rect);
 
@@ -301,10 +304,7 @@ class _BackCircleBorderPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.15
       ..strokeCap = StrokeCap.round
-      ..maskFilter = const MaskFilter.blur(
-        BlurStyle.normal,
-        0.75,
-      )
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 0.75)
       ..shader = LinearGradient(
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
@@ -318,30 +318,16 @@ class _BackCircleBorderPainter extends CustomPainter {
         stops: const [0.0, 0.22, 0.50, 0.78, 1.0],
       ).createShader(rect);
 
-    final topArcRect = Rect.fromLTWH(
-      8,
-      3.5,
-      size.width - 16,
-      size.height - 16,
-    );
+    final topArcRect = Rect.fromLTWH(8, 3.5, size.width - 16, size.height - 16);
 
-    canvas.drawArc(
-      topArcRect,
-      3.55,
-      2.30,
-      false,
-      topShinePaint,
-    );
+    canvas.drawArc(topArcRect, 3.55, 2.30, false, topShinePaint);
 
     // Bottom soft depth
     final bottomDepthPaint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.1
       ..strokeCap = StrokeCap.round
-      ..maskFilter = const MaskFilter.blur(
-        BlurStyle.normal,
-        0.9,
-      )
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 0.9)
       ..color = isDark
           ? Colors.black.withOpacity(0.24)
           : Colors.black.withOpacity(0.055);
@@ -353,13 +339,7 @@ class _BackCircleBorderPainter extends CustomPainter {
       size.height - 10,
     );
 
-    canvas.drawArc(
-      bottomArcRect,
-      0.65,
-      1.85,
-      false,
-      bottomDepthPaint,
-    );
+    canvas.drawArc(bottomArcRect, 0.65, 1.85, false, bottomDepthPaint);
 
     // Inner soft shadow
     final innerCircleRect = Rect.fromCircle(
@@ -370,10 +350,7 @@ class _BackCircleBorderPainter extends CustomPainter {
     final innerShadowPaint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0.9
-      ..maskFilter = const MaskFilter.blur(
-        BlurStyle.normal,
-        1.0,
-      )
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 1.0)
       ..color = isDark
           ? Colors.black.withOpacity(0.20)
           : Colors.white.withOpacity(0.26);
@@ -386,21 +363,15 @@ class _BackCircleBorderPainter extends CustomPainter {
     return oldDelegate.isDark != isDark;
   }
 }
+
 class _VideoCallPillOuterGlowPainter extends CustomPainter {
   final bool isDark;
 
-  const _VideoCallPillOuterGlowPainter({
-    required this.isDark,
-  });
+  const _VideoCallPillOuterGlowPainter({required this.isDark});
 
   @override
   void paint(Canvas canvas, Size size) {
-    final rect = Rect.fromLTWH(
-      1.5,
-      1.5,
-      size.width - 3,
-      size.height - 3,
-    );
+    final rect = Rect.fromLTWH(1.5, 1.5, size.width - 3, size.height - 3);
 
     final rrect = RRect.fromRectAndRadius(
       rect,
@@ -410,24 +381,21 @@ class _VideoCallPillOuterGlowPainter extends CustomPainter {
     final paint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.3
-      ..maskFilter = const MaskFilter.blur(
-        BlurStyle.normal,
-        3.0,
-      )
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3.0)
       ..shader = LinearGradient(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
         colors: isDark
             ? [
-          Colors.white.withOpacity(0.13),
-          Colors.white.withOpacity(0.035),
-          Colors.black.withOpacity(0.30),
-        ]
+                Colors.white.withOpacity(0.13),
+                Colors.white.withOpacity(0.035),
+                Colors.black.withOpacity(0.30),
+              ]
             : [
-          Colors.white.withOpacity(0.82),
-          Colors.white.withOpacity(0.32),
-          Colors.black.withOpacity(0.07),
-        ],
+                Colors.white.withOpacity(0.82),
+                Colors.white.withOpacity(0.32),
+                Colors.black.withOpacity(0.07),
+              ],
         stops: const [0.0, 0.45, 1.0],
       ).createShader(rect);
 
@@ -443,25 +411,15 @@ class _VideoCallPillOuterGlowPainter extends CustomPainter {
 class _VideoCallPillBorderPainter extends CustomPainter {
   final bool isDark;
 
-  const _VideoCallPillBorderPainter({
-    required this.isDark,
-  });
+  const _VideoCallPillBorderPainter({required this.isDark});
 
   @override
   void paint(Canvas canvas, Size size) {
     final radius = size.height / 2;
 
-    final rect = Rect.fromLTWH(
-      1,
-      1,
-      size.width - 2,
-      size.height - 2,
-    );
+    final rect = Rect.fromLTWH(1, 1, size.width - 2, size.height - 2);
 
-    final rrect = RRect.fromRectAndRadius(
-      rect,
-      Radius.circular(radius),
-    );
+    final rrect = RRect.fromRectAndRadius(rect, Radius.circular(radius));
 
     // Main thin border
     final borderPaint = Paint()
@@ -472,15 +430,15 @@ class _VideoCallPillBorderPainter extends CustomPainter {
         end: Alignment.bottomCenter,
         colors: isDark
             ? [
-          Colors.white.withOpacity(0.22),
-          Colors.white.withOpacity(0.075),
-          Colors.black.withOpacity(0.32),
-        ]
+                Colors.white.withOpacity(0.22),
+                Colors.white.withOpacity(0.075),
+                Colors.black.withOpacity(0.32),
+              ]
             : [
-          Colors.white.withOpacity(0.90),
-          Colors.white.withOpacity(0.46),
-          Colors.black.withOpacity(0.08),
-        ],
+                Colors.white.withOpacity(0.90),
+                Colors.white.withOpacity(0.46),
+                Colors.black.withOpacity(0.08),
+              ],
         stops: const [0.0, 0.48, 1.0],
       ).createShader(rect);
 
@@ -491,10 +449,7 @@ class _VideoCallPillBorderPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.0
       ..strokeCap = StrokeCap.round
-      ..maskFilter = const MaskFilter.blur(
-        BlurStyle.normal,
-        0.75,
-      )
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 0.75)
       ..shader = LinearGradient(
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
@@ -519,28 +474,25 @@ class _VideoCallPillBorderPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0.9
       ..strokeCap = StrokeCap.round
-      ..maskFilter = const MaskFilter.blur(
-        BlurStyle.normal,
-        0.75,
-      )
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 0.75)
       ..shader = LinearGradient(
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
         colors: isDark
             ? [
-          Colors.white.withOpacity(0.00),
-          Colors.white.withOpacity(0.030),
-          Colors.white.withOpacity(0.060),
-          Colors.white.withOpacity(0.030),
-          Colors.white.withOpacity(0.00),
-        ]
+                Colors.white.withOpacity(0.00),
+                Colors.white.withOpacity(0.030),
+                Colors.white.withOpacity(0.060),
+                Colors.white.withOpacity(0.030),
+                Colors.white.withOpacity(0.00),
+              ]
             : [
-          Colors.black.withOpacity(0.00),
-          Colors.black.withOpacity(0.025),
-          Colors.black.withOpacity(0.050),
-          Colors.black.withOpacity(0.025),
-          Colors.black.withOpacity(0.00),
-        ],
+                Colors.black.withOpacity(0.00),
+                Colors.black.withOpacity(0.025),
+                Colors.black.withOpacity(0.050),
+                Colors.black.withOpacity(0.025),
+                Colors.black.withOpacity(0.00),
+              ],
         stops: const [0.0, 0.22, 0.50, 0.78, 1.0],
       ).createShader(rect);
 
@@ -551,28 +503,15 @@ class _VideoCallPillBorderPainter extends CustomPainter {
     );
 
     // Inner soft depth
-    final innerRect = Rect.fromLTWH(
-      3.5,
-      3.5,
-      size.width - 7,
-      size.height - 7,
-    );
+    final innerRect = Rect.fromLTWH(3.5, 3.5, size.width - 7, size.height - 7);
 
-    final innerRRect = RRect.fromRectAndRadius(
-      innerRect,
-      Radius.circular(radius),
-    );
+    final innerRRect = RRect.fromRectAndRadius(innerRect, Radius.circular(radius));
 
     final innerShadowPaint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0.9
-      ..maskFilter = const MaskFilter.blur(
-        BlurStyle.normal,
-        1.0,
-      )
-      ..color = isDark
-          ? Colors.black.withOpacity(0.20)
-          : Colors.white.withOpacity(0.24);
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 1.0)
+      ..color = isDark ? Colors.black.withOpacity(0.20) : Colors.white.withOpacity(0.24);
 
     canvas.drawRRect(innerRRect, innerShadowPaint);
   }
