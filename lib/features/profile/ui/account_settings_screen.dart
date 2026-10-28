@@ -21,7 +21,7 @@ class SettingActionSheet {
         return Padding(
           padding: EdgeInsets.fromLTRB(
             12,
-            0,
+            00, 
             12,
             12 + MediaQuery.of(context).padding.bottom,
           ),
